@@ -6,4 +6,5 @@ For fun (and so that you can test committing to the repo) add your name below in
 * Benjamin Jorgensen
 * Tadiwa Mlambo
 * Shristi Gupta
+* Suryansh Singh
 
