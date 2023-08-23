@@ -8,6 +8,7 @@ All the people working on this project
 * Shristi Gupta
 * Suryansh Singh
 * Kristian Norved
+* Lauchie Harvey
 
 ### Display-Manager
 Benjamin Jorgensen, Kristian Noeved
