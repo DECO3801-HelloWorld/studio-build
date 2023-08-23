@@ -9,14 +9,6 @@ All the people working on this project
 * Suryansh Singh
 * Kristian Norved
 
-## Project file Structure
--| # Project Root Directory         <br>
- | --- src                          <br>
- |     | --- display-manager        <br>
- | --- specification                <br>
- |     | --- spec-display-manager   <br>
- | -- README.md                     <br>
-
 ### Display-Manager
 Benjamin Jorgensen, Kristian Noeved
 
