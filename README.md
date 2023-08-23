@@ -10,12 +10,12 @@ All the people working on this project
 * Kristian Norved
 
 ## Project file Structure
--| # Project Root Directory 
- | --- src
- |     | --- display-manager
- | --- specification
- |     | --- spec-display-manager
- | -- README.md
+-| # Project Root Directory         <br>
+ | --- src                          <br>
+ |     | --- display-manager        <br>
+ | --- specification                <br>
+ |     | --- spec-display-manager   <br>
+ | -- README.md                     <br>
 
 ### Display-Manager
 Benjamin Jorgensen, Kristian Noeved
