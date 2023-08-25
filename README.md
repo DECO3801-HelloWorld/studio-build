@@ -1,8 +1,8 @@
 # Team HelloWorld!
-The codebase for the yet undecided project for the HelloWorld team.
+The codebase for the yet for Project 041 of Team HelloWorld.
 
 ## Team Members
-All the people working on this project
+All the people working on this project:
 * Benjamin Jorgensen
 * Tadiwa Mlambo
 * Shristi Gupta
@@ -11,7 +11,5 @@ All the people working on this project
 * Lauchie Harvey
 
 ### Display-Manager
-Benjamin Jorgensen, Kristian Noeved
-
-Aiming to complete some lo-fi ideation of the interface and function of the display manager
+Benjamin Jorgensen and Kristian Norved: aiming to complete some lo-fi ideation of the interface and function of the display manager.
 
