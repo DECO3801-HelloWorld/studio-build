@@ -1,5 +1,5 @@
 # Team HelloWorld!
-The codebase for the yet for Project 041 of Team HelloWorld.
+The codebase for Project 041 as implemented by Team HelloWorld.
 
 ## Team Members
 All the people working on this project:
