@@ -1,6 +1,10 @@
 # Team HelloWorld!
 The codebase for Project 041 as implemented by Team HelloWorld.
 
+### Display-Manager
+Benjamin has created the template for the display manager.
+Check out the readme at "./src/display-manager/README_KRISTIAN.md"
+
 ## Team Members
 All the people working on this project:
 * Benjamin Jorgensen
@@ -19,6 +23,7 @@ All the people working on this project:
 │   │   ├── client-side-prototype.png
 │   │   └── lo-fi paper.png
 │   ├── DOCS-display-manager
+│   │   ├── Display-manager-wireframe.pdf
 │   │   └── Front_End_Server_Display_Mockup.pdf
 │   ├── DOCS-server-side
 │   │   └── deleteMe.txt
@@ -26,20 +31,18 @@ All the people working on this project:
 └── src
     ├── client-side-UI
     │   └── template.txt
-    ├── display-manager
-    │   ├── images
-    │   │   ├── bird.jpg
-    │   │   ├── cat.jpg
-    │   │   ├── squirrel.jpg
-    │   │   └── zebra.jpg
-    │   ├── large-display.html
-    │   ├── script.js
-    │   └── style.css
-    └── server-side
-        └── template.txt
+    └── display-manager
+        ├── README_KRISTIAN.md
+        ├── index.html
+        ├── node_modules
+        ├── package-lock.json
+        ├── package.json
+        └── src
+            ├── App.css
+            ├── App.jsx
+            ├── index.css
+            └── main.jsx
 ```
 
 
-### Display-Manager
-Benjamin Jorgensen and Kristian Norved: aiming to complete some lo-fi ideation of the interface and function of the display manager.
 

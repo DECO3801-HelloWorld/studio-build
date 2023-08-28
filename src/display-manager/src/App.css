@@ -1,0 +1,6 @@
+/* styling for the application -- This file acually changes the webpage */
+#root {
+	margin: 0;
+	padding: 0;
+	height: 100vh;
+}
