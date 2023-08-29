@@ -8,7 +8,10 @@ import  ImgPod  from './Components/ImgPod.jsx'
 export default function App() {
 	return (
 		<>
-		<h1>hello_world</h1>
+		{/* Five zebra's because why not */}
+		<ImgPod/>
+		<ImgPod/>
+		<ImgPod/>
 		<ImgPod/>
 		</>
 	)
