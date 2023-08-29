@@ -1,0 +1,22 @@
+{
+	"orange": {
+		"--colour1": "#ffe040",
+		"--colour2": "#f69D05"
+	},
+	"blue": {
+		"--colour1": "#70f0f5",
+		"--colour2": "#479dfc"
+	},
+	"green": {
+		"--colour1": "#1aff69",
+		"--colour2": "#4ce62e"
+	},
+	"purple": {
+		"--colour1": "#ff00f7",
+		"--colour2": "#c44cf5"
+	},
+	"red": {
+		"--colour1": "#f54971",
+		"--colour2": "#ff0b03"
+	}
+}
