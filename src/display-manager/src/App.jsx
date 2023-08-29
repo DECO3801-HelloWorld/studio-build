@@ -14,9 +14,6 @@ export default function App() {
 		<>
 		{/* Five zebra's because why not */}
 		<ImgPod/>
-		<ImgPod/>
-		<ImgPod/>
-		<ImgPod/>
 		</>
 	)
 }

@@ -1,6 +1,11 @@
-/* styling for the application -- This file acually changes the webpage */
+/* styling for the application -- This file actually changes the web page */
 #root {
+	display: flex;
 	margin: 0;
 	padding: 0;
-	height: 100vh;
+	height: 99vh;
+	width: 99vw;
+	justify-content: center;
+	align-items: center;
+	outline: solid blue;
 }
