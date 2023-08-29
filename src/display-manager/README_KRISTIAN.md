@@ -11,6 +11,15 @@ npm run dev
 and opening the related ip in you're browser
 (Does any of this make sense? It's like 1:23am)
 
+Also if node is not installed on your machine you'll need to run the following commands
+```
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+nvm install latest
+cd {this directory}
+npm i
+```
+You might need to restart the shell after the first command
+
 ## Some things of note
 You are going to have to learn jsx to work on this project.
 A good YouTube video on the basics is here:
