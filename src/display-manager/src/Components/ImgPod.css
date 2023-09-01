@@ -1,27 +1,27 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
-
 /* Styling for the ImgPods */
 /* This is the basic gist of what I want to do with the containers
  * obviously we'll use javascript to customise the container data */
 
 /* Remove all prior styleing from this element */
-*{
-	margin: 0;
-	top: 0;
-	box-sizing: border-box;
-	font-family: 'Montserrat', sans-serif;
-	font-size: 20px;
-	--colour1: #ffe040;
-	--colour2: #f68d05;
-}
 
 /* The Element that's surrounding the entire image */
 .imgPod {
-	width: 400px;		/* Default dimentions, These will be altered by js when it comes time to implement the  */
-	height: 300px;
-	position: relative;
+	width: 50%;		
+	height: 50%;
+	position: absolute;
 	padding: 10px 12px 15px 12px;
+	animation: 0.5s pullup ease;
+	animation-iteration-count: 1;
 }
+
+@keyframes pullup {
+	0% {
+		top: 100%;
+		width: 1px;
+		height: 1px;
+	}
+}
+
 
 /* This is the funky gradient that is happening */
 /* Obtained code from https://dev.to/afif/border-with-gradient-and-radius-387f */
@@ -53,7 +53,7 @@
 /* Username belonging to each image */
 .user-name {
 	position: absolute; /* Want to fload in div */
-	top: -13px;			/* Position text in border */
+	top: -25px;			/* Position text in border */
 	margin-left: 30px;
 	background-color: white; /* Mask out the border */
 	padding: 0 8px;

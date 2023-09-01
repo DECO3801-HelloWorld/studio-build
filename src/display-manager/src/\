@@ -1,0 +1,9 @@
+import './SplashScreen.css'
+
+export default function SplashScreen() {
+	return (
+		<div id="splash-root">
+		<h1>hello!</h1>
+		</div>
+	)
+}

@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react'
 import ImgPod from './Components/ImgPod.jsx'
+import SplashScreen from './Components/SplashScreen.jsx'
 import colours from './Components/colours.json'
 
 //Importing all images - We will get these by web socket in future
@@ -47,12 +48,14 @@ const imgPodsTemplate = [imgPodData1, imgPodData2, imgPodData3, imgPodData4];
 //Just for testing, eventually will create a websocket to the node server
 connectToServer()
 
-/* This is where the application is rendered
-*/
+/* This is where the application is rendered */
 export default function App() {
+	//Controlling the state - If you need to change these variables
+	//Do so with the setX functions
 	const [images, setImages] = useState([]);
 	const [count, setCount] = useState(0);
 
+	/* Will add images to the webpage - call with user data as seen above */
 	function addImage(userData) {
 		setImages((currentImages) => {
 			return [
@@ -62,22 +65,36 @@ export default function App() {
 		})
 	}
 
+	/* Restart and clean slate */
+	function removeAllImages() {
+		setImages(() => {return []})
+	}
+
+	/* Binds [Space] and [Backspace] to add and remove images respectivly */
 	useEffect(() => {
 		const handleKeyPress = (event) => {
 			if (event.code == "Space") {
+				event.preventDefault(); //Stop normal space activity
+				addImage(imgPodsTemplate[count % 4]); //Add an image (this will be from websocket in future)
+				setCount(count + 1); //Remember how many images there are
+			}
+			if (event.code == "Backspace") {
 				event.preventDefault();
-				addImage(imgPodsTemplate[count % 4]);
-				setCount(count + 1);
+				removeAllImages();
+				setCount(0);
 			}
 		}
-		document.addEventListener('keypress', handleKeyPress)
-		return (() => {document.removeEventListener('keypress', handleKeyPress)})
+
+		document.addEventListener('keydown', handleKeyPress)
+		return (() => {document.removeEventListener('keydown', handleKeyPress)})
 	});
 
 	return (
 		<>
-		{images.length == 0 && <h1>Press [SPACE] to add image</h1>}
-		{images.map(vibe => { return <ImgPod key={vibe.id} data={vibe.data}/>})}
+		{/* Only show splash screen if no images*/}
+		<SplashScreen style={images.length ? {opacity : 0} : {opacity : 1}}/>
+		{/* Render however many images we have in the images array */}
+		{images.map(image => { return <ImgPod key={image.id} data={image.data}/>})}
 		</>
 	)
 }
