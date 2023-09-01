@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import {useState, useEffect} from 'react'
 import ImgPod from './Components/ImgPod.jsx'
 import colours from './Components/colours.json'
 
@@ -9,83 +9,75 @@ import bird from './images/bird.jpg'
 import nut from './images/squirrel.jpg'
 import { v4 as uuidv4 } from 'uuid';
 
-import connect_to_server from './Components/ServerConnect.jsx' //Not implemented
+import connectToServer from './Components/ServerConnect.jsx' //Not implemented
 
 //Application styling - ( ImgPod styling found at ./Components/ImgPod.css)
 import './App.css'
 
 /* Simulating user data received from websocket */
-const userData1 = {
+const imgPodData1 = {
 	userId: 1,
 	style: colours.red,
 	name: "Benjamin",
 	img: cat,
 }
 
-const userData2 = {
+const imgPodData2 = {
 	userId: 2,
 	style: colours.blue,
 	name: "Kristian",
 	img: zebra,
 }
 
-const userData3 = {
+const imgPodData3 = {
 	userId: 3,
 	style: colours.green,
 	name: "Tad",
 	img: bird,
 }
 
-const userData4 = {
+const imgPodData4 = {
 	userId: 4,
 	style: colours.purple,
 	name: "Benjamin Again",
 	img: nut,
 }
+const imgPodsTemplate = [imgPodData1, imgPodData2, imgPodData3, imgPodData4];
 
 //Just for testing, eventually will create a websocket to the node server
-connect_to_server()
-
+connectToServer()
 
 /* This is where the application is rendered
 */
 export default function App() {
-	const [ElmImgPod, setElmImgPod] = useState([]);
+	const [images, setImages] = useState([]);
 	const [count, setCount] = useState(0);
-	const users = [userData1, userData2, userData3, userData4];
 
-	useEffect(() => {
-		const handleKeyDown = (event) => {
-			if (event.code == "Space") {
-				create_element(users[count % 4]);
-			}
-		}
-		document.addEventListener('keydown', handleKeyDown);
-
-		return () => {
-			document.removeEventListener('keydown', handleKeyDown);
-		}
-	})
-
-
-	function create_element(user_data) {
-		setCount(count + 1);
-		setElmImgPod((currentImgPods) => {
+	function addImage(userData) {
+		setImages((currentImages) => {
 			return [
-				...currentImgPods,
-				{id: uuidv4(), data: user_data },
+				...currentImages,
+				{id: uuidv4(), data: userData },
 			]
 		})
 	}
 
+	useEffect(() => {
+		const handleKeyPress = (event) => {
+			if (event.code == "Space") {
+				event.preventDefault();
+				addImage(imgPodsTemplate[count % 4]);
+				setCount(count + 1);
+			}
+		}
+		document.addEventListener('keypress', handleKeyPress)
+		return (() => {document.removeEventListener('keypress', handleKeyPress)})
+	});
+
 	return (
 		<>
-		<h1>Press [SPACE] to add image</h1>
-		{ElmImgPod.map(vibe => {
-			return (
-				<ImgPod key={vibe.id} data={vibe.data}/>
-			)
-		})}
+		{images.length == 0 && <h1>Press [SPACE] to add image</h1>}
+		{images.map(vibe => { return <ImgPod key={vibe.id} data={vibe.data}/>})}
 		</>
 	)
 }
