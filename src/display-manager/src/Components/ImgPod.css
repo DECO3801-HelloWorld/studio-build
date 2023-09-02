@@ -1,0 +1,60 @@
+/* Styling for the ImgPods */
+/* This is the basic gist of what I want to do with the containers
+ * obviously we'll use javascript to customise the container data */
+
+/* Remove all prior styleing from this element */
+
+/* The Element that's surrounding the entire image */
+.imgPod {
+	position: relative;
+	padding: 10px 12px 15px 12px;
+	animation: 0.5s pullup ease;
+	animation-iteration-count: 1;
+	top: 0%;
+	height: 80%;
+}
+
+@keyframes pullup {
+	0% {
+		top: 100%;
+		scale: 0;
+	}
+}
+
+
+/* This is the funky gradient that is happening */
+/* Obtained code from https://dev.to/afif/border-with-gradient-and-radius-387f */
+.imgPod::before {
+  content: "";				/* No idea what this does */
+  position: absolute;
+  inset: 0;
+  border-radius: 20px / 20px; 
+  padding: 5px;				/* Padding is actually border-width for some ungodly reason */
+  background:linear-gradient(135deg, var(--colour1), var(--colour2)); 
+  -webkit-mask: 
+     linear-gradient(#fff 0 0) content-box, 
+     linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude; 
+}
+
+/* This is the actuall image. It's been placed in a div
+ * so that it is easily able to be scaled, transformed and altered by js */
+.img-content {
+	height: 100%;
+	width: 100%;
+	background-image: url('../images/cat.jpg');
+	object-fit: cover;
+	border-radius: 20px / 20px;
+}
+
+/* Username belonging to each image */
+.user-name {
+	position: absolute; /* Want to fload in div */
+	top: -25px;			/* Position text in border */
+	margin-left: 30px;
+	background-color: white; /* Mask out the border */
+	padding: 0 8px;
+	color: var(--colour2);
+	white-space: nowrap;
+}

@@ -1,0 +1,74 @@
+/* The Screen styling that is displayed when the system is idle */
+
+/* Root of the splash element */
+#splash-root {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	opacity: 1;
+	transition: opacity 0.2s;
+	outline: green solid;
+}
+
+/* Holds the words together */
+#title {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+/* Big glowey text in the center */
+.teamname {
+	font-size: 70px;
+	font-weight: 700;
+	background-image: linear-gradient(70deg, #ffe040, #ff8800, #ffe040);
+	background-size: 300%;
+	background-repeat: repeat;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent; 
+	-moz-background-clip: text;
+	background-clip: text;
+	-moz-text-fill-color: transparent;
+	animation: 30s grandientShift ease;
+	animation-direction: alternate;
+	animation-iteration-count: infinite;
+}
+
+/* Animation for HelloWorld */
+@keyframes grandientShift {
+	0% {
+		background-position: 0% 300%;
+	}
+	100% {
+		background-position: 300% 0%;
+	}
+}
+
+/* Subtext "Team" and "Presents" */
+.subheading {
+	color: #9f9f9f;
+	font-size: 45px;
+	font-weight: 400;
+}
+
+/* Team */
+.subheading:first-child {
+	right: 100px;
+	top: -105px;
+}
+
+/* Presents */
+.subheading:last-child {
+	left: 30px;
+	top: -10px;
+}
+
+/* all words in the title */
+#title h1 {
+	position: absolute;
+}
