@@ -13,6 +13,8 @@ TODO:
 * Splashscreen idle animation
 * Setup Script for testing
 
+# Please note that aesthetics are messed up at the moment. Will fix css in future
+
 ![Splash Screen Display Manager](./documentation/DOCS-display-manager/display-manager-splash.PNG)
 ![Example1](./documentation/DOCS-display-manager/example1.PNG)
 ![Example2](./documentation/DOCS-display-manager/example2.PNG)
