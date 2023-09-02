@@ -13,6 +13,10 @@ TODO:
 * Splashscreen idle animation
 * Setup Script for testing
 
+![./documentation/DOCS-display-manager/display-manager-splash.PNG](Splash Screen Display Manager)
+![./documentation/DOCS-display-manager/example1.PNG](Example1)
+![./documentation/DOCS-display-manager/example2.PNG](Example2)
+
 ## Team Members
 All the people working on this project:
 * Benjamin Jorgensen
