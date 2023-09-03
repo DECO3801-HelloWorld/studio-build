@@ -2,6 +2,9 @@ import { useRef } from 'react';
 import io from 'socket.io-client'
 import './App.css'
 
+//* WARNING -- This is no longer an accurate representation of the client application
+// 
+
 //Connect to server
 const socket = io.connect("http://localhost:3001");
 
