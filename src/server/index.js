@@ -38,7 +38,9 @@ io.on("connection", (socket) => {
 })
 
 // Ensure that the paths below match the client vite config "base" option.
+// Serve the client upload interface.
 app.use('/', express.static(path.join(__dirname, '../client-side/dist')));
+// Serve the display code.
 app.use('/display', express.static(path.join(__dirname, '../display-manager/dist')));
 
 server.listen(3001, () => {
