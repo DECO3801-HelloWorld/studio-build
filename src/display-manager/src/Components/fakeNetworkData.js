@@ -44,3 +44,11 @@ export const sampleImages = [
 		imgPath: img7
 	}
 ]
+
+/*
+	* > Be me
+	* > Buy wireless device
+	* > Open device
+	* > Look inside
+	* > Wires
+*/

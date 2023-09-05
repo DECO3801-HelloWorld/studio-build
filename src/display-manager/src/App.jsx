@@ -8,6 +8,7 @@ import io from 'socket.io-client'
 import ImgPod from './Components/ImgPod.jsx' //Images are rendered
 import SplashScreen from './Components/SplashScreen.jsx' //Title screen is rendered
 import * as ImageManager from './Components/ImageManager.jsx' //Image loading functionality
+import * as NetworkManager from './Components/NetworkManager.jsx'
 import './App.css'
 
 // Connect to the server - ready to receive images
@@ -29,24 +30,18 @@ export default function App() {
 
 	// Server-Listening  -  Run on every render update
 	useEffect(() => {
-
-		// if there is an image from the server
-		socket.on("download_img", (imgPacket) => {
-
-			// print out image info and add to image state
-			console.log(`Image received form ${imgPacket.userId} : ${imgPacket.imgName}`);
-			ImageManager.addImage(imgPacket);
-		})
+		//Start Listening for images
+		NetworkManager.listenForImage(socket, imageState);
 
 		// Unmount the listener for the download
 		return () => {
 			socket.off("download_img");
+			socket.off("connect_error");
 		}
-	}, []);
+	}, [socket]);
 
 	// Bind keys for easy layout testing
 	useEffect(() => {
-
 		// If key pressed
 		const handleKeyPress = (event) => {
 			switch (event.code) {

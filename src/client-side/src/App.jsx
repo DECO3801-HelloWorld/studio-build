@@ -30,7 +30,7 @@ export default function App() {
 	}
 		
 	// Call when the client would like to disconnect
-	NetworkManager.disconnectUser(socket);
+	//NetworkManager.disconnectUser(socket);
 
 
 	/* Entry Point of Program
