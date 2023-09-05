@@ -43,7 +43,6 @@
 .img-content {
 	height: 100%;
 	width: 100%;
-	background-image: url('../images/cat.jpg');
 	object-fit: cover;
 	border-radius: 20px / 20px;
 }
