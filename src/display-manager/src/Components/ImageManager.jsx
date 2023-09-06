@@ -32,7 +32,7 @@ import { sampleImages } from './fakeNetworkData.js';
 	*/
 const dict = new Object();
 
-export function addImage(imgPacket, { setImages }) {
+export function addImage(imgPacket, {setImages}) {
 	
 	//Append the colour to the image packet
 	if (dict.hasOwnProperty(imgPacket.userId)) {
@@ -90,7 +90,7 @@ export function removeUser(userId, {setImages}) {
 	*	setImages():
 	*		React hook that updates the images array.
 	*/
-export function removeAllImages({ setImages }) {
+export function removeAllImages({setImages}) {
 	setImages(() => {return []})
 }
 
