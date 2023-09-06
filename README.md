@@ -7,11 +7,11 @@ The codebase for Project 041 as implemented by Team HelloWorld.
 
 Here is a list for the network calls for the entire system. If the arrow is leading from the box, then it's an emit event. Otherwise it's a socket.on() event.
 
-#### "connect"
+## "connect"
 This is reserved event for when sockets connect to the server.
 For the server, listen to this and log result.
 
-#### "request_img_remove"
+## "request_img_remove"
 For client:
 
     When user wants to remove an image from the display, emit a packet of the form:
@@ -31,7 +31,7 @@ Listen to the "request_img_remove" event on the socket. When received create a p
     ```
 and emit on event "remove_img"
 
-#### "upload_img"
+## "upload_img"
 For client:
 
     When user wants to send an image to the display, emit the packet
@@ -58,7 +58,7 @@ const imgPacket = {
 ```
 and emit on "download_img" event
 
-#### "user_connect"
+## "user_connect"
 For server:
 
 Emit this event when there is a new IP connection to the network. It is important to note the distinction between network and client. Use the package
@@ -72,7 +72,7 @@ For display manager:
 
 Add The user-icon / token to the display
 
-#### "remove_user"
+## "remove_user"
 For server:
 
 Emit this event when there an IP connection is disconnected from the network. It is important to note the distinction between network and client. Use the package
@@ -86,7 +86,7 @@ For display manager:
 
 Remove the user icon and remove all images from the userId.
 
-#### "remove_img"
+## "remove_img"
 For Sever:
 
 Listen to the "request_img_remove" event on the socket. When received create a packet of the form:
@@ -101,7 +101,7 @@ For display manager:
 
 Remove the image corresponding to the imgId.
 
-#### "download_img"
+## "download_img"
 For Sever:
 
 Listen to the "upload_img" event on the socket. Verify the validity of the filetype.  Create a packet of the form:
@@ -120,7 +120,7 @@ For display manager:
 
 Render the image to the display
 
-#### Device connect
+## Device connect
 On a new IP connection to the network, the server should emit the event "user_connect" with the payload
 ```
 const data = {
