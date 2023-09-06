@@ -32,6 +32,9 @@ export default function App() {
 	useEffect(() => {
 		//Start Listening for images
 		NetworkManager.listenForImage(socket, imageState);
+		socket.on("connect_error", () => {
+			socket.disconnect();
+		});
 
 		// Unmount the listener for the download
 		return () => {

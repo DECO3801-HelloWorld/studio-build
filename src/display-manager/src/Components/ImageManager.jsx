@@ -30,11 +30,17 @@ import { sampleImages } from './fakeNetworkData.js';
 	*	setImages():
 	*		React hook that updates the images array.
 	*/
+const dict = new Object();
+
 export function addImage(imgPacket, { setImages }) {
 	
 	//Append the colour to the image packet
-	//TODO: Map the colours to the user
-	Object.assign(imgPacket, {style: colours[Math.floor(Math.random() * 5)]})
+	if (dict.hasOwnProperty(imgPacket.userId)) {
+		Object.assign(imgPacket, {style: dict[imgPacket.userId]})
+	} else {
+		dict[imgPacket.userId] = colours[Object.keys(dict).length % 5];
+		Object.assign(imgPacket, {style: dict[imgPacket.userId]});
+	}
 
 	//Update the image state array
 	//Current images as an argument so it doesn't overwrite itself
@@ -71,7 +77,7 @@ export function addTestImage({images, setImages}) {
 	*	setImages():
 	*		React hook that updates the images array.
 	*/
-export function removeUser(userId, { setImages }) {
+export function removeUser(userId, {setImages}) {
 	setImages((currentImages) => {
 		return currentImages.filter((image) => image.data.userId !== userId)
 	})
