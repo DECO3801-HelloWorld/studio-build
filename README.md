@@ -14,46 +14,46 @@ For the server, listen to this and log result.
 ## "request_img_remove"
 For client:
 
-    When user wants to remove an image from the display, emit a packet of the form:
-    ```
-    const imgPacket = {
-        userIP: {socket.handshake.address},
-        imgId: {Unique id for the image being sent | Int}
-    }
-    ```
-For Sever:
+When user wants to remove an image from the display, emit a packet of the form:
+```
+const imgPacket = {
+userIP: {socket.handshake.address},
+imgId: {Unique id for the image being sent | Int}
+}
+```
+For Server:
 
 Listen to the "request_img_remove" event on the socket. When received create a packet of the form:
-    ```
-    const imgPacket = {
-        imgId: {userIP + client-imgId}
-    }
-    ```
+```
+const imgPacket = {
+imgId: {userIP + client-imgId}
+}
+```
 and emit on event "remove_img"
 
 ## "upload_img"
 For client:
 
-    When user wants to send an image to the display, emit the packet
-    ```
-    const imgPacket = {
-        userIP: {socket.handshake.adress}
-        imgId: {image ID}
-        imgName: file.name
-        imgPayload: file,
-        imgType: file.type
-    }
-    ```
-For Sever:
+When user wants to send an image to the display, emit the packet
+```
+const imgPacket = {
+userIP: {socket.handshake.adress}
+imgId: {image ID}
+imgName: file.name
+imgPayload: file,
+imgType: file.type
+}
+```
+For Server:
 
 Listen to the "upload_img" event on the socket. Verify the validity of the filetype.  Create a packet of the form:
 ```
 const imgPacket = {
-    userId: userId \\integer associated with IP adress
-    imgId: {IP + image ID}
-    imgName: file.name
-    imgPayload: file,
-    imgType: file.type
+userId: userId \\integer associated with IP adress
+imgId: {IP + image ID}
+imgName: file.name
+imgPayload: file,
+imgType: file.type
 }
 ```
 and emit on "download_img" event
@@ -64,7 +64,7 @@ For server:
 Emit this event when there is a new IP connection to the network. It is important to note the distinction between network and client. Use the package
 ```
 const data = {
-    userId: userId
+userId: userId
 }
 ```
 
@@ -78,7 +78,7 @@ For server:
 Emit this event when there an IP connection is disconnected from the network. It is important to note the distinction between network and client. Use the package
 ```
 const data = {
-    userId: userId
+userId: userId
 }
 ```
 
@@ -87,14 +87,14 @@ For display manager:
 Remove the user icon and remove all images from the userId.
 
 ## "remove_img"
-For Sever:
+For Server:
 
 Listen to the "request_img_remove" event on the socket. When received create a packet of the form:
-    ```
-    const imgPacket = {
-        imgId: {userIP + client-imgId}
-    }
-    ```
+```
+const imgPacket = {
+imgId: {userIP + client-imgId}
+}
+```
 and emit on event "remove_img"
 
 For display manager:
@@ -102,16 +102,16 @@ For display manager:
 Remove the image corresponding to the imgId.
 
 ## "download_img"
-For Sever:
+For Server:
 
 Listen to the "upload_img" event on the socket. Verify the validity of the filetype.  Create a packet of the form:
 ```
 const imgPacket = {
-    userId: userId \\integer associated with IP adress
-    imgId: {IP + image ID}
-    imgName: file.name
-    imgPayload: file,
-    imgType: file.type
+userId: userId \\integer associated with IP adress
+imgId: {IP + image ID}
+imgName: file.name
+imgPayload: file,
+imgType: file.type
 }
 ```
 and emit on "download_img" event
@@ -124,7 +124,7 @@ Render the image to the display
 On a new IP connection to the network, the server should emit the event "user_connect" with the payload
 ```
 const data = {
-    userId: {userId}
+userId: {userId}
 }
 ```
 
@@ -134,7 +134,7 @@ Display manager features:
 * Backspace to clear images from screen
 * Slashscreen for when system idle
 
-TODO:
+    TODO:
 * Image Positioning system
 * Fancier animations
 * Splashscreen idle animation
