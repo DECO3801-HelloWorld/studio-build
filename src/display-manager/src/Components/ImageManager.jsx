@@ -64,8 +64,7 @@ export function addImage(imgPacket, { setImages }) {
 export function addTestImage({setImages}) {
 
 	//Copy image from the sample images
-	const image = {...sampleImages[sampleImageCount % sampleImages.length]};
-	sampleCount += 1;
+	const image = {...sampleImages[sampleImageCount++ % sampleImages.length]};
 	//Add this image
 	addImage(image, {setImages})
 }

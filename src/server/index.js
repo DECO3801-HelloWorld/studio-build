@@ -23,7 +23,7 @@ const io = new Server(server, {
 
 // When connected log the socketID
 io.on("connection", (socket) => {
-	console.log(`User connected: ${socket.id}`)
+	console.log(`User connected: ${socket.handshake.address}`)
 
 	// If we receive an image, send it to the display
 	socket.on("upload_img", (imgPacket) => {
