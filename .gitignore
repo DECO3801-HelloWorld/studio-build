@@ -30,3 +30,4 @@ dm*
 src/server/node_modules
 src/display-manager/node_modules
 src/client-side/node_modules
+node_modules
