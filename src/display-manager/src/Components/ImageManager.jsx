@@ -4,6 +4,7 @@
 import colours from './colours.json';
 import { v4 as uuidv4 } from 'uuid';
 import { sampleImages } from './fakeNetworkData.js';
+let sampleImageCount = 0;
 
 /* TODO:
 	* When images are added, map the userId to the correct colour, otherwise assign one
@@ -63,7 +64,7 @@ export function addImage(imgPacket, {setImages}) {
 export function addTestImage({images, setImages}) {
 
 	//Copy image from the sample images
-	const image = {...sampleImages[images.length % sampleImages.length]};
+	const image = {...sampleImages[sampleImageCount++ % sampleImages.length]};
 	//Add this image
 	addImage(image, {setImages})
 }
