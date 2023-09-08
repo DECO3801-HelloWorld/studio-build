@@ -52,6 +52,10 @@ export default function App() {
 					//Fake images from hard drive [NOT FROM NETWORK]
 					ImageManager.addTestImage(imageState);
 					break;
+				case "Digit1":
+					//Testing removing specific images
+					ImageManager.removeImage(1, imageState)
+					break;
 				default:
 					break;
 			}

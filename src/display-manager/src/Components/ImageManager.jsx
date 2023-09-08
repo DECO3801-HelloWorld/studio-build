@@ -5,6 +5,7 @@ import colours from './colours.json';
 import { v4 as uuidv4 } from 'uuid';
 import { sampleImages } from './fakeNetworkData.js';
 let sampleImageCount = 0;
+const dict = new Object();
 
 /* TODO:
 	* When images are added, map the userId to the correct colour, otherwise assign one
@@ -31,8 +32,6 @@ let sampleImageCount = 0;
 	*	setImages():
 	*		React hook that updates the images array.
 	*/
-const dict = new Object();
-
 export function addImage(imgPacket, {setImages}) {
 	
 	//Append the colour to the image packet
@@ -46,7 +45,8 @@ export function addImage(imgPacket, {setImages}) {
 	//Update the image state array
 	//Current images as an argument so it doesn't overwrite itself
 	setImages((currentImages) => {
-		return [ ...currentImages, {id: uuidv4(), data: imgPacket}, ]
+		console.log(imgPacket);
+		return [ ...currentImages, {id: imgPacket.imgId, data: imgPacket}, ]
 	})
 }
 
@@ -61,10 +61,13 @@ export function addImage(imgPacket, {setImages}) {
 	*	setImages():
 	*		React hook that updates the images array.
 	*/
-export function addTestImage({images, setImages}) {
+export function addTestImage({ setImages }) {
 
 	//Copy image from the sample images
 	const image = {...sampleImages[sampleImageCount++ % sampleImages.length]};
+
+	//Adds an image ID [Warning could pontentially conflict with network imgages]
+	image.imgId = sampleImageCount;
 	//Add this image
 	addImage(image, {setImages})
 }
@@ -81,6 +84,21 @@ export function addTestImage({images, setImages}) {
 export function removeUser(userId, {setImages}) {
 	setImages((currentImages) => {
 		return currentImages.filter((image) => image.data.userId !== userId)
+	})
+}
+
+/* removeImage()
+	* -------------------------------------------------------
+	*  Removes an image from the display with the given imgId
+	*
+	*   imgId:
+	*		The id of the image to be removed
+	*	setImages():
+	*		React hook that updates the images array.
+	*/
+export function removeImage(imgId, {setImages}) {
+	setImages((currentImages) => {
+		return currentImages.filter((image) => image.id !== imgId)
 	})
 }
 
