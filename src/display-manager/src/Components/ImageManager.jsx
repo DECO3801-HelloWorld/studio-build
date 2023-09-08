@@ -7,6 +7,11 @@ import { sampleImages } from './fakeNetworkData.js';
 let sampleImageCount = 0;
 const dict = new Object();
 
+const deathAnimation = {
+	animation: "0.5 death ease"
+}
+
+
 /* TODO:
 	* When images are added, map the userId to the correct colour, otherwise assign one
 	* Discuss the positioning algorithm at some point
@@ -32,21 +37,21 @@ const dict = new Object();
 	*	setImages():
 	*		React hook that updates the images array.
 	*/
-export function addImage(imgPacket, {setImages}) {
-	
+export function addImage(imgPacket, { setImages }) {
+	console.log(imgPacket.imgId);
+
 	//Append the colour to the image packet
 	if (dict.hasOwnProperty(imgPacket.userId)) {
-		Object.assign(imgPacket, {style: dict[imgPacket.userId]})
+		Object.assign(imgPacket, { style: dict[imgPacket.userId] })
 	} else {
 		dict[imgPacket.userId] = colours[Object.keys(dict).length % 5];
-		Object.assign(imgPacket, {style: dict[imgPacket.userId]});
+		Object.assign(imgPacket, { style: dict[imgPacket.userId] });
 	}
 
 	//Update the image state array
 	//Current images as an argument so it doesn't overwrite itself
 	setImages((currentImages) => {
-		console.log(imgPacket);
-		return [ ...currentImages, {id: imgPacket.imgId, data: imgPacket}, ]
+		return [...currentImages, { id: imgPacket.imgId, data: imgPacket },]
 	})
 }
 
@@ -64,12 +69,12 @@ export function addImage(imgPacket, {setImages}) {
 export function addTestImage({ setImages }) {
 
 	//Copy image from the sample images
-	const image = {...sampleImages[sampleImageCount++ % sampleImages.length]};
+	const image = { ...sampleImages[sampleImageCount++ % sampleImages.length] };
 
 	//Adds an image ID [Warning could pontentially conflict with network imgages]
 	image.imgId = sampleImageCount;
 	//Add this image
-	addImage(image, {setImages})
+	addImage(image, { setImages })
 }
 
 /* removeUser()
@@ -81,8 +86,15 @@ export function addTestImage({ setImages }) {
 	*	setImages():
 	*		React hook that updates the images array.
 	*/
-export function removeUser(userId, {setImages}) {
+export function removeUser(userId, { setImages }) {
+	//Run the death animation
 	setImages((currentImages) => {
+		//Run the death Animation
+		currentImages.map((image) => {
+			image.style = deathAnimation;
+			console.log("played animation")
+		})
+
 		return currentImages.filter((image) => image.data.userId !== userId)
 	})
 }
@@ -96,7 +108,8 @@ export function removeUser(userId, {setImages}) {
 	*	setImages():
 	*		React hook that updates the images array.
 	*/
-export function removeImage(imgId, {setImages}) {
+export function removeImage(imgId, { setImages }) {
+	console.log("clear image");
 	setImages((currentImages) => {
 		return currentImages.filter((image) => image.id !== imgId)
 	})
@@ -109,7 +122,25 @@ export function removeImage(imgId, {setImages}) {
 	*	setImages():
 	*		React hook that updates the images array.
 	*/
-export function removeAllImages({setImages}) {
-	setImages(() => {return []})
+export function removeAllImages({ images, setImages }) {
+	images.map(image => {
+		setTimeout(() => {
+			removeImage(image.id, {setImages});
+		}, 500);
+	});
+	playDeathAnimation({setImages});
 }
 
+function playDeathAnimation({setImages}) {
+	setImages((currentImages) => {
+		return currentImages.map((image) => {
+			let style = Object.assign({}, image.data.style);
+			Object.assign(style, { 
+				animation: "0.5s death ease", 
+				animationFillMode: "forwards",
+			});
+			image.data.style = style;
+			return image;
+		});
+	})
+}

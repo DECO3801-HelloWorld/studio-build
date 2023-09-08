@@ -8,16 +8,25 @@
 .imgPod {
 	position: relative;
 	padding: 10px 12px 15px 12px;
-	animation: 0.5s pullup ease;
+	animation: 0.5s birth ease 0s;
 	animation-iteration-count: 1;
+	animation-fill-mode: forward;
 	top: 0%;
 	height: 80%;
+	transition: 0.5s top;
 }
 
-@keyframes pullup {
+@keyframes birth {
 	0% {
 		top: 100%;
-		scale: 0;
+		transform: scale(0);
+	}
+}
+
+@keyframes death {
+	100% {
+		top: -100%;
+		transform: scale(0);
 	}
 }
 
