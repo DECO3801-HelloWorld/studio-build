@@ -32,11 +32,11 @@ export default function App() {
 	useEffect(() => {
 		//Start Listening for images
 		NetworkManager.listenForImage(socket, imageState);
+		NetworkManager.listenForImgRemove(socket, imageState);
 
 		// Unmount the listener for the download
 		return () => {
-			socket.off("download_img");
-			socket.off("connect_error");
+			NetworkManager.dismountListeners(socket);
 		}
 	}, [socket]);
 
@@ -55,6 +55,10 @@ export default function App() {
 				case "Digit1":
 					//Testing removing specific images
 					ImageManager.removeImage(1, imageState)
+					break;
+				case "Digit2":
+					//Testing removing specific images
+					ImageManager.removeUser(2, imageState);
 					break;
 				default:
 					break;
