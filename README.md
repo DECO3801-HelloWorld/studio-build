@@ -146,7 +146,7 @@ Display manager features:
 ![Example1](./documentation/DOCS-display-manager/example1.PNG)
 ![Example2](./documentation/DOCS-display-manager/example2.PNG)
 
-## Please find the client side UI prototypes here.
+## Link to Client Side UI prototypes
 https://www.figma.com/file/V7FGQ1mc1rS79A7kNoOWSB/Hello-World?type=design&node-id=0-1&mode=design&t=WQHavnsUmiNmRr49-0
 
 ## Team Members
