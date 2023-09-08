@@ -8,12 +8,16 @@
 .imgPod {
 	position: relative;
 	padding: 10px 12px 15px 12px;
-	animation: 0.5s birth ease 0s;
-	animation-iteration-count: 1;
-	animation-fill-mode: forward;
 	top: 0%;
 	height: 80%;
-	transition: 0.5s top;
+	opacity: 0;
+	transition: opacity;
+}
+
+.imgLoaded {
+	animation: 0.5s birth ease 0.3s;
+	animation-iteration-count: 1;
+	animation-fill-mode: forward;
 }
 
 @keyframes birth {
