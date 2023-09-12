@@ -35,6 +35,6 @@ io.on("connection", (socket) => {
 })
 
 
-server.listen(3001, () => {
+server.listen(5173, () => {
 	console.log("Server Started on port 3001")
 })
