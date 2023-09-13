@@ -7,7 +7,7 @@
 /* The Element that's surrounding the entire image */
 .imgPod {
 	position: relative;
-	padding: 10px 12px 15px 12px;
+	padding: 15px;
 	top: 0%;
 	height: 80%;
 	opacity: 0;
@@ -42,7 +42,7 @@
   position: absolute;
   inset: 0;
   border-radius: 20px / 20px; 
-  padding: 5px;				/* Padding is actually border-width for some ungodly reason */
+  padding: 8px;				/* Padding is actually border-width for some ungodly reason */
   background:linear-gradient(135deg, var(--colour1), var(--colour2)); 
   -webkit-mask: 
      linear-gradient(#fff 0 0) content-box, 
