@@ -4,11 +4,15 @@ import time
 import datetime
 
 from scapy.all import ARP, sniff
+from user_manager import UserManager
 
 connected_devices = {} # {ip:mac}
 
 # lock for connected_devices dict
 lock = threading.Lock()
+
+# User manager
+user_m = UserManager()
 
 def process_packet(packet):
     if ARP in packet and packet[ARP].op == 1: # ARP Request
@@ -17,6 +21,7 @@ def process_packet(packet):
 
         with lock: # Get lock
             if ip not in connected_devices:
+                user_m.add_user(mac, ip)
                 connected_devices[ip] = mac
                 print(f"New device connected:\nIP: {ip}\nTime: {datetime.datetime.now()}")
 
