@@ -27,15 +27,14 @@ export default function App() {
 	 * Do so with the setX functions */
 	const [images, setImages] = useState([]);
 	const imageState = {images, setImages};
+	const [users, setUsers] = useState([]);
+	const userState = {users, setUsers};
 
 	// Server-Listening  -  Run on every render update
 	useEffect(() => {
 		//Start Listening for images
 		NetworkManager.listenForImage(socket, imageState);
-<<<<<<< HEAD
-=======
 		NetworkManager.listenForImgRemove(socket, imageState);
->>>>>>> 4072a1646a62e0aaf997545847e56ba55e69fb06
 
 		// Unmount the listener for the download
 		return () => {
@@ -53,8 +52,7 @@ export default function App() {
 					break;
 				case ADD_SAMPLE_IMG_KEY:
 					//Fake images from hard drive [NOT FROM NETWORK]
-					ImageManager.addTestImage(imageState);
-					break;
+					ImageManager.addTestImage(imageState);					break;
 				case "Digit1":
 					//Testing removing specific images
 					ImageManager.removeImage(1, imageState)
@@ -80,6 +78,7 @@ export default function App() {
 		<SplashScreen style={images.length ? {opacity : 0} : {opacity : 1}}/>
 		{/* Render however many images we have in the images array */}
 		{images.map(image => {return <ImgPod key={image.id} data={image.data}/>})}
+		{users.map(user => {return <UserPod key={user.userId}></UserPod>})}
 		</>
 	)
 }
