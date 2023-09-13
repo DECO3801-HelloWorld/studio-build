@@ -43,6 +43,6 @@ app.use('/', express.static(path.join(__dirname, '../client-side/dist')));
 // Serve the display code.
 app.use('/display', express.static(path.join(__dirname, '../display-manager/dist')));
 
-server.listen(3001, () => {
-	console.log("The Node server is running on port 3001")
+server.listen(5173, () => {
+	console.log("Server Started on port 5173")
 })
