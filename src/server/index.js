@@ -5,6 +5,9 @@ import { Server } from 'socket.io'
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+//PORT NUM
+const port = process.env.PORT || 3001;
+
 // Create new server
 const app = express();
 app.use(cors());
@@ -43,6 +46,6 @@ app.use('/', express.static(path.join(__dirname, '../client-side/dist')));
 // Serve the display code.
 app.use('/display', express.static(path.join(__dirname, '../display-manager/dist')));
 
-server.listen(5173, () => {
-	console.log("Server Started on port 5173")
+server.listen(port, () => {
+	console.log("Server Started on port " + port)
 })

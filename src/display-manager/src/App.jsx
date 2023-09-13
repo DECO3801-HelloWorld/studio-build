@@ -11,8 +11,9 @@ import * as ImageManager from './Components/ImageManager.jsx' //Image loading fu
 import * as NetworkManager from './Components/NetworkManager.jsx'
 import './App.css'
 
+const port = process.env.PORT || 3001;
 // Connect to the server - ready to receive images
-const socket = io.connect("http://localhost:3001");
+const socket = io.connect("http://localhost:"+port);
 
 // Program constants
 const ADD_SAMPLE_IMG_KEY = "Space";
@@ -27,6 +28,9 @@ export default function App() {
 	 * Do so with the setX functions */
 	const [images, setImages] = useState([]);
 	const imageState = {images, setImages};
+
+	const [users, setUsers] = useState([]);
+	const userState = {users, setUsers}
 
 	// Server-Listening  -  Run on every render update
 	useEffect(() => {
@@ -76,7 +80,7 @@ export default function App() {
 		{/* Only show splash screen if no images*/}
 		<SplashScreen style={images.length ? {opacity : 0} : {opacity : 1}}/>
 		{/* Render however many images we have in the images array */}
-		{images.map(image => {return <ImgPod key={image.id} data={image.data}/>})}
+		{images.map(image => <ImgPod key={image.id} data={image.data}/>)}
 		</>
 	)
 }

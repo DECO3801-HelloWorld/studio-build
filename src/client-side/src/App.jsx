@@ -4,8 +4,8 @@ import * as NetworkManager from './Components/NetworkManager.jsx'
 import './App.css'
 
 //Server variables
-const serverPort = "5173"									//Might change in future
-const socket = io.connect("http://localhost:"+serverPort);  //Socket is connection to server
+const port = process.env.PORT || 3001;
+const socket = io.connect("http://localhost:"+port);  //Socket is connection to server
 
 //Testing Variables
 const userId = 1;				//Maybe grab this from server in future
