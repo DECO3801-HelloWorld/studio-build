@@ -6,6 +6,7 @@ import io from 'socket.io-client'
 
 // Importing Custom modules
 import ImgPod from './Components/ImgPod.jsx' //Images are rendered
+import UserPod from './Components/UserPod.jsx' //Images are rendered
 import SplashScreen from './Components/SplashScreen.jsx' //Title screen is rendered
 import * as ImageManager from './Components/ImageManager.jsx' //Image loading functionality
 import * as NetworkManager from './Components/NetworkManager.jsx'
@@ -83,6 +84,7 @@ export default function App() {
 		{/* Render however many images we have in the images array */}
 		{images.map(image => {return <ImgPod key={image.id} data={image.data}/>})}
 		{users.map(user => {return <UserPod key={user.userId}></UserPod>})}
+		<UserPod data={{color: "blue"}}/>
 		</>
 	)
 }
