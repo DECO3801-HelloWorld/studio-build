@@ -1,4 +1,3 @@
-import numpy
 import json
 
 class UserManager:
