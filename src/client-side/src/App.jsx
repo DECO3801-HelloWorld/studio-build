@@ -59,9 +59,11 @@ export default function App() {
 	
 	function print(){
 		{imageURL.map(imageURL =>{
-			console.log(imageURL.name)
+			console.log(socket)
 		})}
 	}
+
+	
 
 		
 	// Call when the client would like to disconnect
@@ -77,29 +79,34 @@ export default function App() {
 	*/
 	return (
 		<>
+		
 		{/*Upload button*/}
-		
-		<form>
-		
-		{/*data:image/"+data.imgType+";base64,"+base64String */}
-		
-		
-		</form>
-		<label htmlFor="imgUpload" > Upload Image here </label>
-		<input type="file" ref={fileUploadButton} onChange={uploadFile}  id="imgUpload"/> 
+		<div className="wapper">
+		<div className='header'>
+			<div className='headerText'>MagicShare</div>
+		</div>
+		<div className='text'> TEST </div>
+
 		{imageURL.map(imageURL =>{
 			return( 
-			<label htmlFor='image'  key={imageURL.id} >
-				<img src ={imageURL.URLs} alt ="Woops"/>
-			</label>
+				<div className='box ' key={imageURL.id}>
+					<img  src ={imageURL.URLs} alt ="Woops" />
+					</div>
 			);
 		})}
+		
+		<div className='button'>
+		<label htmlFor="imgUpload" > Upload Image here </label>
+		<input type="file" ref={fileUploadButton} onChange={uploadFile}  id="imgUpload"/> 
+		
 		<label 
 		htmlFor='Disconnect'
 		onClick={() => NetworkManager.disconnectUser(socket)}>
 		
 			Disconnect</label>
 		<label onClick={print}>printing</label>
+		</div>
+		</div>
 		</>
 	)
 }
