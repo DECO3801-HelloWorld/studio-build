@@ -22,6 +22,14 @@ export function listenForImage(socket, imageState) {
 	})
 }
 
+//Stub for user data
+export function listenForUserConnect(socket, userState) {
+	socket.on("user_connect"), (data) => {
+		console.log("connected user")
+		console.log(data)
+	}
+}
+
 /* listenForImgRemove()
 	* -------------------------------------------------------
 	*  Listens to the remove image event from the socket and
