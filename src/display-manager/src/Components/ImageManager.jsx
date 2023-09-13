@@ -92,18 +92,7 @@ export function addUserIcon({ setUsers }) {
 	*	setImages():
 	*		React hook that updates the images array.
 	*/
-<<<<<<< HEAD
 export function removeUser(userId, { images, setImages }) {
-	console.log("HIT")
-=======
-export function removeUser(userId, { setImages }) {
-	//Remove from the list of connected users
-	const index = connected.indexOf(userId);
-	if (index > -1) { //Only splice array when item is found
-  		array.splice(index, 1); //Second parameter means remove one item only
-	}
-	
->>>>>>> f6f2660d3c5c9b290bdaf675d487cf26820b41b8
 	//Run the death animation
 	images.map((image) => {
 		if (image.data.userId == userId) {
