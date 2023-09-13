@@ -54,21 +54,11 @@ export default function App() {
 		
 	}
 
-	
-	
-	
 	function print(){
 		{imageURL.map(imageURL =>{
 			console.log(socket)
 		})}
 	}
-
-	
-
-		
-	// Call when the client would like to disconnect
-	{/*NetworkManager.disconnectUser(socket);*/}
-
 
 	/* Entry Point of Program
 	* ---------------------------------------------
