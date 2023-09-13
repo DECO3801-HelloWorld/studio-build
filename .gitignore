@@ -25,3 +25,4 @@ replay_pid*
 
 #symlinks
 dm*
+node_modules
