@@ -4,6 +4,13 @@
 import colours from './colours.json';
 import { v4 as uuidv4 } from 'uuid';
 import { sampleImages } from './fakeNetworkData.js';
+let sampleImageCount = 0;
+const dict = new Object();
+
+const deathAnimation = {
+	animation: "0.5 death ease"
+}
+
 
 /* TODO:
 	* When images are added, map the userId to the correct colour, otherwise assign one
@@ -30,22 +37,21 @@ import { sampleImages } from './fakeNetworkData.js';
 	*	setImages():
 	*		React hook that updates the images array.
 	*/
-const dict = new Object();
+export function addImage(imgPacket, { setImages }) {
+	console.log(imgPacket.imgId);
 
-export function addImage(imgPacket, {setImages}) {
-	
 	//Append the colour to the image packet
 	if (dict.hasOwnProperty(imgPacket.userId)) {
-		Object.assign(imgPacket, {style: dict[imgPacket.userId]})
+		Object.assign(imgPacket, { style: dict[imgPacket.userId] })
 	} else {
 		dict[imgPacket.userId] = colours[Object.keys(dict).length % 5];
-		Object.assign(imgPacket, {style: dict[imgPacket.userId]});
+		Object.assign(imgPacket, { style: dict[imgPacket.userId] });
 	}
 
 	//Update the image state array
 	//Current images as an argument so it doesn't overwrite itself
 	setImages((currentImages) => {
-		return [ ...currentImages, {id: uuidv4(), data: imgPacket}, ]
+		return [...currentImages, { id: imgPacket.imgId, data: imgPacket },]
 	})
 }
 
@@ -60,12 +66,15 @@ export function addImage(imgPacket, {setImages}) {
 	*	setImages():
 	*		React hook that updates the images array.
 	*/
-export function addTestImage({images, setImages}) {
+export function addTestImage({ setImages }) {
 
 	//Copy image from the sample images
-	const image = {...sampleImages[images.length % sampleImages.length]};
+	const image = { ...sampleImages[sampleImageCount++ % sampleImages.length] };
+
+	//Adds an image ID [Warning could pontentially conflict with network imgages]
+	image.imgId = sampleImageCount;
 	//Add this image
-	addImage(image, {setImages})
+	addImage(image, { setImages })
 }
 
 /* removeUser()
@@ -77,9 +86,32 @@ export function addTestImage({images, setImages}) {
 	*	setImages():
 	*		React hook that updates the images array.
 	*/
-export function removeUser(userId, {setImages}) {
+export function removeUser(userId, { setImages }) {
+	//Run the death animation
 	setImages((currentImages) => {
+		//Run the death Animation
+		currentImages.map((image) => {
+			image.style = deathAnimation;
+			console.log("played animation")
+		})
+
 		return currentImages.filter((image) => image.data.userId !== userId)
+	})
+}
+
+/* removeImage()
+	* -------------------------------------------------------
+	*  Removes an image from the display with the given imgId
+	*
+	*   imgId:
+	*		The id of the image to be removed
+	*	setImages():
+	*		React hook that updates the images array.
+	*/
+export function removeImage(imgId, { setImages }) {
+	console.log("clear image");
+	setImages((currentImages) => {
+		return currentImages.filter((image) => image.id !== imgId)
 	})
 }
 
@@ -90,7 +122,25 @@ export function removeUser(userId, {setImages}) {
 	*	setImages():
 	*		React hook that updates the images array.
 	*/
-export function removeAllImages({setImages}) {
-	setImages(() => {return []})
+export function removeAllImages({ images, setImages }) {
+	images.map(image => {
+		setTimeout(() => {
+			removeImage(image.id, {setImages});
+		}, 500);
+	});
+	playDeathAnimation({setImages});
 }
 
+function playDeathAnimation({setImages}) {
+	setImages((currentImages) => {
+		return currentImages.map((image) => {
+			let style = Object.assign({}, image.data.style);
+			Object.assign(style, { 
+				animation: "0.5s death ease", 
+				animationFillMode: "forwards",
+			});
+			image.data.style = style;
+			return image;
+		});
+	})
+}
