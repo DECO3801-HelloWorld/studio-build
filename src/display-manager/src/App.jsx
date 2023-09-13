@@ -30,6 +30,11 @@ export default function App() {
 	 * Do so with the setX functions */
 	const [images, setImages] = useState([]);
 	const imageState = {images, setImages};
+<<<<<<< HEAD
+=======
+	const [users, setUsers] = useState([]);
+	const userState = {users, setUsers}
+>>>>>>> f6f2660d3c5c9b290bdaf675d487cf26820b41b8
 
 	// Server-Listening  -  Run on every render update
 	useEffect(() => {
@@ -53,7 +58,7 @@ export default function App() {
 					break;
 				case ADD_SAMPLE_IMG_KEY:
 					//Fake images from hard drive [NOT FROM NETWORK]
-					ImageManager.addTestImage(imageState);
+					ImageManager.addTestImage(imageState);					
 					break;
 				case "Digit1":
 					//Testing removing specific images
@@ -79,7 +84,8 @@ export default function App() {
 		{/* Only show splash screen if no images*/}
 		<SplashScreen style={images.length ? {opacity : 0} : {opacity : 1}}/>
 		{/* Render however many images we have in the images array */}
-		{images.map(image => <ImgPod key={image.id} data={image.data}/>)}
+		{images.map(image => {return <ImgPod key={image.id} data={image.data}/>})}
+		{users.map(user => {return <UserPod key={user.userId}></UserPod>})}
 		</>
 	)
 }

@@ -5,7 +5,8 @@ import colours from './colours.json';
 import { sampleImages } from './fakeNetworkData.js';
 let sampleImageCount = 0;
 const dict = new Object();
-
+const connected = [];
+const icons = [];
 const deathAnimation = {
 	animation: "0.5s death ease", 
 	animationFillMode: "forwards",
@@ -75,6 +76,13 @@ export function addTestImage({ setImages }) {
 	addImage(image, { setImages })
 }
 
+
+export function addUserIcon({ setUsers }) {
+	setUsers((currentUsers) => {
+		return [...currentUsers, {data: imgPacket}]
+	})
+}
+
 /* removeUser()
 	* -------------------------------------------------------
 	*  Removes all images belonging to a certain userId from the display.
@@ -84,8 +92,18 @@ export function addTestImage({ setImages }) {
 	*	setImages():
 	*		React hook that updates the images array.
 	*/
+<<<<<<< HEAD
 export function removeUser(userId, { images, setImages }) {
 	console.log("HIT")
+=======
+export function removeUser(userId, { setImages }) {
+	//Remove from the list of connected users
+	const index = connected.indexOf(userId);
+	if (index > -1) { //Only splice array when item is found
+  		array.splice(index, 1); //Second parameter means remove one item only
+	}
+	
+>>>>>>> f6f2660d3c5c9b290bdaf675d487cf26820b41b8
 	//Run the death animation
 	images.map((image) => {
 		if (image.data.userId == userId) {
