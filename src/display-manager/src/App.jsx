@@ -30,11 +30,8 @@ export default function App() {
 	 * Do so with the setX functions */
 	const [images, setImages] = useState([]);
 	const imageState = {images, setImages};
-<<<<<<< HEAD
-=======
 	const [users, setUsers] = useState([]);
 	const userState = {users, setUsers}
->>>>>>> f6f2660d3c5c9b290bdaf675d487cf26820b41b8
 
 	// Server-Listening  -  Run on every render update
 	useEffect(() => {
