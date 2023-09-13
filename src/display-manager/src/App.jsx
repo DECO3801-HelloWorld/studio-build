@@ -11,7 +11,9 @@ import * as ImageManager from './Components/ImageManager.jsx' //Image loading fu
 import * as NetworkManager from './Components/NetworkManager.jsx'
 import './App.css'
 
-const port = process.env.PORT || 3001;
+//Dumb
+const port = (typeof process !== 'undefined') ? (process.env.PORT || 3001) : 3001;
+
 // Connect to the server - ready to receive images
 const socket = io.connect("http://localhost:"+port);
 
@@ -28,9 +30,6 @@ export default function App() {
 	 * Do so with the setX functions */
 	const [images, setImages] = useState([]);
 	const imageState = {images, setImages};
-
-	const [users, setUsers] = useState([]);
-	const userState = {users, setUsers}
 
 	// Server-Listening  -  Run on every render update
 	useEffect(() => {

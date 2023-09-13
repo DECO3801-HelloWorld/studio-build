@@ -14,14 +14,12 @@ export default function ImgPod({ data }) {
 
 	const img = useRef(null);
 	function birthAnimation() {
-		console.log(img.current.offsetParent.style)
 		Object.assign(img.current.offsetParent.style, {
 			animation: "0.5s birth ease 0s",
 			animationIterationCount: "1",
 			animationFillMode: "forward",
 			opacity: "1"
 		})
-		console.log("opacity assigned")
 	}
 
 

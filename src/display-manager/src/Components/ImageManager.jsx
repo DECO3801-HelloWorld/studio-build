@@ -2,13 +2,13 @@
 /* Manages adding removing and creating images */
 
 import colours from './colours.json';
-import { v4 as uuidv4 } from 'uuid';
 import { sampleImages } from './fakeNetworkData.js';
 let sampleImageCount = 0;
 const dict = new Object();
 
 const deathAnimation = {
-	animation: "0.5 death ease"
+	animation: "0.5s death ease", 
+	animationFillMode: "forwards",
 }
 
 
@@ -38,8 +38,6 @@ const deathAnimation = {
 	*		React hook that updates the images array.
 	*/
 export function addImage(imgPacket, { setImages }) {
-	console.log(imgPacket.imgId);
-
 	//Append the colour to the image packet
 	if (dict.hasOwnProperty(imgPacket.userId)) {
 		Object.assign(imgPacket, { style: dict[imgPacket.userId] })
@@ -86,61 +84,58 @@ export function addTestImage({ setImages }) {
 	*	setImages():
 	*		React hook that updates the images array.
 	*/
-export function removeUser(userId, { setImages }) {
+export function removeUser(userId, { images, setImages }) {
+	console.log("HIT")
 	//Run the death animation
-	setImages((currentImages) => {
-		//Run the death Animation
-		currentImages.map((image) => {
-			image.style = deathAnimation;
-			console.log("played animation")
-		})
-
-		return currentImages.filter((image) => image.data.userId !== userId)
+	images.map((image) => {
+		if (image.data.userId == userId) {
+			removeImage(image.id, { setImages });
+		}
 	})
 }
 
 /* removeImage()
-	* -------------------------------------------------------
-	*  Removes an image from the display with the given imgId
-	*
-	*   imgId:
-	*		The id of the image to be removed
-	*	setImages():
-	*		React hook that updates the images array.
-	*/
+* -------------------------------------------------------
+*  Removes an image from the display with the given imgId
+*
+*   imgId:
+*		The id of the image to be removed
+*	setImages():
+*		React hook that updates the images array.
+*/
 export function removeImage(imgId, { setImages }) {
-	console.log("clear image");
 	setImages((currentImages) => {
-		return currentImages.filter((image) => image.id !== imgId)
+		return currentImages.map((image) => {
+			if (image.id == imgId) {
+				return applyDeathAnimation(image);
+			}
+			return image;
+		})
 	})
+	setTimeout(() => {
+		setImages((currentImages) => {
+			return currentImages.filter((image) => image.id !== imgId)
+		})
+	}, 500);
+
 }
 
 /* removeUser()
-	* -------------------------------------------------------
-	*  Removes all images from the display
-	*
-	*	setImages():
-	*		React hook that updates the images array.
-	*/
+* -------------------------------------------------------
+*  Removes all images from the display
+*
+*	setImages():
+*		React hook that updates the images array.
+*/
 export function removeAllImages({ images, setImages }) {
 	images.map(image => {
-		setTimeout(() => {
-			removeImage(image.id, {setImages});
-		}, 500);
+		removeImage(image.id, {setImages});
 	});
-	playDeathAnimation({setImages});
 }
 
-function playDeathAnimation({setImages}) {
-	setImages((currentImages) => {
-		return currentImages.map((image) => {
-			let style = Object.assign({}, image.data.style);
-			Object.assign(style, { 
-				animation: "0.5s death ease", 
-				animationFillMode: "forwards",
-			});
-			image.data.style = style;
-			return image;
-		});
-	})
+function applyDeathAnimation(image) {
+	let style = Object.assign({}, image.data.style);
+	Object.assign(style, deathAnimation)
+	image.data.style = style;
+	return image;
 }
