@@ -6,13 +6,17 @@ import io from 'socket.io-client'
 
 // Importing Custom modules
 import ImgPod from './Components/ImgPod.jsx' //Images are rendered
+import UserPod from './Components/UserPod.jsx' //Images are rendered
 import SplashScreen from './Components/SplashScreen.jsx' //Title screen is rendered
 import * as ImageManager from './Components/ImageManager.jsx' //Image loading functionality
 import * as NetworkManager from './Components/NetworkManager.jsx'
 import './App.css'
 
+//Dumb
+const port = (typeof process !== 'undefined') ? (process.env.PORT || 3001) : 3001;
+
 // Connect to the server - ready to receive images
-const socket = io.connect("http://localhost:3001");
+const socket = io.connect("http://localhost:"+port);
 
 // Program constants
 const ADD_SAMPLE_IMG_KEY = "Space";
@@ -27,12 +31,16 @@ export default function App() {
 	 * Do so with the setX functions */
 	const [images, setImages] = useState([]);
 	const imageState = {images, setImages};
+	const [users, setUsers] = useState([]);
+	const userState = {users, setUsers}
 
 	// Server-Listening  -  Run on every render update
 	useEffect(() => {
 		//Start Listening for images
 		NetworkManager.listenForImage(socket, imageState);
 		NetworkManager.listenForImgRemove(socket, imageState);
+		NetworkManager.listenForUserConnect(socket, userState);
+		NetworkManager.listenForRemoveUser(socket, imageState, userState);
 
 		// Unmount the listener for the download
 		return () => {
@@ -50,7 +58,7 @@ export default function App() {
 					break;
 				case ADD_SAMPLE_IMG_KEY:
 					//Fake images from hard drive [NOT FROM NETWORK]
-					ImageManager.addTestImage(imageState);
+					ImageManager.addTestImage(imageState);					
 					break;
 				case "Digit1":
 					//Testing removing specific images
@@ -77,6 +85,7 @@ export default function App() {
 		<SplashScreen style={images.length ? {opacity : 0} : {opacity : 1}}/>
 		{/* Render however many images we have in the images array */}
 		{images.map(image => {return <ImgPod key={image.id} data={image.data}/>})}
+		{users.map(user => {return <UserPod key={user.userId}></UserPod>})}
 		</>
 	)
 }
