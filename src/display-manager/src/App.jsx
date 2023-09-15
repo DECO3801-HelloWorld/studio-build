@@ -39,6 +39,8 @@ export default function App() {
 		//Start Listening for images
 		NetworkManager.listenForImage(socket, imageState);
 		NetworkManager.listenForImgRemove(socket, imageState);
+		NetworkManager.listenForUserConnect(socket, userState);
+		NetworkManager.listenForRemoveUser(socket, imageState, userState);
 
 		// Unmount the listener for the download
 		return () => {
@@ -84,7 +86,6 @@ export default function App() {
 		{/* Render however many images we have in the images array */}
 		{images.map(image => {return <ImgPod key={image.id} data={image.data}/>})}
 		{users.map(user => {return <UserPod key={user.userId}></UserPod>})}
-		<UserPod data={{color: "blue"}}/>
 		</>
 	)
 }

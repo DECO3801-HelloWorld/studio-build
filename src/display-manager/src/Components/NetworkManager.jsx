@@ -27,6 +27,7 @@ export function listenForUserConnect(socket, userState) {
 	socket.on("user_connect"), (data) => {
 		console.log("connected user")
 		console.log(data)
+		ImageManager.addUserIcon(userState);
 	}
 }
 
@@ -61,7 +62,7 @@ export function listenForImgRemove(socket, imageState) {
 	*	imageState:
 	*		{images, setImage} the state of images on the display
 	*/
-export function listenForRemoveUser(socket, imageState) {
+export function listenForRemoveUser(socket, imageState, userState) {
 	socket.on("remove_user", ({ userId }) => {
 		console.log(`Removing all images belonging to user: ${userId}`);
 		ImageManager.removeUser(userId, imageState);

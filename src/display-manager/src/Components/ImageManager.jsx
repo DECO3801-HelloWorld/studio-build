@@ -76,8 +76,8 @@ export function addTestImage({ setImages }) {
 	addImage(image, { setImages })
 }
 
-
 export function addUserIcon({ setUsers }) {
+	console.log("addUser works!")
 	setUsers((currentUsers) => {
 		return [...currentUsers, {data: imgPacket}]
 	})
