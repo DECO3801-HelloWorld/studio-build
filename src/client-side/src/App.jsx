@@ -4,7 +4,7 @@ import * as NetworkManager from "./Components/NetworkManager.jsx";
 import "./App.css";
 
 //Server variables
-const port = process.env.PORT || 3001;
+const port = (typeof process !== 'undefined') ? (process.env.PORT || 3001) : 3001;
 const socket = io.connect("http://localhost:"+port);  //Socket is connection to server
 
 //Testing Variables
