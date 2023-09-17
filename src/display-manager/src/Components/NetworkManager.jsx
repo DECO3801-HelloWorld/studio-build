@@ -24,7 +24,6 @@ export function listenForImage(socket, imageState) {
 
 //Stub for user data
 export function listenForUserConnect(socket, userState) {
-	console.log("Setting up user_connect event.");
 	socket.on("user_connect"), () => {
 		const userId = 0;
 		try {

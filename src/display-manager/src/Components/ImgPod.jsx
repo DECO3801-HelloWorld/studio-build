@@ -24,9 +24,13 @@ export default function ImgPod({ data }) {
 		})
 	}
 
+	//This is fucked but lets just ignore it for now
+	let style = Object.assign({}, data.style);
+	Object.assign(style, data.moving);
+
 
 	return (
-		<div className="imgPod" style={data.style}>
+		<div className="imgPod" style={style}>
 			<p className="user-name" style={data.style}> {data.userName} </p>
 			<img src={src} ref={img} className="img-content" onLoad={birthAnimation} alt={data.imgName}/>
 		</div>

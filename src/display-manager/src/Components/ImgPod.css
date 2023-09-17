@@ -5,13 +5,13 @@
 
 /* The Element that's surrounding the entire image */
 .imgPod {
-	position: relative;
+	position: absolute;
 	box-sizing: border-box;
 	padding: 15px;
 	top: 0%;
 	height: 100%;
 	opacity: 0;
-	transition: opacity;
+	transition: 1s height, 1s width;
 }
 
 .imgLoaded {

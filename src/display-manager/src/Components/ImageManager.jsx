@@ -5,13 +5,10 @@ import colours from './colours.json';
 import { sampleImages } from './fakeNetworkData.js';
 let sampleImageCount = 0;
 const dict = new Object();
-const connected = [];
-const icons = [];
 const deathAnimation = {
 	animation: "0.5s death ease", 
 	animationFillMode: "forwards",
 }
-
 
 /* TODO:
 	* When images are added, map the userId to the correct colour, otherwise assign one
@@ -40,7 +37,7 @@ const deathAnimation = {
 	*/
 export function addImage(imgPacket, { setImages }) {
 	//Append the colour to the image packet
-	if (dict.hasOwnProperty(imgPacket.userId)) {
+	if (Object.prototype.hasOwnProperty.call(dict, imgPacket.userId)) {
 		Object.assign(imgPacket, { style: dict[imgPacket.userId] })
 	} else {
 		dict[imgPacket.userId] = colours[Object.keys(dict).length % 5];

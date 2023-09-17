@@ -1,7 +1,7 @@
 /* App.jsx - Display Manager */
 
 // Import npm modules
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useLayoutEffect} from 'react'
 import io from 'socket.io-client'
 
 // Importing Custom modules
@@ -30,23 +30,51 @@ export default function App() {
 	/*Controlling the state - If you need to change these variables
 	 * Do so with the setX functions */
 	const [images, setImages] = useState([]);
-	const imageState = {images, setImages};
 	const [users, setUsers] = useState([]);
-	const userState = {users, setUsers}
 
 	// Server-Listening  -  Run on every render update
 	useEffect(() => {
 		//Start Listening for images
-		NetworkManager.listenForImage(socket, imageState);
-		NetworkManager.listenForImgRemove(socket, imageState);
-		NetworkManager.listenForUserConnect(socket, userState);
-		NetworkManager.listenForRemoveUser(socket, imageState, userState);
+		NetworkManager.listenForImage(socket, { images, setImages });
+		NetworkManager.listenForImgRemove(socket, { images, setImages });
+		NetworkManager.listenForUserConnect(socket, { users, setUsers });
+		NetworkManager.listenForRemoveUser(socket, { images, setImages }, { users, setUsers });
 
 		// Unmount the listener for the download
 		return () => {
 			NetworkManager.dismountListeners(socket);
 		}
-	}, [socket]);
+	}, [images, users]);
+
+	//Ignore all this jazz
+	//useLayoutEffect(() => {
+	//	//track the position of all images
+	//	const elementList = [...document.getElementsByClassName("imgPod")];
+	//	let boundingList = [];
+
+	//	elementList.map(image => {
+	//		const imageBounds = image.getBoundingClientRect();
+	//		const area = imageBounds.height * imageBounds.width
+	//		boundingList.push(area);
+	//	})
+
+	//	//Might need to add average function
+	//	if (boundingList.length === 0) {
+	//		return; // You can choose to return NaN, undefined, or any other value if you prefer
+	//	}
+	//	// Calculate the sum of all elements in the array
+	//	const sum = boundingList.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  
+	//	// Divide the sum by the number of elements in the array to find the average
+	//	const average = sum / boundingList.length;
+
+
+	//	console.log(boundingList)
+	//	console.log("Average area: " + average)
+
+	//	console.log(images);
+
+	//},[images])
 
 	// Bind keys for easy layout testing
 	useEffect(() => {
@@ -54,19 +82,19 @@ export default function App() {
 		const handleKeyPress = (event) => {
 			switch (event.code) {
 				case REMOVE_ALL_IMG_KEY:
-					ImageManager.removeAllImages(imageState);
+					ImageManager.removeAllImages({ images, setImages });
 					break;
 				case ADD_SAMPLE_IMG_KEY:
 					//Fake images from hard drive [NOT FROM NETWORK]
-					ImageManager.addTestImage(imageState);					
+					ImageManager.addTestImage({ images, setImages });					
 					break;
 				case "Digit1":
 					//Testing removing specific images
-					ImageManager.removeImage(1, imageState)
+					ImageManager.removeImage(1, { images, setImages })
 					break;
 				case "Digit2":
 					//Testing removing specific images
-					ImageManager.removeUser(2, imageState);
+					ImageManager.removeUser(2, { images, setImages });
 					break;
 				default:
 					break;
