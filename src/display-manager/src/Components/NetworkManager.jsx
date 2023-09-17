@@ -24,10 +24,18 @@ export function listenForImage(socket, imageState) {
 
 //Stub for user data
 export function listenForUserConnect(socket, userState) {
-	socket.on("user_connect"), (data) => {
-		console.log("connected user")
-		console.log(data)
-		ImageManager.addUserIcon(userState);
+	console.log("Setting up user_connect event.");
+	socket.on("user_connect"), () => {
+		const userId = 0;
+		try {
+			console.log("connected user")
+			console.log(userId)
+			ImageManager.addUserIcon(userId.useId, userState);
+		} catch (error) {
+			console.log(error);
+			console.log("Failed in listenForUserConnect()");
+
+		}
 	}
 }
 
@@ -81,6 +89,8 @@ export function listenForRemoveUser(socket, imageState, userState) {
 	*/
 export function dismountListeners(socket) {
 	socket.off("download_img");
+	socket.off("remove_user");
+	socket.off("user_connect");
 	socket.off("connect_error");
 	socket.off("remove_img");
 }

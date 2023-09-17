@@ -76,11 +76,9 @@ export function addTestImage({ setImages }) {
 	addImage(image, { setImages })
 }
 
-export function addUserIcon({ setUsers }) {
+export function addUserIcon(userId, { users, setUsers }) {
 	console.log("addUser works!")
-	setUsers((currentUsers) => {
-		return [...currentUsers, {data: imgPacket}]
-	})
+	setUsers((currentUsers) => [...currentUsers, userId])
 }
 
 /* removeUser()
