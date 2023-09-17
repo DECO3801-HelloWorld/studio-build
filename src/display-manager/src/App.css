@@ -1,14 +1,27 @@
 /* styling for the application -- This file actually changes the web page */
 #root {
-	top: 0;
-	left: 0;
 	height: 100%;
 	width: 100%;
+	box-sizing: border-box;
 	overflow: hidden;
 	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	transition: 2s background-color ease 3s;
-	/*background-color: red; */
+	border: solid green 2px;
+	padding: 20px;
+}
+
+/* Remove all prior styleing from this element */
+.imgContainer {
+	top: 0%;
+	left: 0%;
+	outline: solid green 3px;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	position: relative;
+	justify-content: center;
+	margin: 10px;
 }

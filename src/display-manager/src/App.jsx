@@ -81,11 +81,13 @@ export default function App() {
 	// Render application
 	return (
 		<>
-		{/* Only show splash screen if no images*/}
-		<SplashScreen style={images.length ? {opacity : 0} : {opacity : 1}}/>
-		{/* Render however many images we have in the images array */}
-		{images.map(image => {return <ImgPod key={image.id} data={image.data}/>})}
-		{users.map(user => {return <UserPod key={user.userId}></UserPod>})}
+			{/* Only show splash screen if no images*/}
+			<SplashScreen style={images.length ? {opacity : 0} : {opacity : 1}}/>
+			{/* Render however many images we have in the images array */}
+			<div className='imgContainer'>
+				{images.map(image => {return <ImgPod key={image.id} data={image.data}/>})}
+			</div>
+			{users.map(user => {return <UserPod key={user.userId}></UserPod>})}
 		</>
 	)
 }

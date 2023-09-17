@@ -1,6 +1,6 @@
 import '../App.css'
 import './ImgPod.css'
-import {useRef, useEffect} from 'react'
+import { useRef } from 'react'
 import base64ArrayBuffer from "./Encoder";
 
 /* The ImgPod(s) are an element that are going to render the user's image in a
@@ -13,6 +13,8 @@ export default function ImgPod({ data }) {
 	const src = (data.imgPath) ? data.imgPath : "data:image/"+data.imgType+";base64,"+base64String
 
 	const img = useRef(null);
+
+	//Birth animation
 	function birthAnimation() {
 		Object.assign(img.current.offsetParent.style, {
 			animation: "0.5s birth ease 0s",
