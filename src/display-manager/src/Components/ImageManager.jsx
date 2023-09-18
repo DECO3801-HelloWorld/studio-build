@@ -35,7 +35,9 @@ const deathAnimation = {
 	*	setImages():
 	*		React hook that updates the images array.
 	*/
-export function addImage(imgPacket, { setImages }) {
+export function addImage(imgPacket, {images,  setImages }) {
+	console.log(imgPacket)
+
 	//Append the colour to the image packet
 	if (Object.prototype.hasOwnProperty.call(dict, imgPacket.userId)) {
 		Object.assign(imgPacket, { style: dict[imgPacket.userId] })
@@ -47,8 +49,32 @@ export function addImage(imgPacket, { setImages }) {
 	//Update the image state array
 	//Current images as an argument so it doesn't overwrite itself
 	setImages((currentImages) => {
-		return [...currentImages, { id: imgPacket.imgId, data: imgPacket },]
+		return [...currentImages, { id: imgPacket.imgId, data: imgPacket},]
 	})
+	resizeImages({setImages});
+}
+
+export function resizeImages({setImages}) {
+	setImages(currentImages => {
+		const updatedImages = currentImages;
+
+		//Just ignore this for now I need to find a good palcement algorithm
+		for (let i = 0; i < updatedImages.length; i++) {
+			const image = updatedImages[i];
+			image.data.moving = {
+				height: Math.random()*100+"%",
+				top: Math.random()*100+"%",
+				left: Math.random()*100+"%",
+			}
+			//image.data.moving = {
+			//	height: ((100 / updatedImages.length))+"%",
+			//	top: ((i / updatedImages.length)*90)+"%",
+			//	left: (( / updatedImages.length)*90)+"%",
+			//}
+		}
+		return updatedImages;
+	})
+
 }
 
 /* addTestImage()
@@ -62,7 +88,7 @@ export function addImage(imgPacket, { setImages }) {
 	*	setImages():
 	*		React hook that updates the images array.
 	*/
-export function addTestImage({ setImages }) {
+export function addTestImage({images, setImages }) {
 
 	//Copy image from the sample images
 	const image = { ...sampleImages[sampleImageCount++ % sampleImages.length] };
@@ -70,7 +96,7 @@ export function addTestImage({ setImages }) {
 	//Adds an image ID [Warning could pontentially conflict with network imgages]
 	image.imgId = sampleImageCount;
 	//Add this image
-	addImage(image, { setImages })
+	addImage(image, {images, setImages })
 }
 
 export function addUserIcon(userId, { users, setUsers }) {
@@ -116,6 +142,7 @@ export function removeImage(imgId, { setImages }) {
 	})
 	setTimeout(() => {
 		setImages((currentImages) => {
+			resizeImages({setImages});
 			return currentImages.filter((image) => image.id !== imgId)
 		})
 	}, 500);
@@ -135,9 +162,38 @@ export function removeAllImages({ images, setImages }) {
 	});
 }
 
+/* applyDeathAnimation()
+* -------------------------------------------------------
+*  Applys the death animation to an image (Makes it fly up the screen)
+*
+*	image:
+*		The image theat the death animation should apply to
+*/
 function applyDeathAnimation(image) {
 	let style = Object.assign({}, image.data.style);
 	Object.assign(style, deathAnimation)
 	image.data.style = style;
 	return image;
+}
+
+
+export function getAverageImgSize() {
+	const elementList = [...document.getElementsByClassName("imgPod")];
+	let boundingList = [];
+
+	elementList.map(image => {
+		const imageBounds = image.getBoundingClientRect();
+		const area = imageBounds.height * imageBounds.width
+		boundingList.push(area);
+	})
+
+	//Might need to add average function
+	if (boundingList.length === 0) {
+		return; // You can choose to return NaN, undefined, or any other value if you prefer
+	}
+	// Calculate the sum of all elements in the array
+	const sum = boundingList.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+
+	// Divide the sum by the number of elements in the array to find the average
+	return sum / boundingList.length;
 }

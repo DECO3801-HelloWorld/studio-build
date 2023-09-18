@@ -1,7 +1,7 @@
 /* App.jsx - Display Manager */
 
 // Import npm modules
-import {useState, useEffect, useLayoutEffect} from 'react'
+import {useState, useEffect} from 'react'
 import io from 'socket.io-client'
 
 // Importing Custom modules
@@ -40,41 +40,14 @@ export default function App() {
 		NetworkManager.listenForUserConnect(socket, { users, setUsers });
 		NetworkManager.listenForRemoveUser(socket, { images, setImages }, { users, setUsers });
 
+		ImageManager.resizeImages({setImages});
+
 		// Unmount the listener for the download
 		return () => {
 			NetworkManager.dismountListeners(socket);
 		}
 	}, [images, users]);
 
-	//Ignore all this jazz
-	//useLayoutEffect(() => {
-	//	//track the position of all images
-	//	const elementList = [...document.getElementsByClassName("imgPod")];
-	//	let boundingList = [];
-
-	//	elementList.map(image => {
-	//		const imageBounds = image.getBoundingClientRect();
-	//		const area = imageBounds.height * imageBounds.width
-	//		boundingList.push(area);
-	//	})
-
-	//	//Might need to add average function
-	//	if (boundingList.length === 0) {
-	//		return; // You can choose to return NaN, undefined, or any other value if you prefer
-	//	}
-	//	// Calculate the sum of all elements in the array
-	//	const sum = boundingList.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-  
-	//	// Divide the sum by the number of elements in the array to find the average
-	//	const average = sum / boundingList.length;
-
-
-	//	console.log(boundingList)
-	//	console.log("Average area: " + average)
-
-	//	console.log(images);
-
-	//},[images])
 
 	// Bind keys for easy layout testing
 	useEffect(() => {
