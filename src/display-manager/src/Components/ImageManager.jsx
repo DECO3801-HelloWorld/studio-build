@@ -9,11 +9,7 @@ const deathAnimation = {
 	animation: "0.5s death ease", 
 	animationFillMode: "forwards",
 }
-
-/* TODO:
-	* When images are added, map the userId to the correct colour, otherwise assign one
-	* Discuss the positioning algorithm at some point
-	
+/* 
 	ImgPacket template:
 	imgPacket = {
 		userId:		//ID belong to the clients IP adress
@@ -36,8 +32,6 @@ const deathAnimation = {
 	*		React hook that updates the images array.
 	*/
 export function addImage(imgPacket, {images,  setImages }) {
-	console.log(imgPacket)
-
 	//Append the colour to the image packet
 	if (Object.prototype.hasOwnProperty.call(dict, imgPacket.userId)) {
 		Object.assign(imgPacket, { style: dict[imgPacket.userId] })
@@ -51,31 +45,40 @@ export function addImage(imgPacket, {images,  setImages }) {
 	setImages((currentImages) => {
 		return [...currentImages, { id: imgPacket.imgId, data: imgPacket},]
 	})
-	resizeImages({setImages});
 }
 
 export function resizeImages({setImages}) {
 	setImages(currentImages => {
-		const updatedImages = currentImages;
+		const rootHeight = document.getElementById("imgContainer").getBoundingClientRect().height;
+		const rootWidth= document.getElementById("imgContainer").getBoundingClientRect().width;
 
-		//Just ignore this for now I need to find a good palcement algorithm
-		for (let i = 0; i < updatedImages.length; i++) {
-			const image = updatedImages[i];
+		const attributes = {
+			width: 0,
+			height: 0,
+			area: 0,
+		};
+
+		for (let i = 0; i < currentImages.length; i++) {
+			const image = currentImages[i];
+
+			const height = rootHeight / Math.ceil(currentImages.length / 2);
+
 			image.data.moving = {
-				height: Math.random()*100+"%",
-				top: Math.random()*100+"%",
-				left: Math.random()*100+"%",
+				height: height,
+				top: attributes.height,
+				left: i*20+"%"
 			}
-			//image.data.moving = {
-			//	height: ((100 / updatedImages.length))+"%",
-			//	top: ((i / updatedImages.length)*90)+"%",
-			//	left: (( / updatedImages.length)*90)+"%",
-			//}
-		}
-		return updatedImages;
-	})
 
+			attributes.width += image.data.props.width;
+			attributes.height += (i%2) ? image.data.moving.height : attributes.height;
+			image.data.props.width = image.data.props.ratio * image.data.moving.height;
+			image.data.props.height = image.data.moving.height;
+
+		}
+		return [...currentImages];
+	})
 }
+
 
 /* addTestImage()
 	* -------------------------------------------------------
@@ -177,23 +180,20 @@ function applyDeathAnimation(image) {
 }
 
 
-export function getAverageImgSize() {
-	const elementList = [...document.getElementsByClassName("imgPod")];
-	let boundingList = [];
-
+export function calibrateImageSize(images) {
 	elementList.map(image => {
 		const imageBounds = image.getBoundingClientRect();
-		const area = imageBounds.height * imageBounds.width
-		boundingList.push(area);
+		const props = {
+			height: imageBounds.height,
+			width: imageBounds.width,
+			area: imageBounds.width * imageBounds.height
+		};
+		boundingList.push(props);
+		console.log(props)
 	})
 
-	//Might need to add average function
-	if (boundingList.length === 0) {
-		return; // You can choose to return NaN, undefined, or any other value if you prefer
+	for (let i = 0; i < images.length; i++) {
+		images[i].data.props = boundingList[i];
 	}
-	// Calculate the sum of all elements in the array
-	const sum = boundingList.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-
-	// Divide the sum by the number of elements in the array to find the average
-	return sum / boundingList.length;
+	return [...images]
 }

@@ -1,5 +1,6 @@
 import '../App.css'
 import './ImgPod.css'
+import { resizeImages } from './ImageManager';
 import { useRef } from 'react'
 import base64ArrayBuffer from "./Encoder";
 
@@ -7,7 +8,7 @@ import base64ArrayBuffer from "./Encoder";
 * colourful frame. Eventually it'll take arguments from App.jsx about the
 * name and associated id/colour of the bubble. 
 */
-export default function ImgPod({ data }) {
+export default function ImgPod({ data, setImages }) {
 	//Encode image into string that can be encoded into the image
 	const base64String = base64ArrayBuffer(data.imgPayload)
 	const src = (data.imgPath) ? data.imgPath : "data:image/"+data.imgType+";base64,"+base64String
@@ -22,6 +23,14 @@ export default function ImgPod({ data }) {
 			animationFillMode: "forward",
 			opacity: "1"
 		})
+
+		data.props = {
+			width: img.current.width,
+			height: img.current.height,
+			area: img.current.width * img.current.height,
+			ratio: img.current.width / img.current.height //L + ratio
+		}
+		resizeImages({setImages})
 	}
 
 	//This is fucked but lets just ignore it for now

@@ -39,12 +39,12 @@ export default function App() {
 		NetworkManager.listenForImgRemove(socket, { images, setImages });
 		NetworkManager.listenForUserConnect(socket, { users, setUsers });
 		NetworkManager.listenForRemoveUser(socket, { images, setImages }, { users, setUsers });
-
-		ImageManager.resizeImages({setImages});
+		//ImageManager.resizeImages({setImages})
 
 		// Unmount the listener for the download
 		return () => {
 			NetworkManager.dismountListeners(socket);
+			//ImageManager.resizeImages({setImages})
 		}
 	}, [images, users]);
 
@@ -77,7 +77,7 @@ export default function App() {
 
 		// Unmount Event listener
 		return (() => {document.removeEventListener('keydown', handleKeyPress)})
-	});
+	}, [images]);
 
 	// Render application
 	return (
@@ -85,8 +85,8 @@ export default function App() {
 			{/* Only show splash screen if no images*/}
 			<SplashScreen style={images.length ? {opacity : 0} : {opacity : 1}}/>
 			{/* Render however many images we have in the images array */}
-			<div className='imgContainer'>
-				{images.map(image => {return <ImgPod key={image.id} data={image.data}/>})}
+			<div id='imgContainer'>
+				{images.map(image => {return <ImgPod key={image.id} setImages={setImages} data={image.data}/>})}
 			</div>
 			{users.map(user => {return <UserPod key={user.userId}></UserPod>})}
 		</>
