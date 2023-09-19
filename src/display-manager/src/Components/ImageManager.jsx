@@ -51,28 +51,30 @@ export function resizeImages({setImages}) {
 	setImages(currentImages => {
 		const rootHeight = document.getElementById("imgContainer").getBoundingClientRect().height;
 		const rootWidth= document.getElementById("imgContainer").getBoundingClientRect().width;
+		const padding = 10;
 
 		const attributes = {
-			width: 0,
-			height: 0,
+			left: 0,
+			top: 0,
 			area: 0,
 		};
 
 		for (let i = 0; i < currentImages.length; i++) {
 			const image = currentImages[i];
 
-			const height = rootHeight / Math.ceil(currentImages.length / 2);
-
 			image.data.moving = {
-				height: height,
-				top: attributes.height,
-				left: i*20+"%"
+				height: rootHeight / Math.ceil(currentImages.length / 3),
+				width: Math.min(rootWidth / Math.min(currentImages.length, 3), image.data.props.width),
+				top: attributes.top,
+				left: attributes.left
 			}
 
-			attributes.width += image.data.props.width;
-			attributes.height += (i%2) ? image.data.moving.height : attributes.height;
-			image.data.props.width = image.data.props.ratio * image.data.moving.height;
-			image.data.props.height = image.data.moving.height;
+			//attributes.top += (i%2) ? image.data.moving.height : attributes.top;
+			//image.data.props.width = image.data.props.ratio * image.data.moving.height;
+			image.data.props = image.data.moving;
+			attributes.left = ((i+1)%3) ? attributes.left + image.data.props.width + padding: 0;
+			attributes.top = ((i+1)%3) ? attributes.top : attributes.top + image.data.props.height + padding;
+			//image.data.props.width = image.data.moving.width;
 
 		}
 		return [...currentImages];
