@@ -13,12 +13,12 @@ input {
 }
 
 .button button {
-  color: #f6eeee;
+  color: #fff;
   width: 200px;
-  height: 65px;
-  font-size: 24px;
-  border-radius: 10px;
-  font-family: sans-serif;
+  height: 55px;
+  font-size: 21px;
+  border-radius: 13px;
+  font-family: Montserrat;
   font-weight: 400;
   word-wrap: break-word;
   background-color: #7970b1;
@@ -26,27 +26,32 @@ input {
   display: flex;
   top: 60%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 100%);
   align-items: center;
   justify-content: center;
+  border: #454545;
+  cursor: pointer;
 }
+
 .button2 {
-  color: #f6eeee;
-  width: 130px;
-  height: 65px;
-  font-size: 24px;
-  border-radius: 10px;
-  font-family: sans-serif;
+  color: #fff;
+  width: 120px;
+  height: 50px;
+  font-size: 18px;
+  border-radius: 13px;
+  font-family: Montserrat;
   font-weight: 400;
   word-wrap: break-word;
   background-color: #595151;
   position: fixed;
   display: flex;
   top: 90%;
-  left: 95%;
-  transform: translate(-50%, -50%);
+  left: 93%;
+  transform: translate(-50%, -30%);
   justify-content: center;
   align-items: center;
+  border: #454545;
+  cursor: pointer;
 }
 .uploadedImage img {
   bottom: 0;
@@ -114,12 +119,12 @@ input {
   display: flex;
   color: #FFF;
   word-wrap: break-word;
-  padding-left: 4%;
+  padding-left: 3%;
   width: 100%;
   font-size: 1.8rem;
   font-style: normal;
-  font-family: sans-serif;
-  font-weight: 600;
+  font-family: Montserrat;
+  font-weight: 500;
   line-height: normal;
 }
 
