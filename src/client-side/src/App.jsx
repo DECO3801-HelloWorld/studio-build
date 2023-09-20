@@ -7,6 +7,7 @@ import "./App.css";
 const port = typeof process !== "undefined" ? (typeof process !== 'undefined') ? (process.env.PORT || 3001) : 3001 : 3001;
 const socket = io.connect("http://localhost:" + port); //Socket is connection to server
 console.log("initial value "+socket.connected);
+var count =0;
 
 //Testing Variables
 const userId = 1; //Maybe grab this from server in future
@@ -42,7 +43,7 @@ export default function App() {
           return [
             ...currentImageUrl,
             {
-              id: crypto.randomUUID(),
+              id: count++,
               name: imgPacket.imgName,
               imgFile: file,
               URLs: newImageURLs[i],
