@@ -68,10 +68,13 @@ export default function App() {
             <img src="src\Components\Upload icon.png" />
           </div>
           <div>
+            <button className = "uploadButton" htmlFor="imgUpload" onClick={() => fileUploadButton.current.click()}>
             <span className="uploadText">Upload your Image</span>
+            </button>
           </div>
           <div className="uploadText2">
-            Supported formates: JPEG, PNG, GIF, MP4, PDF, PSD, AI, Word, PPT
+            <br></br>
+            Supported formats: JPEG, PNG, TIFF, GIF
           </div>
         </label>
       </div>
