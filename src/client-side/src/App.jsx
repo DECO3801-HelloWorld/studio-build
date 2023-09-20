@@ -62,17 +62,17 @@ export default function App() {
 
   function uploadFxn() {
     return (
-      <div className="box">
-        <label className="file-uploader-container">
+      <div class="upload-box">
+        <label class="file-uploader-container">
           <div className="centered-content">
             <img src="src\Components\Upload icon.png" />
           </div>
           <div>
-            <button className = "uploadButton" htmlFor="imgUpload" onClick={() => fileUploadButton.current.click()}>
-            <span className="uploadText">Upload your Image</span>
+            <button class= "upload-button" htmlFor="image-upload" onClick={() => fileUploadButton.current.click()}>
+            <span class="upload-text">Upload your Image</span>
             </button>
           </div>
-          <div className="uploadText2">
+          <div class="supported-formats-text">
             <br></br>
             Supported formats: JPEG, PNG, TIFF, GIF
           </div>
@@ -82,8 +82,8 @@ export default function App() {
   }
   function imgMapFxn() {
     return imageURL.map((image) => (
-      <div className="uploadedImage" key={image.id}>
-        <img src={image.URLs} alt="Woops" />
+      <div class="image-upload" key={image.id}>
+        <img src={image.URLs} alt="Oops!" />
       </div>
     ));
   }
@@ -98,26 +98,26 @@ export default function App() {
   return (
     <>
       {/*Upload button*/}
-      <div className="wapper">
-        <div className="header">
-          <div className="headerText">MagicShare</div>
+      <div class="wrapper-upload-btn">
+        <div class="header">
+          <div class="header-text">MagicShare</div>
         </div>
-        <div className="text"> Connected to Screen X123 </div>
+        <div class="text"> Connected to Screen X123 </div>
         {imageURL.length === 0 ? uploadFxn() : imgMapFxn()}
-        <div className="button">
+        <div class="start-presenting-button">
           <button
-            htmlFor="imgUpload"
+            htmlFor="image-upload"
             onClick={() => fileUploadButton.current.click()}>Start Presenting</button>
           <input
             type="file"
             ref={fileUploadButton}
             onChange={uploadFile}
-            id="imgUpload"
+            id="image-upload"
           />
         </div>
         <div>
         <button
-          className="button2"
+          class="disconnect-button"
           htmlFor="Disconnect"
           onClick={() => NetworkManager.disconnectUser(socket)}
         >
