@@ -16,7 +16,7 @@ import './App.css'
 const port = (typeof process !== 'undefined') ? (process.env.PORT || 3001) : 3001;
 
 // Connect to the server - ready to receive images
-const socket = io.connect("http://localhost:"+port);
+const socket = io.connect(window.location.origin);
 
 // Program constants
 const ADD_SAMPLE_IMG_KEY = "Space";

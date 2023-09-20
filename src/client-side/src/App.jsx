@@ -5,7 +5,7 @@ import "./App.css";
 
 //Server variables
 const port = typeof process !== "undefined" ? (typeof process !== 'undefined') ? (process.env.PORT || 3001) : 3001 : 3001;
-const socket = io.connect("http://localhost:" + port); //Socket is connection to server
+const socket = io.connect(window.location.origin); //Socket is connection to server
 console.log("initial value "+socket.connected);
 var count =0;
 
