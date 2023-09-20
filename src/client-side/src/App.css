@@ -149,3 +149,44 @@ input {
   font-weight: 400;
   word-wrap: break-word;
 }
+
+@media only screen and (max-width: 768px) {
+  .header-text {
+      font-size: 1.2rem;
+      padding-left: 5%;
+  }
+
+  .start-presenting-button button {
+      width: 170px;
+      height: 45px;
+      font-size: 17px;
+  }
+
+  .disconnect-button {
+      width: 110px;
+      height: 40px;
+      font-size: 16px;
+      top: 94%;
+      left: 83%;
+  }
+
+  .upload-box label {
+      max-width: 90%;
+      height: 35%;
+  }
+
+  .upload-image img {
+      width: 90%;
+      height: auto;
+  }
+
+  .upload-text {
+      font-size: 14px;
+      top: 10%;
+      left: 50%;
+  }
+
+  .supported-formats-text {
+      font-size: 10px;
+  }
+}
