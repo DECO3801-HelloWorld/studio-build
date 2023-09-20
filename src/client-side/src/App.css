@@ -12,7 +12,7 @@ input {
   display: none; /* We want this for styling purposes */
 }
 
-.button button {
+.start-presenting-button button {
   color: #fff;
   width: 200px;
   height: 55px;
@@ -33,11 +33,11 @@ input {
   cursor: pointer;
 }
 
-.uploadButton {
+.upload-button {
   border: none;
 }
 
-.button2 {
+.disconnect-button {
   color: #fff;
   width: 120px;
   height: 50px;
@@ -58,7 +58,7 @@ input {
   cursor: pointer;
 }
 
-.uploadedImage img {
+.upload-image img {
   bottom: 0;
   width: 800px;
   height: 363px;
@@ -73,7 +73,7 @@ input {
   transform: translate(-50%, -50%); /* Center the label using transform */
 }
 
-.box label {
+.upload-box label {
   background: #e0e0e0;
   border: 1px rgba(8, 133, 134, 0.3) dotted;
   width: 100%; /* Use 100% width to fill the container */
@@ -94,16 +94,16 @@ input {
   cursor: pointer;
 }
 
-.text {
+.upload-text {
   width: 304px;
-  height: 50px;
-  position: fixed;
+  height: 70px;
+  position: center;
   top: 70px;
   bottom: 20px;
   color: #f6eeee;
   top: 15%;
   left: 52%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 10%);
 }
 
 .header {
@@ -122,7 +122,7 @@ input {
   box-shadow: 0 2px 2px 2px rgba(9, 9, 9, 0.23);
 }
 
-.headerText {
+.header-text {
   display: flex;
   color: #FFF;
   word-wrap: break-word;
@@ -135,17 +135,58 @@ input {
   line-height: normal;
 }
 
-.uploadText {
+.upload-text {
   color: #454545;
   font-size: 16px;
   font-family: Montserrat;
   font-weight: 600;
 }
 
-.uploadText2 {
+.supported-formats-text {
   color: #676767;
   font-size: 12px;
   font-family: Montserrat;
   font-weight: 400;
   word-wrap: break-word;
+}
+
+@media only screen and (max-width: 768px) {
+  .header-text {
+      font-size: 1.2rem;
+      padding-left: 5%;
+  }
+
+  .start-presenting-button button {
+      width: 170px;
+      height: 45px;
+      font-size: 17px;
+  }
+
+  .disconnect-button {
+      width: 110px;
+      height: 40px;
+      font-size: 16px;
+      top: 94%;
+      left: 83%;
+  }
+
+  .upload-box label {
+      max-width: 90%;
+      height: 35%;
+  }
+
+  .upload-image img {
+      width: 90%;
+      height: auto;
+  }
+
+  .upload-text {
+      font-size: 14px;
+      top: 10%;
+      left: 50%;
+  }
+
+  .supported-formats-text {
+      font-size: 10px;
+  }
 }
