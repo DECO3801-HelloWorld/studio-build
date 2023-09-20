@@ -4,8 +4,9 @@ import * as NetworkManager from "./Components/NetworkManager.jsx";
 import "./App.css";
 
 //Server variables
-const port = process.env.PORT || 3001;
-const socket = io.connect("http://localhost:"+port);  //Socket is connection to server
+const port = typeof process !== "undefined" ? process.env.PORT || 3001 : 3001;
+const socket = io.connect("http://localhost:" + port); //Socket is connection to server
+console.log("initial value "+socket.connected);
 
 //Testing Variables
 const userId = 1; //Maybe grab this from server in future
@@ -13,8 +14,10 @@ const userName = "Test User"; //Device name maybe?
 
 export default function App() {
   const [imageURL, setImageURL] = useState([]);
+  const [isConnected, setIsConnected] =useState(false);
   //Grab Upload button
   const fileUploadButton = useRef(null);
+  
 
   /* uploadFile()
    *  ------------------------
@@ -27,6 +30,7 @@ export default function App() {
     const imgPacket = NetworkManager.packImage(file, userId, userName);
     NetworkManager.sendImage(socket, imgPacket);
 
+  
     const newImageURLs = [];
     for (let i = 0; i < e.target.files.length; i++) {
       const imgFile = e.target.files[i];
@@ -51,13 +55,20 @@ export default function App() {
 
     //this adds the list of images to imageURL
   }
-//extra function
+  //extra function
   function print() {
     {
       imageURL.map((imageURL) => {
-        console.log(imageURL.name);
+        // console.log(imageURL.name);
       });
+      console.log(socket.Connected);
     }
+  }
+
+  function status(){
+    return (
+      isConnected == true ? (<div className="text"> Connected to Server </div>):(<div className="text"> Not Connected to Server </div>)
+    );
   }
 
   function uploadFxn() {
@@ -78,10 +89,12 @@ export default function App() {
     );
   }
   function imgMapFxn() {
+    console.log(socket.connected);
     return imageURL.map((image) => (
       <div className="uploadedImage" key={image.id}>
         <img src={image.URLs} alt="Woops" />
       </div>
+      
     ));
   }
 
@@ -94,17 +107,21 @@ export default function App() {
    */
   return (
     <>
+    {/* {console.log("initial value "+socket.connected)} */}
       {/*Upload button*/}
       <div className="wapper">
         <div className="header">
           <div className="headerText">MagicShare</div>
         </div>
-        <div className="text"> Connected to Screen X123 </div>
+        {status()}
         {imageURL.length === 0 ? uploadFxn() : imgMapFxn()}
         <div className="button">
           <button
             htmlFor="imgUpload"
-            onClick={() => fileUploadButton.current.click()}>Start Presenting</button>
+            onClick={() => fileUploadButton.current.click()}
+          >
+            Start Presenting
+          </button>
           <input
             type="file"
             ref={fileUploadButton}
@@ -113,13 +130,18 @@ export default function App() {
           />
         </div>
         <div>
-        <button
-          className="button2"
-          htmlFor="Disconnect"
-          onClick={() => NetworkManager.disconnectUser(socket)}
-        >
-          Disconnect
-        </button>
+          <button
+            className="button2"
+            htmlFor="Disconnect"
+            onClick={() => NetworkManager.disconnectUser(socket) & setIsConnected(false)}
+          >
+            Disconnect
+          </button>
+          {/* {<div>
+            <button className="button" onClick={print}>
+              print socket
+            </button>
+          </div>} */}
         </div>
         {/* {<label onClick={print}>printing</label>} */}
       </div>
