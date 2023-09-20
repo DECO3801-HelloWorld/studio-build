@@ -71,7 +71,7 @@ export default function App() {
             <span className="uploadText">Upload your Image</span>
           </div>
           <div className="uploadText2">
-            Supported formates: JPEG, PNG, GIF, MP4, PDF, PSD, AI, Word, PPT
+            Supported formats: JPEG, PNG, GIF, MP4, PDF, PSD, AI, Word, PPT
           </div>
         </label>
       </div>
