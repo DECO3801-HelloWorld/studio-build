@@ -4,8 +4,10 @@ import * as NetworkManager from "./Components/NetworkManager.jsx";
 import "./App.css";
 
 //Server variables
-const port = (typeof process !== 'undefined') ? (process.env.PORT || 3001) : 3001;
-const socket = io.connect("http://localhost:"+port);  //Socket is connection to server
+const port = typeof process !== "undefined" ? (typeof process !== 'undefined') ? (process.env.PORT || 3001) : 3001 : 3001;
+const socket = io.connect("http://localhost:" + port); //Socket is connection to server
+console.log("initial value "+socket.connected);
+var count =0;
 
 //Testing Variables
 const userId = 1; //Maybe grab this from server in future
@@ -13,8 +15,10 @@ const userName = "Test User"; //Device name maybe?
 
 export default function App() {
   const [imageURL, setImageURL] = useState([]);
+  const [isConnected, setIsConnected] =useState(false);
   //Grab Upload button
   const fileUploadButton = useRef(null);
+  
 
   /* uploadFile()
    *  ------------------------
@@ -27,6 +31,7 @@ export default function App() {
     const imgPacket = NetworkManager.packImage(file, userId, userName);
     NetworkManager.sendImage(socket, imgPacket);
 
+  
     const newImageURLs = [];
     for (let i = 0; i < e.target.files.length; i++) {
       const imgFile = e.target.files[i];
@@ -38,7 +43,7 @@ export default function App() {
           return [
             ...currentImageUrl,
             {
-              id: crypto.randomUUID(),
+              id: count++,
               name: imgPacket.imgName,
               imgFile: file,
               URLs: newImageURLs[i],
@@ -51,13 +56,20 @@ export default function App() {
 
     //this adds the list of images to imageURL
   }
-//extra function
+  //extra function
   function print() {
     {
       imageURL.map((imageURL) => {
-        console.log(imageURL.name);
+        // console.log(imageURL.name);
       });
+      console.log(socket.Connected);
     }
+  }
+
+  function status(){
+    return (
+      isConnected == true ? (<div className="text"> Connected to Server </div>):(<div className="text"> Not Connected to Server </div>)
+    );
   }
 
   function uploadFxn() {
@@ -81,10 +93,12 @@ export default function App() {
     );
   }
   function imgMapFxn() {
+    console.log(socket.connected);
     return imageURL.map((image) => (
       <div class="image-upload" key={image.id}>
         <img src={image.URLs} alt="Oops!" />
       </div>
+      
     ));
   }
 
@@ -97,12 +111,13 @@ export default function App() {
    */
   return (
     <>
+    {/* {console.log("initial value "+socket.connected)} */}
       {/*Upload button*/}
       <div class="wrapper-upload-btn">
         <div class="header">
           <div class="header-text">MagicShare</div>
         </div>
-        <div class="text"> Connected to Screen X123 </div>
+        {status()}
         {imageURL.length === 0 ? uploadFxn() : imgMapFxn()}
         <div class="start-presenting-button">
           <button
