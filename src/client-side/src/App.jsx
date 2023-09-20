@@ -66,7 +66,7 @@ export default function App() {
     }
   }
 
-  function status(){
+  function status() {
     return (
       isConnected == true ? (<div className="text"> Connected to Server </div>):(<div className="text"> Not Connected to Server </div>)
     );
