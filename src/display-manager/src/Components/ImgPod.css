@@ -2,16 +2,16 @@
 /* This is the basic gist of what I want to do with the containers
  * obviously we'll use javascript to customise the container data */
 
-/* Remove all prior styleing from this element */
 
 /* The Element that's surrounding the entire image */
 .imgPod {
-	position: relative;
+	position: absolute;
+	box-sizing: border-box;
 	padding: 15px;
 	top: 0%;
-	height: 80%;
+	height: 100%;
 	opacity: 0;
-	transition: opacity;
+	transition: 500ms height, 500ms width, 500ms transform, 500ms top, 500ms left;
 }
 
 .imgLoaded {
@@ -63,10 +63,12 @@
 /* Username belonging to each image */
 .user-name {
 	position: absolute; /* Want to fload in div */
-	top: -25px;			/* Position text in border */
+	top: -30px;			/* Position text in border */
 	margin-left: 30px;
 	background-color: white; /* Mask out the border */
 	padding: 0 8px;
 	color: var(--colour2);
 	white-space: nowrap;
+	font-size: 20px;
+	font-weight: 500;
 }

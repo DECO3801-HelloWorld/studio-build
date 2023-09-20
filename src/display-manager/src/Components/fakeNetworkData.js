@@ -1,10 +1,10 @@
-import img1 from '../images/cat.jpg'
-import img2 from '../images/two-yellow-labrador-retriever-puppies-1108099.jpg'
-import img3 from '../images/ducklings.webp'
-import img4 from '../images/chicken.webp'
-import img5 from '../images/bird.jpg'
-import img6 from '../images/squirrel.jpg'
-import img7 from '../images/cherries.gif'
+import img1 from '../images/img1.jpg'
+import img2 from '../images/img2.jpg'
+import img3 from '../images/img3.jpg'
+import img4 from '../images/img4.jpg'
+import img5 from '../images/img5.jpg'
+import img6 from '../images/img6.jpg'
+import img7 from '../images/img7.jpg'
 
 //Fake images :) - Feel free to add more if you don't like these ones
 export const sampleImages = [

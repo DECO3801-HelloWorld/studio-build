@@ -13,12 +13,12 @@ input {
 }
 
 .button button {
-  color: #f6eeee;
+  color: #fff;
   width: 200px;
-  height: 65px;
-  font-size: 24px;
-  border-radius: 10px;
-  font-family: Roboto;
+  height: 55px;
+  font-size: 21px;
+  border-radius: 13px;
+  font-family: Montserrat;
   font-weight: 400;
   word-wrap: break-word;
   background-color: #7970b1;
@@ -26,27 +26,32 @@ input {
   display: flex;
   top: 60%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 100%);
   align-items: center;
   justify-content: center;
+  border: #454545;
+  cursor: pointer;
 }
+
 .button2 {
-  color: #f6eeee;
-  width: 130px;
-  height: 65px;
-  font-size: 24px;
-  border-radius: 10px;
-  font-family: Roboto;
+  color: #fff;
+  width: 120px;
+  height: 50px;
+  font-size: 18px;
+  border-radius: 13px;
+  font-family: Montserrat;
   font-weight: 400;
   word-wrap: break-word;
   background-color: #595151;
   position: fixed;
   display: flex;
   top: 90%;
-  left: 95%;
-  transform: translate(-50%, -50%);
+  left: 93%;
+  transform: translate(-50%, -30%);
   justify-content: center;
   align-items: center;
+  border: #454545;
+  cursor: pointer;
 }
 .uploadedImage img {
   bottom: 0;
@@ -100,23 +105,27 @@ input {
   left: 0;
   margin: 0;
   padding: 0;
+  height: 41px;
   width: 100%;
-  height: 4%;
   background: #7970b1;
   position: fixed;
-}
-.headerText {
-  word-wrap: break-word;
-  
-  padding-left: 60px;
-  width: 100%;
-  height: 86px;
-  color: white;
-  font-size: 35px;
-  font-family: Roboto;
-  font-weight: 700;
   display: flex;
-  /* dont know the meaning of the flexbox */
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 2px 2px rgba(9, 9, 9, 0.23);
+}
+
+.headerText {
+  display: flex;
+  color: #FFF;
+  word-wrap: break-word;
+  padding-left: 3%;
+  width: 100%;
+  font-size: 1.8rem;
+  font-style: normal;
+  font-family: Montserrat;
+  font-weight: 500;
+  line-height: normal;
 }
 
 .uploadText {

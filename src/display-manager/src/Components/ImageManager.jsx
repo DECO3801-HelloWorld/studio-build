@@ -5,18 +5,11 @@ import colours from './colours.json';
 import { sampleImages } from './fakeNetworkData.js';
 let sampleImageCount = 0;
 const dict = new Object();
-const connected = [];
-const icons = [];
 const deathAnimation = {
 	animation: "0.5s death ease", 
 	animationFillMode: "forwards",
 }
-
-
-/* TODO:
-	* When images are added, map the userId to the correct colour, otherwise assign one
-	* Discuss the positioning algorithm at some point
-	
+/* 
 	ImgPacket template:
 	imgPacket = {
 		userId:		//ID belong to the clients IP adress
@@ -38,9 +31,9 @@ const deathAnimation = {
 	*	setImages():
 	*		React hook that updates the images array.
 	*/
-export function addImage(imgPacket, { setImages }) {
+export function addImage(imgPacket, {images,  setImages }) {
 	//Append the colour to the image packet
-	if (dict.hasOwnProperty(imgPacket.userId)) {
+	if (Object.prototype.hasOwnProperty.call(dict, imgPacket.userId)) {
 		Object.assign(imgPacket, { style: dict[imgPacket.userId] })
 	} else {
 		dict[imgPacket.userId] = colours[Object.keys(dict).length % 5];
@@ -50,9 +43,44 @@ export function addImage(imgPacket, { setImages }) {
 	//Update the image state array
 	//Current images as an argument so it doesn't overwrite itself
 	setImages((currentImages) => {
-		return [...currentImages, { id: imgPacket.imgId, data: imgPacket },]
+		return [...currentImages, { id: imgPacket.imgId, data: imgPacket},]
 	})
 }
+
+export function resizeImages({setImages}) {
+	setImages(currentImages => {
+		const rootHeight = document.getElementById("imgContainer").getBoundingClientRect().height;
+		const rootWidth= document.getElementById("imgContainer").getBoundingClientRect().width;
+		const padding = 10;
+
+		const attributes = {
+			left: 0,
+			top: 0,
+			area: 0,
+		};
+
+		for (let i = 0; i < currentImages.length; i++) {
+			const image = currentImages[i];
+
+			image.data.moving = {
+				height: rootHeight / Math.ceil(currentImages.length / 3),
+				width: Math.min(rootWidth / Math.min(currentImages.length, 3), image.data.props.width),
+				top: attributes.top,
+				left: attributes.left
+			}
+
+			//attributes.top += (i%2) ? image.data.moving.height : attributes.top;
+			//image.data.props.width = image.data.props.ratio * image.data.moving.height;
+			image.data.props = image.data.moving;
+			attributes.left = ((i+1)%3) ? attributes.left + image.data.props.width + padding: 0;
+			attributes.top = ((i+1)%3) ? attributes.top : attributes.top + image.data.props.height + padding;
+			//image.data.props.width = image.data.moving.width;
+
+		}
+		return [...currentImages];
+	})
+}
+
 
 /* addTestImage()
 	* -------------------------------------------------------
@@ -65,7 +93,7 @@ export function addImage(imgPacket, { setImages }) {
 	*	setImages():
 	*		React hook that updates the images array.
 	*/
-export function addTestImage({ setImages }) {
+export function addTestImage({images, setImages }) {
 
 	//Copy image from the sample images
 	const image = { ...sampleImages[sampleImageCount++ % sampleImages.length] };
@@ -73,14 +101,12 @@ export function addTestImage({ setImages }) {
 	//Adds an image ID [Warning could pontentially conflict with network imgages]
 	image.imgId = sampleImageCount;
 	//Add this image
-	addImage(image, { setImages })
+	addImage(image, {images, setImages })
 }
 
-export function addUserIcon({ setUsers }) {
+export function addUserIcon(userId, { users, setUsers }) {
 	console.log("addUser works!")
-	setUsers((currentUsers) => {
-		return [...currentUsers, {data: imgPacket}]
-	})
+	setUsers((currentUsers) => [...currentUsers, userId])
 }
 
 /* removeUser()
@@ -121,6 +147,7 @@ export function removeImage(imgId, { setImages }) {
 	})
 	setTimeout(() => {
 		setImages((currentImages) => {
+			resizeImages({setImages});
 			return currentImages.filter((image) => image.id !== imgId)
 		})
 	}, 500);
@@ -140,9 +167,35 @@ export function removeAllImages({ images, setImages }) {
 	});
 }
 
+/* applyDeathAnimation()
+* -------------------------------------------------------
+*  Applys the death animation to an image (Makes it fly up the screen)
+*
+*	image:
+*		The image theat the death animation should apply to
+*/
 function applyDeathAnimation(image) {
 	let style = Object.assign({}, image.data.style);
 	Object.assign(style, deathAnimation)
 	image.data.style = style;
 	return image;
+}
+
+
+export function calibrateImageSize(images) {
+	elementList.map(image => {
+		const imageBounds = image.getBoundingClientRect();
+		const props = {
+			height: imageBounds.height,
+			width: imageBounds.width,
+			area: imageBounds.width * imageBounds.height
+		};
+		boundingList.push(props);
+		console.log(props)
+	})
+
+	for (let i = 0; i < images.length; i++) {
+		images[i].data.props = boundingList[i];
+	}
+	return [...images]
 }

@@ -30,23 +30,24 @@ export default function App() {
 	/*Controlling the state - If you need to change these variables
 	 * Do so with the setX functions */
 	const [images, setImages] = useState([]);
-	const imageState = {images, setImages};
 	const [users, setUsers] = useState([]);
-	const userState = {users, setUsers}
 
 	// Server-Listening  -  Run on every render update
 	useEffect(() => {
 		//Start Listening for images
-		NetworkManager.listenForImage(socket, imageState);
-		NetworkManager.listenForImgRemove(socket, imageState);
-		NetworkManager.listenForUserConnect(socket, userState);
-		NetworkManager.listenForRemoveUser(socket, imageState, userState);
+		NetworkManager.listenForImage(socket, { images, setImages });
+		NetworkManager.listenForImgRemove(socket, { images, setImages });
+		NetworkManager.listenForUserConnect(socket, { users, setUsers });
+		NetworkManager.listenForRemoveUser(socket, { images, setImages }, { users, setUsers });
+		//ImageManager.resizeImages({setImages})
 
 		// Unmount the listener for the download
 		return () => {
 			NetworkManager.dismountListeners(socket);
+			//ImageManager.resizeImages({setImages})
 		}
-	}, [socket]);
+	}, [images, users]);
+
 
 	// Bind keys for easy layout testing
 	useEffect(() => {
@@ -54,19 +55,19 @@ export default function App() {
 		const handleKeyPress = (event) => {
 			switch (event.code) {
 				case REMOVE_ALL_IMG_KEY:
-					ImageManager.removeAllImages(imageState);
+					ImageManager.removeAllImages({ images, setImages });
 					break;
 				case ADD_SAMPLE_IMG_KEY:
 					//Fake images from hard drive [NOT FROM NETWORK]
-					ImageManager.addTestImage(imageState);					
+					ImageManager.addTestImage({ images, setImages });					
 					break;
 				case "Digit1":
 					//Testing removing specific images
-					ImageManager.removeImage(1, imageState)
+					ImageManager.removeImage(1, { images, setImages })
 					break;
 				case "Digit2":
 					//Testing removing specific images
-					ImageManager.removeUser(2, imageState);
+					ImageManager.removeUser(2, { images, setImages });
 					break;
 				default:
 					break;
@@ -76,16 +77,18 @@ export default function App() {
 
 		// Unmount Event listener
 		return (() => {document.removeEventListener('keydown', handleKeyPress)})
-	});
+	}, [images]);
 
 	// Render application
 	return (
 		<>
-		{/* Only show splash screen if no images*/}
-		<SplashScreen style={images.length ? {opacity : 0} : {opacity : 1}}/>
-		{/* Render however many images we have in the images array */}
-		{images.map(image => {return <ImgPod key={image.id} data={image.data}/>})}
-		{users.map(user => {return <UserPod key={user.userId}></UserPod>})}
+			{/* Only show splash screen if no images*/}
+			<SplashScreen style={images.length ? {opacity : 0} : {opacity : 1}}/>
+			{/* Render however many images we have in the images array */}
+			<div id='imgContainer'>
+				{images.map(image => {return <ImgPod key={image.id} setImages={setImages} data={image.data}/>})}
+			</div>
+			{users.map(user => {return <UserPod key={user.userId}></UserPod>})}
 		</>
 	)
 }

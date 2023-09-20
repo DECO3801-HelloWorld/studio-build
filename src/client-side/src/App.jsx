@@ -4,7 +4,7 @@ import * as NetworkManager from "./Components/NetworkManager.jsx";
 import "./App.css";
 
 //Server variables
-const port = typeof process !== "undefined" ? process.env.PORT || 3001 : 3001;
+const port = typeof process !== "undefined" ? (typeof process !== 'undefined') ? (process.env.PORT || 3001) : 3001 : 3001;
 const socket = io.connect("http://localhost:" + port); //Socket is connection to server
 console.log("initial value "+socket.connected);
 
@@ -82,7 +82,7 @@ export default function App() {
             <span className="uploadText">Upload your Image</span>
           </div>
           <div className="uploadText2">
-            Supported formates: JPEG, PNG, GIF, MP4, PDF, PSD, AI, Word, PPT
+            Supported formats: JPEG, PNG, GIF, MP4, PDF, PSD, AI, Word, PPT
           </div>
         </label>
       </div>

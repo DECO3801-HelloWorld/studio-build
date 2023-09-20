@@ -38,6 +38,11 @@ io.on("connection", (socket) => {
 	socket.on("disconnect", () => {
 		console.log("client disconnected");
 	})
+
+	socket.on("request_img_remove", (imgPacket) => {
+		console.log("Requested to remove an image.");
+		console.log(imgPacket);
+	})
 })
 
 // Ensure that the paths below match the client vite config "base" option.
@@ -49,3 +54,20 @@ app.use('/display', express.static(path.join(__dirname, '../display-manager/dist
 server.listen(port, () => {
 	console.log("Server Started on port " + port)
 })
+
+
+// === For Debugging only ===
+/*
+let id = 0;
+const testConnectUser = () => {
+	io.emit("user_connect", {userId: id});
+	id;
+}
+setInterval(testConnectUser, 5_000);
+const testRemoveUser = () => {
+	io.emit("remove_user", {userId: id});
+	id++;
+}
+setInterval(testRemoveUser, 5_100);
+*/
+// ==========================
