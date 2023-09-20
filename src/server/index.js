@@ -57,6 +57,7 @@ server.listen(port, () => {
 
 
 // === For Debugging only ===
+/*
 let id = 0;
 const testConnectUser = () => {
 	io.emit("user_connect", {userId: id});
@@ -68,4 +69,5 @@ const testRemoveUser = () => {
 	id++;
 }
 setInterval(testRemoveUser, 5_100);
+*/
 // ==========================
