@@ -158,8 +158,8 @@ Features:
 * Enhance the user interface design.
 * Remove uploaded media when disconnected.
 
-![Start](./documentation\Client-start.png)
-![image](./documentation\Client-image.png)
+![Start](./documentation\Client-start.PNG)
+![image](./documentation\Client-image.PNG)
 
 
 ## Link to Client Side UI prototypes
