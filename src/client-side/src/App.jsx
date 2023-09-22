@@ -95,7 +95,7 @@ export default function App() {
   function imgMapFxn() {
     console.log(socket.connected);
     return imageURL.map((image) => (
-      <div class="image-upload" key={image.id}>
+      <div class="upload-image" key={image.id}>
         <img src={image.URLs} alt="Oops!" />
       </div>
       

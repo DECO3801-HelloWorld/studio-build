@@ -146,6 +146,22 @@ Display manager features:
 ![Example1](./documentation/DOCS-display-manager/example1.PNG)
 ![Example2](./documentation/DOCS-display-manager/example2.PNG)
 
+
+## Client-Side
+Features:
+* Users can upload images to the server from their file explorer.
+* Users can disconnect from the server, and after that, no more images will be uploaded.
+* A live preview of media uploaded by the user is available.
+  TODO:
+
+* Implement the swipe-up feature for media upload.
+* Enhance the user interface design.
+* Remove uploaded media when disconnected.
+
+![Start](./documentation\Client-start.png)
+![image](./documentation\Client-image.png)
+
+
 ## Link to Client Side UI prototypes
 https://www.figma.com/file/V7FGQ1mc1rS79A7kNoOWSB/Hello-World?type=design&node-id=0-1&mode=design&t=WQHavnsUmiNmRr49-0
 
