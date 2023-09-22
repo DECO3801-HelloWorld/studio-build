@@ -158,9 +158,8 @@ Features:
 * Enhance the user interface design.
 * Remove uploaded media when disconnected.
 
-![Start](./documentation/Client-start.PNG)
-![image](./documentation/Client-image.PNG)
-
+![Start](./documentation/DOCS-client-side-UI/Client-start.png)
+![image](./documentation/DOCS-client-side-UI/Client-image.png)
 
 ## Link to Client Side UI prototypes
 https://www.figma.com/file/V7FGQ1mc1rS79A7kNoOWSB/Hello-World?type=design&node-id=0-1&mode=design&t=WQHavnsUmiNmRr49-0
