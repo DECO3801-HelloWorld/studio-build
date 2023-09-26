@@ -69,6 +69,9 @@ export default function App() {
 					//Testing removing specific images
 					ImageManager.removeUser(2, { images, setImages });
 					break;
+				case "KeyU": //Testing adding users
+					ImageManager.addTestUser({users, setUsers});
+					break;
 				default:
 					break;
 			}
@@ -88,7 +91,9 @@ export default function App() {
 			<div id='imgContainer'>
 				{images.map(image => {return <ImgPod key={image.id} setImages={setImages} data={image.data}/>})}
 			</div>
-			{users.map(user => {return <UserPod key={user.userId}></UserPod>})}
+			<div className='userContainer'>
+				{users.map(user => {return <UserPod style={user.style} key={user.userId}></UserPod>})}
+			</div>
 		</>
 	)
 }

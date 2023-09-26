@@ -4,6 +4,7 @@
 import colours from './colours.json';
 import { sampleImages } from './fakeNetworkData.js';
 let sampleImageCount = 0;
+let testUserCount = 0;
 const dict = new Object();
 const deathAnimation = {
 	animation: "0.5s death ease", 
@@ -69,12 +70,9 @@ export function resizeImages({setImages}) {
 				left: attributes.left
 			}
 
-			//attributes.top += (i%2) ? image.data.moving.height : attributes.top;
-			//image.data.props.width = image.data.props.ratio * image.data.moving.height;
 			image.data.props = image.data.moving;
 			attributes.left = ((i+1)%3) ? attributes.left + image.data.props.width + padding: 0;
 			attributes.top = ((i+1)%3) ? attributes.top : attributes.top + image.data.props.height + padding;
-			//image.data.props.width = image.data.moving.width;
 
 		}
 		return [...currentImages];
@@ -103,6 +101,24 @@ export function addTestImage({images, setImages }) {
 	//Add this image
 	addImage(image, {images, setImages })
 }
+
+/* addTestUser()
+* -------------------------------------------------------
+*   images:
+*		An array of images that are to be rendered to the screen
+*	setImages():
+*		React hook that updates the images array.
+*/
+export function addTestUser({users, setUsers}) {
+	setUsers((currentUser) => [...currentUser, {
+        userId: testUserCount,
+        style: dict[testUserCount],
+    }
+    ])
+	testUserCount++;
+}
+
+
 
 export function addUserIcon(userId, { users, setUsers }) {
 	console.log("addUser works!")
