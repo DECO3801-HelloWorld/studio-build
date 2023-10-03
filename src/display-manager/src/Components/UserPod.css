@@ -1,7 +1,28 @@
 .userPod {
-	position: absolute;
-	outline: blue solid 3px;
-	padding: 20px;
-	opacity: 0.2;
-	top: 5px;
+	--colour1: #ffe040;
+	--colour2: #f69D05;
+	margin: 5px;
+	position: relative;
+	width: 25px;
+	aspect-ratio: 1 / 1;
+	top: 0;
+	background: linear-gradient(135deg, var(--colour1), var(--colour2)); 
+	border-radius: 100%;
+	border: 2px solid var(--colour1);
+	transform: translateY(0);
+	animation: 1s ubirth ease 0s;
+	animation-fill-mode: forwards;
 }
+
+@keyframes ubirth {
+	0% {
+		transform: translateY(-50px);
+	}
+}
+
+@keyframes udeath {
+	100% {
+		transform: translateY(-50px);
+	}
+}
+
