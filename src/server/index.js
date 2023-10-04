@@ -7,7 +7,7 @@ import { fileURLToPath } from 'url';
 import {
 	handle_lost_connection,
 	handle_new_connection
-} from 'event-handlers/network_monitor.js';
+} from './event-handlers/network_monitor.js';
 
 //PORT NUM
 const port = process.env.PORT || 3001;
@@ -28,15 +28,26 @@ const io = new Server(server, {
 	maxHttpBufferSize: 1e8,
 })
 
+let images = []
+
 // When connected log the socketID
 io.on("connection", (socket) => {
 	console.log(`User connected: ${socket.handshake.address}`)
 
 	// If we receive an image, send it to the display
 	socket.on("upload_img", (imgPacket) => {
-		console.log(`Sending Image ${imgPacket.imgName} from ${imgPacket.userName}`)
+		console.log(`Sending Image ${imgPacket.imgName} from ${imgPacket.userName}`);
+		images.push(imgPacket);
 		socket.broadcast.emit("download_img", imgPacket);
 	})
+
+	socket.on("disconnectUser", (userId) => {
+		// Remove images uploaded by the disconnected user
+		images = images.filter(image => image.userId !== userId);
+	  
+		// Notify all clients about the updated images array
+		io.emit('updateImages', images);
+	  });
 
 	// Declare Disconnects
 	socket.on("disconnect", () => {

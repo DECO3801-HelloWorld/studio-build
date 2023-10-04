@@ -18,6 +18,29 @@ export default function App() {
   const [isConnected, setIsConnected] =useState(false);
   //Grab Upload button
   const fileUploadButton = useRef(null);
+
+  useEffect(() => {
+    // Setting up listeners for socket connection and disconnection
+    socket.on('connect', () => {
+        setIsConnected(true);
+    });
+
+    socket.on('disconnect', () => {
+        setIsConnected(false);
+    });
+
+    // Listen for server updates about images
+    socket.on('updateImages', (updatedImages) => {
+        setImageURL(updatedImages);
+    });
+
+    // Cleanup listeners on unmount
+    return () => {
+      socket.off('connect');
+      socket.off('disconnect');
+      socket.off('updateImages');
+  }
+}, []);
   
 
   /* uploadFile()
@@ -134,7 +157,10 @@ export default function App() {
         <button
           class="disconnect-button"
           htmlFor="Disconnect"
-          onClick={() => NetworkManager.disconnectUser(socket)}
+          onClick={() => {
+            socket.emit('disconnectUser', userId);
+            setImageURL([]);
+          }}
         >
           Disconnect
         </button>
