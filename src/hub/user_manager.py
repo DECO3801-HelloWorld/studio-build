@@ -45,7 +45,7 @@ class UserManager:
         for key, ip_list in self.users_dict.items():
             for val in ip_list:
                 if val == IP:
-                    self.users_dict[key].remove[val]
+                    self.users_dict[key].remove(val)
 
     def f_save(self):
         with open(self.file_path, "w") as file:
