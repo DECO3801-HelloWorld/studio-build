@@ -4,6 +4,10 @@ import cors from 'cors'
 import { Server } from 'socket.io'
 import path from 'path';
 import { fileURLToPath } from 'url';
+import {
+	handle_lost_connection,
+	handle_new_connection
+} from 'event-handlers/network_monitor.js';
 
 //PORT NUM
 const port = process.env.PORT || 3001;
@@ -43,6 +47,9 @@ io.on("connection", (socket) => {
 		console.log("Requested to remove an image.");
 		console.log(imgPacket);
 	})
+
+	socket.on("new_connection", (socket) => handle_new_connection(socket));
+	socket.on("lost_connection", (socket) => handle_new_connection(socket));
 })
 
 // Ensure that the paths below match the client vite config "base" option.
@@ -54,20 +61,3 @@ app.use('/display', express.static(path.join(__dirname, '../display-manager/dist
 server.listen(port, () => {
 	console.log("Server Started on port " + port)
 })
-
-
-// === For Debugging only ===
-/*
-let id = 0;
-const testConnectUser = () => {
-	io.emit("user_connect", {userId: id});
-	id;
-}
-setInterval(testConnectUser, 5_000);
-const testRemoveUser = () => {
-	io.emit("remove_user", {userId: id});
-	id++;
-}
-setInterval(testRemoveUser, 5_100);
-*/
-// ==========================
