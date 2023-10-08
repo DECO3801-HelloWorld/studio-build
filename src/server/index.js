@@ -60,7 +60,7 @@ io.on("connection", (socket) => {
 	})
 
 	socket.on("new_connection", (socket) => handle_new_connection(socket));
-	socket.on("lost_connection", (socket) => handle_new_connection(socket));
+	socket.on("lost_connection", (socket) => handle_lost_connection(socket));
 })
 
 // Ensure that the paths below match the client vite config "base" option.
