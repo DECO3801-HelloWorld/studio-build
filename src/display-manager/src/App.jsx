@@ -3,6 +3,7 @@
 // Import npm modules
 import {useState, useEffect} from 'react'
 import io from 'socket.io-client'
+import { QRCodeSVG } from 'qrcode.react'
 
 // Importing Custom modules
 import ImgPod from './Components/ImgPod.jsx' //Images are rendered
@@ -99,6 +100,10 @@ export default function App() {
 			</div>
 			<div className='userContainer'>
 				{users.map(user => {return <UserPod style={user.style} key={user.userId}></UserPod>})}
+			</div>
+			<div className="prompts">
+				{/* Add something akin to prompt the user to scan the qr code.*/}
+				<QRCodeSVG value={window.location.origin}/>
 			</div>
 		</>
 	)
