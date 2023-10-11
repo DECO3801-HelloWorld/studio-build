@@ -40,7 +40,6 @@ export default function ImgPod({ data, setImages }) {
 
 	return (
 		<div className="imgPod" style={style}>
-			<p className="user-name" style={data.style}> {data.userName} </p>
 			<img src={src} ref={img} className="img-content" onLoad={birthAnimation} alt={data.imgName}/>
 		</div>
 	)
