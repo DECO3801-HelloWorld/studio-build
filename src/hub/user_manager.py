@@ -1,17 +1,20 @@
 import json
+import os
 
 class UserManager:
 
     def __init__(self):
         self.file_path = "users.json"
         self.users_dict = {}
-
         try:
             with open(self.file_path, "r") as file:
                 users_dict = json.load(file)
             print("File Located")
         except IOError as e:
             print(f"An error occurred while writing the file: {e}")
+
+        d_ip = os.popen("hostname -I").read()
+        self.device_ip = d_ip.strip()
 
 
     def verify_user(self, MAC):
@@ -27,6 +30,8 @@ class UserManager:
         else:
             self.users_dict[MAC] = [IP]
         self.f_save()
+
+        return IP != self.device_ip
 
     def get_ip(self, MAC):
         if MAC in self.users_dict:

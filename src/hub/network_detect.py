@@ -20,18 +20,16 @@ sio = socketio.Client()
 # lock for connected_devices dict
 lock = threading.Lock()
 
-# User manager
+# user manager
 user_m = UserManager()
 
-# Exit program flag
+# exit program flag
 exit_flag = False
 
 # TODO add in:
 #   - user verificaiton in process_packet
-#   - determine socket functionality with server
-#   - check ping del removes from connected_devices
-#   - rearrange socket.write() to allow for disconnect
-#   - fix exit msg w/ SNIFF
+#   - don't process device and hotspot ARP
+#   - fix exit msg w/ SNIF
 
 def stop_capture(packet):
     global exit_flag
@@ -43,8 +41,7 @@ def msg_format(ip):
     int_ip = int(ipaddress.IPv4Address(ip))
     usr_count = len(connected_devices)
     #msg_str = '{' + str(int_ip) + ':' + str(usr_count) + '}'
-    msg_json = {int_ip:usr_count} 
-    print(msg_json)
+    msg_json = {int_ip:usr_count}
     return msg_json
 
 def process_packet(packet):
@@ -56,10 +53,12 @@ def process_packet(packet):
 
         with lock: # Get lock
             if mac not in connected_devices:
-                user_m.add_user(mac, ip)
-                connected_devices[mac] = ip
-                print(f"New device connected:\n IP: {ip}")
-                sio.emit('new_connection', msg_format(ip)) # send new connection ip to server
+                if user_m.add_user(mac, ip): # checks if server device is being processed
+                    connected_devices[mac] = ip
+                    print(f"\nNew device connected:\n IP: {ip}")
+                    sio.emit('new_connection', msg_format(ip)) # send new connection ip to server
+                else:
+                    print("\nDevice ARP: avoided")
 
 def device_ping():
     global exit_flag
@@ -72,8 +71,9 @@ def device_ping():
         for mac, ip in tmp_connected.items():
             response = os.system(f"ping -c 1 {ip} > /dev/null 2>&1") # Ping device
             if response != 0:
-                print(f"Device disconnected:\n IP: {ip}")
-                del connected_devices[mac]
+                print(f"\nDevice disconnected:\n IP: {ip}")
+                with lock:
+                    del connected_devices[mac]
                 sio.emit('lost_connection', msg_format(ip)) # send disconnected ip to server
 
         time.sleep(5) # seconds
@@ -81,7 +81,7 @@ def device_ping():
 def close_cmd():
     global connected_devices
     global exit_flag
-    # Wait for user input to exit the program
+    # wait for user input to exit the program
     while True:
         user_input = input()
         if user_input.lower() == "end":
@@ -92,12 +92,12 @@ def close_cmd():
 
 # ARP packet processing thread
 arp_thread = threading.Thread(target=lambda: sniff(filter="arp", prn=process_packet, stop_filter=stop_capture, store=0))
-# Device ping thread
+# device ping thread
 ping_thread = threading.Thread(target=device_ping)
-# Server communications thread
+# aerver communications thread
 close_thread = threading.Thread(target=close_cmd)
 
-# Start Threads
+# start threads
 arp_thread.start()
 ping_thread.start()
 close_thread.start()
@@ -111,7 +111,7 @@ def connect():
 
 @sio.event
 def disconnect():
-    print('disconnected from server')
+    print(' - - disconnected from server - - ')
 
 def main():
     # get local hostname
@@ -121,21 +121,22 @@ def main():
     port = os.environ.get("PORT", "3002")
     try:
         print(f"{ip_address}:{port}")
-        sio.connect(f'http://{ip_address}:{port}') # +':' + port)
+        sio.connect(f'http://{ip_address}:{port}')
     except Exception as e:
-        print(f'Error Msg: {e}')
+        print(f'Error Message: {e}')
 
 
 if __name__ == '__main__':
     main()
 
-# ----------------------
+# -------------------- Ending Processes -----------------
 
-# Finish Threads
+# finish threads
 arp_thread.join()
 ping_thread.join()
 close_thread.join()
 
+# disconnect from server
 sio.disconnect()
 
-print("COMPLETED")
+print(" - - COMPLETED - - ")
