@@ -7,7 +7,7 @@ import { fileURLToPath } from 'url';
 import {
 	handle_lost_connection,
 	handle_new_connection
-} from 'event-handlers/network_monitor.js';
+} from './event-handlers/network_monitor.js';
 
 //PORT NUM
 const port = process.env.PORT || 3001;
