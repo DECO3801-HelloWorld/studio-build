@@ -174,16 +174,16 @@ export default function App() {
   //     onPanResponderRelease: (e, gestureState) => {
   //       const screenHeight = Dimensions.get("window").height;
   //       const touchY = gestureState.moveY;
-  
+
   //       const imageTop = touchY;
   //       const imageBottom = touchY + PixelRatio.getPixelSizeForLayoutSize(363);
-  
+
   //       if (imageTop >= 20 || imageBottom >= screenHeight - 20) {
   //         alert("Image touches the top or bottom of the screen");
   //       }
   //     },
   //   });
-  
+
   //   return imageURL.map((image) => (
   //     <View
   //       style={{
@@ -231,11 +231,12 @@ export default function App() {
               console.log(screenHeight);
               const touchY = e.nativeEvent.pageY;
               console.log(touchY);
-  
+
               // Get the position of the top and bottom of the image
               const imageTop = touchY;
-              const imageBottom = touchY + PixelRatio.getPixelSizeForLayoutSize(363); // Height of the image
-  
+              const imageBottom =
+                touchY + PixelRatio.getPixelSizeForLayoutSize(363); // Height of the image
+
               if (imageTop >= 20 || imageBottom >= screenHeight - 20) {
                 // Image touches the top or bottom of the screen (within 20 pixels)
                 alert("Image touches the top or bottom of the screen");
