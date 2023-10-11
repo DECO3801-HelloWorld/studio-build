@@ -40,7 +40,7 @@ def msg_format(ip):
 
     int_ip = int(ipaddress.IPv4Address(ip))
     usr_count = len(connected_devices)
-    #msg_str = '{' + str(int_ip) + ':' + str(usr_count) + '}'
+
     msg_json = {int_ip:usr_count}
     return msg_json
 
@@ -88,6 +88,7 @@ def close_cmd():
             exit_flag = True
             connected_devices = {}
             break
+
 # -------------------- Define & Start Threads -----------------
 
 # ARP packet processing thread
@@ -118,13 +119,12 @@ def main():
     hostname = socket.gethostname()
     # get ip address
     ip_address = socket.gethostbyname(hostname)
-    port = os.environ.get("PORT", "3002")
+    port = os.environ.get("PORT", "3001")
     try:
         print(f"{ip_address}:{port}")
         sio.connect(f'http://{ip_address}:{port}')
     except Exception as e:
         print(f'Error Message: {e}')
-
 
 if __name__ == '__main__':
     main()
