@@ -97,6 +97,7 @@ export default function App() {
 
   function uploadFxn() {
     return (
+      <center>
       <div class="upload-box">
         <label class="file-uploader-container">
           <div className="centered-content">
@@ -113,6 +114,7 @@ export default function App() {
           </div>
         </label>
       </div>
+      </center>
     );
   }
   function imgMapFxn() {
@@ -142,6 +144,8 @@ export default function App() {
         </div>
         {status()}
         {imageURL.length === 0 ? uploadFxn() : imgMapFxn()}
+        <br />
+        <center>
         <div class="start-presenting-button">
           <button
             htmlFor="image-upload"
@@ -153,6 +157,7 @@ export default function App() {
             id="image-upload"
           />
         </div>
+        </center>
         <div>
         <button
           class="disconnect-button"
