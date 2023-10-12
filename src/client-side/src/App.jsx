@@ -80,7 +80,7 @@ export default function App() {
    */
   function uploadFile(e) {
     const file = NetworkManager.getFile(fileUploadButton);
-    const imgPacket = NetworkManager.packImage(file, userId, userName);
+    const imgPacket = NetworkManager.packImage(file, userId, userName, imageURL.length);
     NetworkManager.sendImage(socket, imgPacket);
 
     const newImageURLs = [];
@@ -280,7 +280,7 @@ export default function App() {
             onChange={uploadFile}
             id="image-upload"
             accept="image/*" // Specify accepted file types
-            capture // Capture from device camera if available
+            // capture // Capture from device camera if available
           />
         </div>
         <div>

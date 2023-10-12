@@ -43,10 +43,10 @@ else
 	npm run build
 fi
 
-open_browser () {
-	sleep 3s
-	xdg-open "http://localhost:$PORT/display"
-}
+# { open_browser () {
+# 	sleep 3s
+# 	xdg-open "http://localhost:$PORT/display"
+# }
 
 # Run the server.
 cd ../server
@@ -54,6 +54,6 @@ npm install
 if [ $DEV == 1 ]; then
 	npm run dev
 else 
-	open_browser&
+	# open_browser&
 	npm run start
 fi

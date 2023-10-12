@@ -41,6 +41,7 @@ export function addImage(imgPacket, {images,  setImages }) {
 		Object.assign(imgPacket, { style: dict[imgPacket.userId] });
 	}
 
+	console.log(imgPacket.imgId)
 	//Update the image state array
 	//Current images as an argument so it doesn't overwrite itself
 	setImages((currentImages) => {
@@ -59,12 +60,16 @@ export function resizeImages({setImages}) {
 		let current_row_width = 0
 		for (let i = 0; i < currentImages.length; i++) {
 			current_row_width += currentImages[i].data.props.width
+			if (current_row_width > rootWidth) {
+				current_row_width = rootWidth
+			}
 			if ((i+1) % 3 == 0) {
 				img_row_width.push(current_row_width)
 				current_row_width = 0
 			}
 		}
 		img_row_width.push(current_row_width)
+		console.log(img_row_width)
 
 		const attributes = {
 			left: (rootWidth / 2) - (img_row_width[0] / 2),

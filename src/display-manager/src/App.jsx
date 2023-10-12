@@ -40,6 +40,7 @@ export default function App() {
 		NetworkManager.listenForImgRemove(socket, { images, setImages });
 		NetworkManager.listenForUserConnect(socket, { users, setUsers });
 		NetworkManager.listenForRemoveUser(socket, { images, setImages }, { users, setUsers });
+		NetworkManager.listenForRemoveAllImage(socket, {images, setImages});
 		//ImageManager.resizeImages({setImages})
 
 		// Unmount the listener for the download
@@ -90,8 +91,7 @@ export default function App() {
 			<SplashScreen style={images.length ? {opacity : 0} : {opacity : 1}}/>
 			{/* Render however many images we have in the images array */}
 			<div id='imgContainer'>
-				{images.map(image => {return <ImgPod key={image.id} setImages={setImages} data={image.data}/>})}
-			</div>
+				{images.map(image => {return <ImgPod key={image.id} setImages={setImages} data={image.data}/>})} </div>
 			<div className='userContainer'>
 				{users.map(user => {return <UserPod style={user.style} key={user.userId}></UserPod>})}
 			</div>

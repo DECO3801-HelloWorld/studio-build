@@ -22,6 +22,14 @@ export function listenForImage(socket, imageState) {
 	})
 }
 
+export function listenForRemoveAllImage(socket, {images, setImages}) {
+	socket.on("display_remove_all_image", ({ userId }) => {
+		// print out image info and add to image state
+		console.log(`Removing image with ID: ${userId}`);
+		ImageManager.removeUser(userId, {images, setImages});
+	})
+}
+
 //Stub for user data
 export function listenForUserConnect(socket, userState) {
 	socket.on("user_connect"), () => {
@@ -92,4 +100,5 @@ export function dismountListeners(socket) {
 	socket.off("user_connect");
 	socket.off("connect_error");
 	socket.off("remove_img");
+	socket.off("display_remove_all_image");
 }
