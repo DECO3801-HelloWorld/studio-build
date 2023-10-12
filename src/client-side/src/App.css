@@ -67,7 +67,7 @@ input {
 .upload-image img {
   bottom: 0;
   width: 60vw;
-  height: 40vh;
+  height: 55vh;
   border: solid 3px;
   color: black;
   border-radius: 20px;
@@ -77,7 +77,7 @@ input {
   background: #e0e0e0;
   border: 1px rgba(8, 133, 134, 0.3) dotted;
   width: 60vw; 
-  height: 40vh;
+  height: 55vh;
   color: black;
   border-radius: 20px;
   object-fit: cover;
