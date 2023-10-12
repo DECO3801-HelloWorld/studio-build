@@ -40,12 +40,18 @@ export default function App() {
 		NetworkManager.listenForImgRemove(socket, { images, setImages });
 		NetworkManager.listenForUserConnect(socket, { users, setUsers });
 		NetworkManager.listenForRemoveUser(socket, { images, setImages }, { users, setUsers });
-		NetworkManager.listenForRemoveAllImage(socket, {images, setImages});
+		//NetworkManager.listenForRemoveAllImage(socket, {images, setImages});
+		//NetworkManager.disconnectUser(socket, userId);
 		//ImageManager.resizeImages({setImages})
+
+		socket.on('updateImages', (updatedImages) => {
+			setImages(updatedImages);
+		  });
 
 		// Unmount the listener for the download
 		return () => {
 			NetworkManager.dismountListeners(socket);
+			socket.off('updateImages');
 			//ImageManager.resizeImages({setImages})
 		}
 	}, [images, users]);

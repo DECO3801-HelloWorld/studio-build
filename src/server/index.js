@@ -32,6 +32,8 @@ const io = new Server(server, {
 	maxHttpBufferSize: 1e8,
 })
 
+let images = []
+
 // When connected log the socketID
 io.on("connection", (socket) => {
 	console.log(`User connected: ${socket.handshake.address}`)
@@ -43,6 +45,14 @@ io.on("connection", (socket) => {
 		imgPacket.imgId = ip2int(socket.handshake.address)+imgPacket.imgId
 		socket.broadcast.emit("download_img", imgPacket);
 	})
+
+	socket.on("disconnectUser", (userId) => {
+		// Remove images uploaded by the disconnected user
+		images = images.filter(image => image.userId !== userId);
+	  
+		// Notify all clients about the updated images array
+		io.emit('updateImages', images);
+	  });
 
 	// Declare Disconnects
 	socket.on("disconnect", () => {

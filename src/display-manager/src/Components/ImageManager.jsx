@@ -200,6 +200,15 @@ export function removeAllImages({ images, setImages }) {
 	});
 }
 
+/* removeImagesByUser() 
+ * Removes all images associated with a specific userId
+ */
+export function removeImagesByUser(userId, { images, setImages }) {
+    // Filter out images that have the matching userId
+    const updatedImages = images.filter(image => image.data.userId !== userId);
+    setImages(updatedImages);
+}
+
 /* applyDeathAnimation()
 * -------------------------------------------------------
 *  Applys the death animation to an image (Makes it fly up the screen)

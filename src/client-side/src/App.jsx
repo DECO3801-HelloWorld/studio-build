@@ -56,6 +56,7 @@ export default function App() {
       },
     })
   ).current;
+
   const styles = StyleSheet.create({
     uploadImage: {
       flex: 1,
@@ -71,6 +72,29 @@ export default function App() {
       transform: [{ translateX: "-50%" }, { translateY: "-50%" }],
     },
   });
+
+  useEffect(() => {
+    // Setting up listeners for socket connection and disconnection
+    socket.on('connect', () => {
+        setIsConnected(true);
+    });
+
+    socket.on('disconnect', () => {
+        setIsConnected(false);
+    });
+
+    // Listen for server updates about images
+    socket.on('updateImages', (updatedImages) => {
+        setImageURL(updatedImages);
+    });
+
+    // Cleanup listeners on unmount
+    return () => {
+      socket.off('connect');
+      socket.off('disconnect');
+      socket.off('updateImages');
+  }
+}, []);
 
   /* uploadFile()
    *  ------------------------
@@ -284,13 +308,16 @@ export default function App() {
           />
         </div>
         <div>
-          <button
-            className="disconnect-button"
-            htmlFor="Disconnect"
-            onClick={() => NetworkManager.disconnectUser(socket)}
-          >
-            Disconnect
-          </button>
+        <button
+          class="disconnect-button"
+          htmlFor="Disconnect"
+          onClick={() => {
+            socket.emit('disconnectUser', userId);
+            setImageURL([]);
+          }}
+        >
+          Disconnect
+        </button>
         </div>
         {/* {<label onClick={print}>printing</label>} */}
       </div>
