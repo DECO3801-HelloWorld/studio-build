@@ -21,13 +21,14 @@
 	*		imgPacket - The packed object that contains all information
 	*					about an image.
 */
-export function packImage(file, userID, userName) {
+export function packImage(file, userID, userName, imgId) {
 	const imgPacket = {
 		userId: userID,			//ID belong to the clients IP adress
 		userName: userName,		//Handle for the IP, [NOT USED FOR IDENTIFICATION]
 		imgName: file.name,		//Filename of the image
 		imgPayload: file,		//ArrayBuffer format
 		imgType: file.type,		//ImgType eg. PNG JPEG
+		imgId: imgId,
 	}
 	return imgPacket;
 }
@@ -75,7 +76,7 @@ export function getFile(fileUploadButton) {
 	*		The socket connected with the server
 */
 export function disconnectUser(socket) {
-	socket.disconnect()
+	socket.emit("remove_all_image")
 	console.log(`Client initiated disconnect from server` )
 }
 

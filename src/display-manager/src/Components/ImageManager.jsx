@@ -41,6 +41,7 @@ export function addImage(imgPacket, {images,  setImages }) {
 		Object.assign(imgPacket, { style: dict[imgPacket.userId] });
 	}
 
+	console.log(imgPacket.imgId)
 	//Update the image state array
 	//Current images as an argument so it doesn't overwrite itself
 	setImages((currentImages) => {
@@ -54,8 +55,24 @@ export function resizeImages({setImages}) {
 		const rootWidth= document.getElementById("imgContainer").getBoundingClientRect().width;
 		const padding = 10;
 
+
+		let img_row_width = []
+		let current_row_width = 0
+		for (let i = 0; i < currentImages.length; i++) {
+			current_row_width += currentImages[i].data.props.width
+			if (current_row_width > rootWidth) {
+				current_row_width = rootWidth
+			}
+			if ((i+1) % 3 == 0) {
+				img_row_width.push(current_row_width)
+				current_row_width = 0
+			}
+		}
+		img_row_width.push(current_row_width)
+		console.log(img_row_width)
+
 		const attributes = {
-			left: 0,
+			left: (rootWidth / 2) - (img_row_width[0] / 2),
 			top: 0,
 			area: 0,
 		};
@@ -71,7 +88,7 @@ export function resizeImages({setImages}) {
 			}
 
 			image.data.props = image.data.moving;
-			attributes.left = ((i+1)%3) ? attributes.left + image.data.props.width + padding: 0;
+			attributes.left = ((i+1)%3) ? attributes.left + image.data.props.width + padding: (rootWidth / 2) - (img_row_width[Math.ceil(i / 3)]/2);
 			attributes.top = ((i+1)%3) ? attributes.top : attributes.top + image.data.props.height + padding;
 
 		}
