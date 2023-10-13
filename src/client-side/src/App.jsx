@@ -77,6 +77,30 @@ export default function App() {
     })
   ).current;
 
+
+  useEffect(() => {
+    // Setting up listeners for socket connection and disconnection
+    socket.on('connect', () => {
+        setIsConnected(true);
+    });
+
+    socket.on('disconnect', () => {
+        setIsConnected(false);
+    });
+
+    // Listen for server updates about images
+    socket.on('updateImages', (updatedImages) => {
+        setImageURL(updatedImages);
+    });
+
+    // Cleanup listeners on unmount
+    return () => {
+      socket.off('connect');
+      socket.off('disconnect');
+      socket.off('updateImages');
+  }
+}, []);
+
   /* uploadFile()
    *  ------------------------
    *  Uploads the file from the input element with id "imgUpload" to the server
@@ -85,7 +109,7 @@ export default function App() {
    */
   function uploadFile(e) {
     const file = NetworkManager.getFile(fileUploadButton);
-    const imgPacket = NetworkManager.packImage(file, userId, userName);
+    const imgPacket = NetworkManager.packImage(file, userId, userName, imageURL.length);
     NetworkManager.sendImage(socket, imgPacket);
 
     const newImageURLs = [];
@@ -230,17 +254,20 @@ export default function App() {
             onChange={uploadFile}
             id="image-upload"
             accept="image/*" // Specify accepted file types
-            capture // Capture from device camera if available
+            // capture // Capture from device camera if available
           />
         </div>
         <div>
-          <button
-            className="disconnect-button"
-            htmlFor="Disconnect"
-            onClick={() => NetworkManager.disconnectUser(socket)}
-          >
-            Disconnect
-          </button>
+        <button
+          class="disconnect-button"
+          htmlFor="Disconnect"
+          onClick={() => {
+            socket.emit('disconnectUser', userId);
+            setImageURL([]);
+          }}
+        >
+          Disconnect
+        </button>
         </div>
         {/* {<label onClick={print}>printing</label>} */}
       </div>

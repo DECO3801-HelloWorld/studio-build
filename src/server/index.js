@@ -12,6 +12,10 @@ import {
 //PORT NUM
 const port = process.env.PORT || 3001;
 
+function ip2int(ip) {
+    return ip.split('.').reduce(function(ipInt, octet) { return (ipInt<<8) + parseInt(octet, 10)}, 0) >>> 0;
+}
+
 // Create new server
 const app = express();
 app.use(cors());
@@ -28,6 +32,8 @@ const io = new Server(server, {
 	maxHttpBufferSize: 1e8,
 })
 
+let images = []
+
 // When connected log the socketID
 io.on("connection", (socket) => {
 	console.log(`User connected: ${socket.handshake.address}`)
@@ -35,12 +41,28 @@ io.on("connection", (socket) => {
 	// If we receive an image, send it to the display
 	socket.on("upload_img", (imgPacket) => {
 		console.log(`Sending Image ${imgPacket.imgName} from ${imgPacket.userName}`)
+		imgPacket.userId = ip2int(socket.handshake.address)
+		imgPacket.imgId = ip2int(socket.handshake.address)+imgPacket.imgId
 		socket.broadcast.emit("download_img", imgPacket);
 	})
+
+	socket.on("disconnectUser", (userId) => {
+		// Remove images uploaded by the disconnected user
+		images = images.filter(image => image.userId !== userId);
+	  
+		// Notify all clients about the updated images array
+		io.emit('updateImages', images);
+	  });
 
 	// Declare Disconnects
 	socket.on("disconnect", () => {
 		console.log("client disconnected");
+	})
+
+	socket.on("remove_all_image", () => {
+		const payload = { userId: ip2int(socket.handshake.address)}
+		socket.broadcast.emit("display_remove_all_image", payload)
+		console.log(`User ${payload.userId} requested a remove all images`)
 	})
 
 	socket.on("request_img_remove", (imgPacket) => {
@@ -48,8 +70,8 @@ io.on("connection", (socket) => {
 		console.log(imgPacket);
 	})
 
-	socket.on("new_connection", (socket) => handle_new_connection(socket));
-	socket.on("lost_connection", (socket) => handle_lost_connection(socket));
+	socket.on("new_connection", handle_new_connection(socket));
+	socket.on("lost_connection", handle_lost_connection(socket));
 })
 
 // Ensure that the paths below match the client vite config "base" option.
