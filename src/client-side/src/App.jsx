@@ -7,10 +7,12 @@ import {
   View,
   StyleSheet,
   PanResponder,
-  Dimensions,
   Text,
   PixelRatio,
+  Dimensions,
 } from "react-native-web";
+import { useSpring, animated } from 'react-spring';
+
 
 //import Hammer from "hammerjs";
 //Server variables
@@ -35,42 +37,45 @@ export default function App() {
   //Grab Upload button
   const fileUploadButton = useRef(null);
   const pan = useRef(new Animated.ValueXY()).current;
+  const [position, setPosition] = useState({ x: 0, y: 0 });
 
+  
   const panResponder = useRef(
-    // PanResponder.create({
-    //   onMoveShouldSetPanResponder: () => true,
-    //   onPanResponderMove: (event, gestureState) => {
-    //     console.log("PanResponderMove:", gestureState);
-    //     Animated.event([null, { dx: pan.x, dy: pan.y }])(event, gestureState);
-    //   },
-    //   onPanResponderRelease: (event, gestureState) => {
-    //     console.log("PanResponderRelease:", gestureState);
-    //     pan.flattenOffset();
-    //   },
-    // })
+   
     PanResponder.create({
       onMoveShouldSetPanResponder: () => true,
-      onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }]),
-      onPanResponderRelease: () => {
-        pan.extractOffset();
+      onPanResponderMove: (event, gestureState) => {
+        console.log('PanResponderMove:', gestureState);
+        Animated.event([null, { dx: pan.x, dy: pan.y }])(event, gestureState);
+        const imageTop = gestureState.moveY;
+        const screenHeight = Dimensions.get("window").height;
+            const imageBottom =
+            gestureState.moveY + PixelRatio.getPixelSizeForLayoutSize(363); // Height of the image
+
+            if (imageTop <= 20 || imageBottom >= screenHeight - 20) {
+              // Image touches the top or bottom of the screen (within 20 pixels)
+              console.log("yoooooooooo")
+              // alert("Image touches the top or bottom of the screen");
+            }
+
       },
+      onPanResponderRelease: (event, gestureState) => {
+        console.log('PanResponderRelease:', gestureState);
+        //alert("going back ");
+         // Animate the view back to its original position
+      Animated.spring(pan, {
+        toValue: { x: 0, y: 0 },
+        useNativeDriver: false, // Set this to true if using native driver
+      }).start();
+
+      // Reset the position in the state
+      setPosition({ x: 0, y: 0 });
+
+        //pan.flattenOffset();
+      },
+
     })
   ).current;
-  const styles = StyleSheet.create({
-    uploadImage: {
-      flex: 1,
-      width: PixelRatio.getPixelSizeForLayoutSize(800), // Convert 800px to dp
-      height: PixelRatio.getPixelSizeForLayoutSize(363), // Convert 363px to dp
-      borderWidth: PixelRatio.getPixelSizeForLayoutSize(3), // Convert 3px to dp
-      borderColor: "black",
-      borderRadius: 20,
-      objectFit: "cover",
-      position: "fixed",
-      top: "37%",
-      left: "50%",
-      transform: [{ translateX: "-50%" }, { translateY: "-50%" }],
-    },
-  });
 
   /* uploadFile()
    *  ------------------------
@@ -168,86 +173,31 @@ export default function App() {
       </div>
     );
   }
-  // function imgMapFxn() {
-  //   const panResponder = PanResponder.create({
-  //     onStartShouldSetPanResponder: () => true,
-  //     onPanResponderRelease: (e, gestureState) => {
-  //       const screenHeight = Dimensions.get("window").height;
-  //       const touchY = gestureState.moveY;
 
-  //       const imageTop = touchY;
-  //       const imageBottom = touchY + PixelRatio.getPixelSizeForLayoutSize(363);
-
-  //       if (imageTop >= 20 || imageBottom >= screenHeight - 20) {
-  //         alert("Image touches the top or bottom of the screen");
-  //       }
-  //     },
-  //   });
-
-  //   return imageURL.map((image) => (
-  //     <View
-  //       style={{
-  //         flex: 1,
-  //         width: PixelRatio.getPixelSizeForLayoutSize(800),
-  //         height: PixelRatio.getPixelSizeForLayoutSize(363),
-  //       }}
-  //       key={image.id}
-  //     >
-  //       <Animated.View
-  //         key={image.id}
-  //         style={{
-  //           transform: [{ translateX: pan.x }, { translateY: pan.y }],
-  //         }}
-  //         {...panResponder.panHandlers}
-  //       >
-  //         <div className="upload-image">
-  //           <img src={image.URLs} alt="Oops!" />
-  //         </div>
-  //       </Animated.View>
-  //     </View>
-  //   ));
-  // }
   function imgMapFxn() {
+    
+
+    console.log(socket.connected);
     return imageURL.map((image) => (
-      <View
-        style={{
-          flex: 1,
-          width: PixelRatio.getPixelSizeForLayoutSize(800),
-          height: PixelRatio.getPixelSizeForLayoutSize(363),
-        }}
-        key={image.id}
-      >
+      
+      <View style = {{width: PixelRatio.getPixelSizeForLayoutSize(800), // Convert 800px to dp
+      height: PixelRatio.getPixelSizeForLayoutSize(363), }} key={image.id}>
         <Animated.View
           key={image.id}
-          style={{
-            transform: [{ translateX: pan.x }, { translateY: pan.y }],
-          }}
+        style={{
+          
+          transform: [{translateX: pan.x}, {translateY: pan.y}],
+        }}
           {...panResponder.panHandlers}
-        >
-          <div
-            className="upload-image"
-            onTouchMove={(e) => {
-              const screenHeight = Dimensions.get("window").height;
-              console.log(screenHeight);
-              const touchY = e.nativeEvent.pageY;
-              console.log(touchY);
+        ><div className="upload-image">
+          <img  src={image.URLs} alt="Oops!" />
+        
+          </div></Animated.View>
+        </View >
 
-              // Get the position of the top and bottom of the image
-              const imageTop = touchY;
-              const imageBottom =
-                touchY + PixelRatio.getPixelSizeForLayoutSize(363); // Height of the image
-
-              if (imageTop >= 20 || imageBottom >= screenHeight - 20) {
-                // Image touches the top or bottom of the screen (within 20 pixels)
-                alert("Image touches the top or bottom of the screen");
-              }
-            }}
-          >
-            <img src={image.URLs} alt="Oops!" />
-          </div>
-        </Animated.View>
-      </View>
+      
     ));
+    
   }
 
   /* Entry Point of Program
