@@ -312,7 +312,7 @@ export default function App() {
           class="disconnect-button"
           htmlFor="Disconnect"
           onClick={() => {
-            socket.emit('disconnectUser', userId);
+			  NetworkManager.disconnectUser(socket)
             setImageURL([]);
           }}
         >
