@@ -3,4 +3,5 @@
 export const sideStyle = {
 	left: "6vw",
 	top: "79vh",
+	opacity: "0.5",
 }
