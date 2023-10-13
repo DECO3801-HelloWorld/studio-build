@@ -18,8 +18,13 @@ export function listenForImage(socket, imageState) {
 	socket.on("download_img", (imgPacket) => {
 		// print out image info and add to image state
 		console.log(`Image received form ${imgPacket.userName} : ${imgPacket.imgName}`);
+		imgPacket.userId = imgPacket.userId || null;
 		ImageManager.addImage(imgPacket, imageState);
-	})
+	});
+
+	socket.on('updateImages', (updatedImages) => {
+        imageState.setImages(updatedImages);
+    });
 }
 
 export function listenForRemoveAllImage(socket, {images, setImages}) {
@@ -84,6 +89,11 @@ export function listenForRemoveUser(socket, imageState, userState) {
 	})
 }
 
+// export function removeImagesByUser(userId, { images, setImages }) {
+// 	const updatedImages = images.filter(image => image.userId !== userId);
+// 	setImages(updatedImages);
+// }
+
 /* dismountListeners()
 	* -------------------------------------------------------
 	*  Will call socket.off() on all the appropriate event listeners.
@@ -101,4 +111,13 @@ export function dismountListeners(socket) {
 	socket.off("connect_error");
 	socket.off("remove_img");
 	socket.off("display_remove_all_image");
+}
+
+export function disconnectUser(socket, imageState) {
+	// socket.on("disconnectUser", ({ userId }) => {
+	// 	console.log(`Removing all images belonging to user: ${userId}`);
+	// 	ImageManager.removeImagesByUser(userId, imageState)
+	// })
+
+	socket.emit('disconnectUser', userId);
 }
