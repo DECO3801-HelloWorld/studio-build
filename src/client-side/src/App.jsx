@@ -310,11 +310,11 @@ export default function App() {
           class="disconnect-button"
           htmlFor="Disconnect"
           onClick={() => {
-            socket.emit('disconnectUser', userId);
+			  NetworkManager.disconnectUser(socket)
             setImageURL([]);
           }}
         >
-          Disconnect
+          Remove Images
         </button>
         </div>
         {/* {<label onClick={print}>printing</label>} */}
