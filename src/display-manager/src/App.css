@@ -34,7 +34,16 @@
 
 .prompts {
 	position: absolute;
-	opacity: 0.8;
-	left: 2%;
-	top: 80%;
+	opacity: 0.9;
+    left: 50%;
+    top: 60vh;
+    transform: translate(-51%, 0);
+	transition: 0.5s all ease;
 }
+
+#QR {
+	width: 10vw;
+	height: 10vw;
+}
+
+
