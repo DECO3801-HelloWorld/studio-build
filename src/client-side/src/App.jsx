@@ -316,7 +316,7 @@ export default function App() {
             setImageURL([]);
           }}
         >
-          Disconnect
+          Remove Images
         </button>
         </div>
         {/* {<label onClick={print}>printing</label>} */}

@@ -42,7 +42,7 @@ export default function App() {
 		NetworkManager.listenForUserConnect(socket, { users, setUsers });
 		NetworkManager.listenForRemoveUser(socket, { images, setImages }, { users, setUsers });
 		NetworkManager.listenForRemoveAllImage(socket, {images, setImages});
-		NetworkManager.disconnectUser(socket, userId);
+		// NetworkManager.disconnectUser(socket, userId);
 		//ImageManager.resizeImages({setImages})
 
 		//Not sure who wrote this but it broke display manager
