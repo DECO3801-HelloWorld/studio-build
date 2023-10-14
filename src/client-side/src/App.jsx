@@ -2,26 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
 import * as NetworkManager from "./Components/NetworkManager.jsx";
 import "./App.css";
-import {
-  Animated,
-  View,
-  StyleSheet,
-  PanResponder,
-  Dimensions,
-  Text,
-  PixelRatio,
-} from "react-native-web";
 
-//import Hammer from "hammerjs";
 //Server variables
-const port =
-  typeof process !== "undefined"
-    ? typeof process !== "undefined"
-      ? process.env.PORT || 3001
-      : 3001
-    : 3001;
 const socket = io.connect(window.location.origin); //Socket is connection to server
-console.log("initial value " + socket.connected);
 var count = 0;
 
 //Testing Variables
@@ -34,44 +17,7 @@ export default function App() {
   const [isConnected, setIsConnected] = useState(false);
   //Grab Upload button
   const fileUploadButton = useRef(null);
-  const pan = useRef(new Animated.ValueXY()).current;
 
-  const panResponder = useRef(
-    // PanResponder.create({
-    //   onMoveShouldSetPanResponder: () => true,
-    //   onPanResponderMove: (event, gestureState) => {
-    //     console.log("PanResponderMove:", gestureState);
-    //     Animated.event([null, { dx: pan.x, dy: pan.y }])(event, gestureState);
-    //   },
-    //   onPanResponderRelease: (event, gestureState) => {
-    //     console.log("PanResponderRelease:", gestureState);
-    //     pan.flattenOffset();
-    //   },
-    // })
-    PanResponder.create({
-      onMoveShouldSetPanResponder: () => true,
-      onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }]),
-      onPanResponderRelease: () => {
-        pan.extractOffset();
-      },
-    })
-  ).current;
-
-  const styles = StyleSheet.create({
-    uploadImage: {
-      flex: 1,
-      width: PixelRatio.getPixelSizeForLayoutSize(800), // Convert 800px to dp
-      height: PixelRatio.getPixelSizeForLayoutSize(363), // Convert 363px to dp
-      borderWidth: PixelRatio.getPixelSizeForLayoutSize(3), // Convert 3px to dp
-      borderColor: "black",
-      borderRadius: 20,
-      objectFit: "cover",
-      position: "fixed",
-      top: "37%",
-      left: "50%",
-      transform: [{ translateX: "-50%" }, { translateY: "-50%" }],
-    },
-  });
 
   useEffect(() => {
     // Setting up listeners for socket connection and disconnection
@@ -131,44 +77,9 @@ export default function App() {
 
     //this adds the list of images to imageURL
   }
-  //extra function
-  function print() {
-    {
-      imageURL.map((imageURL) => {
-        // console.log(imageURL.name);
-      });
-      console.log(socket.Connected);
-    }
-  }
-
-  // function handleSwipe(event) {
-  //   const { direction } = event;
-
-  //   if (direction == Hammer.DIRECTION_UP) {
-  //     console.log("Swipe-up");
-  //     alert('Swipe up detected');
-  //   } else if (direction == Hammer.DIRECTION_DOWN) {
-  //     console.log("Swipe-down");
-  //     alert('Swipe down detected');
-  //   }
-  // }
-  function status() {
-    return isConnected == true ? (
-      <div className="text"> Connected to Server </div>
-    ) : (
-      <div className="text"> Not Connected to Server </div>
-    );
-  }
 
   function uploadFxn() {
     return (
-      //   <div>
-      //   <img
-      //     className="test-image"
-      //     src="https://via.placeholder.com/200"
-      //     alt="Test Image"
-      //   />
-      // </div>
 
       <div className="upload-box">
         <label className="file-uploader-container">
@@ -192,62 +103,8 @@ export default function App() {
       </div>
     );
   }
-  // function imgMapFxn() {
-  //   const panResponder = PanResponder.create({
-  //     onStartShouldSetPanResponder: () => true,
-  //     onPanResponderRelease: (e, gestureState) => {
-  //       const screenHeight = Dimensions.get("window").height;
-  //       const touchY = gestureState.moveY;
-
-  //       const imageTop = touchY;
-  //       const imageBottom = touchY + PixelRatio.getPixelSizeForLayoutSize(363);
-
-  //       if (imageTop >= 20 || imageBottom >= screenHeight - 20) {
-  //         alert("Image touches the top or bottom of the screen");
-  //       }
-  //     },
-  //   });
-
-  //   return imageURL.map((image) => (
-  //     <View
-  //       style={{
-  //         flex: 1,
-  //         width: PixelRatio.getPixelSizeForLayoutSize(800),
-  //         height: PixelRatio.getPixelSizeForLayoutSize(363),
-  //       }}
-  //       key={image.id}
-  //     >
-  //       <Animated.View
-  //         key={image.id}
-  //         style={{
-  //           transform: [{ translateX: pan.x }, { translateY: pan.y }],
-  //         }}
-  //         {...panResponder.panHandlers}
-  //       >
-  //         <div className="upload-image">
-  //           <img src={image.URLs} alt="Oops!" />
-  //         </div>
-  //       </Animated.View>
-  //     </View>
-  //   ));
-  // }
   function imgMapFxn() {
     return imageURL.map((image) => (
-      <View
-        style={{
-          flex: 1,
-          width: PixelRatio.getPixelSizeForLayoutSize(800),
-          height: PixelRatio.getPixelSizeForLayoutSize(363),
-        }}
-        key={image.id}
-      >
-        <Animated.View
-          key={image.id}
-          style={{
-            transform: [{ translateX: pan.x }, { translateY: pan.y }],
-          }}
-          {...panResponder.panHandlers}
-        >
           <div
             className="upload-image"
             onTouchMove={(e) => {
@@ -269,8 +126,6 @@ export default function App() {
           >
             <img src={image.URLs} alt="Oops!" />
           </div>
-        </Animated.View>
-      </View>
     ));
   }
 
@@ -292,22 +147,14 @@ export default function App() {
         {/* {status()} */}
         {imageURL.length === 0 ? uploadFxn() : imgMapFxn()}
         <div className="start-presenting-button">
-          <button
-            htmlFor="image-upload"
-            onClick={() => fileUploadButton.current.click()}
-          >
-            Start Presenting
-          </button>
           <input
             type="file"
             ref={fileUploadButton}
             onChange={uploadFile}
             id="image-upload"
             accept="image/*" // Specify accepted file types
-            // capture // Capture from device camera if available
           />
         </div>
-        <div>
         <button
           class="disconnect-button"
           htmlFor="Disconnect"
@@ -316,9 +163,8 @@ export default function App() {
             setImageURL([]);
           }}
         >
-          Remove Images
+          Remove My Images
         </button>
-        </div>
         {/* {<label onClick={print}>printing</label>} */}
       </div>
     </>
