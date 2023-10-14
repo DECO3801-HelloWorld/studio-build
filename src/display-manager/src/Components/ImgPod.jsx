@@ -59,6 +59,14 @@ export default function ImgPod({ data, setImages }) {
 			area: img.current.width * img.current.height,
 			ratio: img.current.width / img.current.height //L + ratio
 		}
+
+		data.original = {
+			width: img.current.width,
+			height: img.current.height,
+			area: img.current.width * img.current.height,
+			ratio: img.current.width / img.current.height //L + ratio
+		}
+
 		resizeImages({setImages})
 		setTimeout(() => {
 			resizeImages({setImages})
