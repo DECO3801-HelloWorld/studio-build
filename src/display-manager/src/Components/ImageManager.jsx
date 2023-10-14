@@ -80,7 +80,7 @@ export function resizeImages({setImages}) {
 		let img_row_width = []
 		let current_row_width = padding
 		for (let i = 0; i < currentImages.length; i++) {
-			current_row_width += currentImages[i].data.props.width (i) ? 0 : padding
+			current_row_width += currentImages[i].data.props.width  + ((i) ? 0 : padding)
 			if (current_row_width > rootWidth) {
 				current_row_width = rootWidth
 			}
