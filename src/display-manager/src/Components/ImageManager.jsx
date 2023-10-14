@@ -41,25 +41,46 @@ export function addImage(imgPacket, {images,  setImages }) {
 		Object.assign(imgPacket, { style: dict[imgPacket.userId] });
 	}
 
-	console.log(imgPacket.imgId)
+	// If there are too many images on the sreen
+	if (images.length >= 6) {
+		removeImage(images[0].id, {setImages})
+		setTimeout(() => {
+			setImages((currentImages) => {
+				return [...currentImages, { id: imgPacket.imgId, data: imgPacket},]
+			})
+		}, 1000)
+		setTimeout(() => {
+			console.log("Image Timed out -- Removing")
+			removeImage(imgPacket.imgId, {setImages})
+		}, 60000)
+		return
+	}
+
+	// console.log(imgPacket.imgId)
 	//Update the image state array
 	//Current images as an argument so it doesn't overwrite itself
 	setImages((currentImages) => {
 		return [...currentImages, { id: imgPacket.imgId, data: imgPacket},]
 	})
+
+	setTimeout(() => {
+		console.log("Image Timed out -- Removing")
+		removeImage(imgPacket.imgId, {setImages})
+	}, 60000)
+
 }
 
 export function resizeImages({setImages}) {
 	setImages(currentImages => {
 		const rootHeight = document.getElementById("imgContainer").getBoundingClientRect().height;
 		const rootWidth= document.getElementById("imgContainer").getBoundingClientRect().width;
-		const padding = 10;
+		const padding = 30;
 
 
 		let img_row_width = []
-		let current_row_width = 0
+		let current_row_width = padding
 		for (let i = 0; i < currentImages.length; i++) {
-			current_row_width += currentImages[i].data.props.width
+			current_row_width += currentImages[i].data.props.width + padding
 			if (current_row_width > rootWidth) {
 				current_row_width = rootWidth
 			}
@@ -69,7 +90,7 @@ export function resizeImages({setImages}) {
 			}
 		}
 		img_row_width.push(current_row_width)
-		console.log(img_row_width)
+		// console.log(img_row_width)
 
 		const attributes = {
 			left: (rootWidth / 2) - (img_row_width[0] / 2),
@@ -81,8 +102,8 @@ export function resizeImages({setImages}) {
 			const image = currentImages[i];
 
 			image.data.moving = {
-				height: rootHeight / Math.ceil(currentImages.length / 3),
-				width: Math.min(rootWidth / Math.min(currentImages.length, 3), image.data.props.width),
+				height: rootHeight / Math.ceil(currentImages.length / 3) - padding,
+				width: Math.min((rootWidth / Math.min(currentImages.length, 3)) - padding, image.data.props.width),
 				top: attributes.top,
 				left: attributes.left
 			}
