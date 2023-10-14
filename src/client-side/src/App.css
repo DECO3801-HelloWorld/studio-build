@@ -205,4 +205,6 @@ input {
 	transition: 1s opacity ease;
 	font-family: Montserrat;
 	font-weight: 500;
+	font-size: 40px;
+	color: black
 }
