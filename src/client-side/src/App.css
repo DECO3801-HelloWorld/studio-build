@@ -3,6 +3,7 @@
 
 body, html {
   background-color: #7970b1;
+  font-family: Montserrat;
 }
 
 #root {
@@ -189,4 +190,19 @@ input {
   .supported-formats-text {
     font-size: 10px;
   }
+}
+
+.extra-upload {
+	position: absolute;
+	z-index: 100;
+	width: 50%;
+	height: 60px;
+	border-radius: 5px;
+	background: #e0e0e0;
+	left: 50%;
+	top: 70%;
+	transform: translateX(-50%);
+	transition: 1s opacity ease;
+	font-family: Montserrat;
+	font-weight: 500;
 }

@@ -104,29 +104,10 @@ export default function App() {
     );
   }
   function imgMapFxn() {
-    return imageURL.map((image) => (
-          <div
-            className="upload-image"
-            onTouchMove={(e) => {
-              const screenHeight = Dimensions.get("window").height;
-              console.log(screenHeight);
-              const touchY = e.nativeEvent.pageY;
-              console.log(touchY);
-
-              // Get the position of the top and bottom of the image
-              const imageTop = touchY;
-              const imageBottom =
-                touchY + PixelRatio.getPixelSizeForLayoutSize(363); // Height of the image
-
-              if (imageTop >= 20 || imageBottom >= screenHeight - 20) {
-                // Image touches the top or bottom of the screen (within 20 pixels)
-                alert("Image touches the top or bottom of the screen");
-              }
-            }}
-          >
-            <img src={image.URLs} alt="Oops!" />
-          </div>
-    ));
+	  return (
+		  <div className="upload-image">
+			<img src={imageURL[imageURL.length -1].URLs} alt="Oops!" />
+		  </div>)
   }
 
   /* Entry Point of Program
@@ -155,8 +136,14 @@ export default function App() {
             accept="image/*" // Specify accepted file types
           />
         </div>
-        <button
-          class="disconnect-button"
+        <button 
+	  htmlFor="image-upload"
+	  onClick={() => fileUploadButton.current.click()}
+	  style={imageURL.length === 0 ? {opacity : 0} : {}} className="extra-upload">
+	  Upload More Images
+            </button>
+			<button
+          className="disconnect-button"
           htmlFor="Disconnect"
           onClick={() => {
 			  NetworkManager.disconnectUser(socket)
@@ -165,7 +152,6 @@ export default function App() {
         >
           Remove My Images
         </button>
-        {/* {<label onClick={print}>printing</label>} */}
       </div>
     </>
   );
