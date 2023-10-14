@@ -59,11 +59,15 @@ input {
   cursor: pointer;
 }
 
+.animated-image-container {
+  transition: transform 0.2s ease; /* Adjust the duration and timing function as needed */
+   max-width: 800px;
+  max-height: 363px;
+}
+
 .upload-image img {
-  
-  
-  max-Width: 800px;
-  max-Height: 363px;
+  max-width: 800px;
+  max-height: 363px;
   border: solid 3px;
   color: black;
   border-radius: 20px;
