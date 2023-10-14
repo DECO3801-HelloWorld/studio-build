@@ -112,6 +112,7 @@ export default function App() {
     const imgPacket = NetworkManager.packImage(file, userId, userName, imageURL.length);
     NetworkManager.sendImage(socket, imgPacket);
 
+
     const newImageURLs = [];
     for (let i = 0; i < e.target.files.length; i++) {
       const imgFile = e.target.files[i];
@@ -167,14 +168,7 @@ export default function App() {
 
   function uploadFxn() {
     return (
-      //   <div>
-      //   <img
-      //     className="test-image"
-      //     src="https://via.placeholder.com/200"
-      //     alt="Test Image"
-      //   />
-      // </div>
-
+      <center>
       <div className="upload-box">
         <label className="file-uploader-container">
           <div className="centered-content">
@@ -195,6 +189,7 @@ export default function App() {
           </div>
         </label>
       </div>
+      </center>
     );
   }
 
@@ -308,7 +303,9 @@ export default function App() {
         </div>
         {/* {status()} */}
         {imageURL.length === 0 ? uploadFxn() : imgMapFxn()}
-        <div className="start-presenting-button">
+        <br />
+        <center>
+        <div class="start-presenting-button">
           <button
             htmlFor="image-upload"
             onClick={() => fileUploadButton.current.click()}
@@ -324,6 +321,7 @@ export default function App() {
             // capture // Capture from device camera if available
           />
         </div>
+        </center>
         <div>
         <button
           className="disconnect-button"

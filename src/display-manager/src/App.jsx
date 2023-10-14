@@ -14,8 +14,6 @@ import * as NetworkManager from './Components/NetworkManager.jsx'
 import { sideStyle } from './Components/QrStyle.jsx'
 import './App.css'
 
-//Dumb
-//const port = (typeof process !== 'undefined') ? (process.env.PORT || 3001) : 3001;
 
 // Connect to the server - ready to receive images
 const socket = io.connect(window.location.origin);
