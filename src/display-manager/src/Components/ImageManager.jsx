@@ -33,8 +33,8 @@ const deathAnimation = {
 	*		React hook that updates the images array.
 	*/
 export function addImage(imgPacket, {images,  setImages }) {
-	// const timeout = 300000 // 5 mins
-	const timeout = 10000 // 5 mins
+	const timeout = 300000 // 5 mins
+	// const timeout = 10000 // 10 secs
 	//Append the colour to the image packet
 	if (Object.prototype.hasOwnProperty.call(dict, imgPacket.userId)) {
 		Object.assign(imgPacket, { style: dict[imgPacket.userId] })
