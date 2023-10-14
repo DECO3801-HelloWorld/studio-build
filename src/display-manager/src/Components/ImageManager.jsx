@@ -33,6 +33,7 @@ const deathAnimation = {
 	*		React hook that updates the images array.
 	*/
 export function addImage(imgPacket, {images,  setImages }) {
+	const timeout = 300000 // 5 mins
 	//Append the colour to the image packet
 	if (Object.prototype.hasOwnProperty.call(dict, imgPacket.userId)) {
 		Object.assign(imgPacket, { style: dict[imgPacket.userId] })
@@ -49,6 +50,10 @@ export function addImage(imgPacket, {images,  setImages }) {
 				return [...currentImages, { id: imgPacket.imgId, data: imgPacket},]
 			})
 		}, 1000)
+		setTimeout(() => {
+			console.log("Image Timed out -- Removing")
+			removeImage(imgPacket.imgId, {setImages})
+		}, timeout)
 		return
 	}
 
@@ -62,7 +67,7 @@ export function addImage(imgPacket, {images,  setImages }) {
 	setTimeout(() => {
 		console.log("Image Timed out -- Removing")
 		removeImage(imgPacket.imgId, {setImages})
-	}, 60000)
+	}, timeout)
 
 }
 
