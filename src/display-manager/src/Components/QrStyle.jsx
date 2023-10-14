@@ -1,7 +1,9 @@
 
 // This is the Css Applied to hte QR code when images are on screen
 export const sideStyle = {
-	left: "6vw",
-	top: "79vh",
+	left: "0",
 	opacity: "0.5",
+	top: "100%",
+	transform: "translateY(-100%)",
+	padding: "10px",
 }
