@@ -52,7 +52,7 @@ export function addImage(imgPacket, {images,  setImages }) {
 		setTimeout(() => {
 			console.log("Image Timed out -- Removing")
 			removeImage(imgPacket.imgId, {setImages})
-		}, 60000)
+		}, 300000)
 		return
 	}
 
@@ -80,7 +80,7 @@ export function resizeImages({setImages}) {
 		let img_row_width = []
 		let current_row_width = padding
 		for (let i = 0; i < currentImages.length; i++) {
-			current_row_width += currentImages[i].data.props.width + padding
+			current_row_width += currentImages[i].data.props.width (i) ? 0 : padding
 			if (current_row_width > rootWidth) {
 				current_row_width = rootWidth
 			}
