@@ -53,6 +53,9 @@ export function addImage(imgPacket, {images,  setImages }) {
 		setTimeout(() => {
 			console.log("Image Timed out -- Removing")
 			removeImage(imgPacket.imgId, {setImages})
+			setTimeout(() => {
+				resizeImages({setImages})
+			}, 1000)
 		}, timeout)
 		return
 	}
@@ -67,6 +70,9 @@ export function addImage(imgPacket, {images,  setImages }) {
 	setTimeout(() => {
 		console.log("Image Timed out -- Removing")
 		removeImage(imgPacket.imgId, {setImages})
+		setTimeout(() => {
+			resizeImages({setImages})
+		}, 1000)
 	}, timeout)
 
 }
