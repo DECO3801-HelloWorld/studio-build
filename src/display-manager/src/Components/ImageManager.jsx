@@ -49,10 +49,6 @@ export function addImage(imgPacket, {images,  setImages }) {
 				return [...currentImages, { id: imgPacket.imgId, data: imgPacket},]
 			})
 		}, 1000)
-		setTimeout(() => {
-			console.log("Image Timed out -- Removing")
-			removeImage(imgPacket.imgId, {setImages})
-		}, 300000)
 		return
 	}
 
