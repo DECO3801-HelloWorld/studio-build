@@ -110,7 +110,7 @@ export function resizeImages({setImages}) {
 			}
 
 			image.data.props = image.data.moving;
-			attributes.left = ((i+1)%3) ? attributes.left + image.data.props.width + padding: (rootWidth / 2) - (img_row_width[Math.ceil(i / 3)]/2);
+			attributes.left = ((i+1)%3) ? attributes.left + image.data.props.width + padding : (rootWidth / 2) - (img_row_width[Math.ceil(i / 3) - 1]/2);
 			attributes.top = ((i+1)%3) ? attributes.top : attributes.top + image.data.props.height + padding;
 
 		}
