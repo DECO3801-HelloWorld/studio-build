@@ -1,150 +1,27 @@
-# Team HelloWorld!
-The codebase for Project 041 as implemented by Team HelloWorld.
+# MagicShare - Team HelloWorld
+For project 041, Proxiemic Displays.
 
-## Networking
+![Display-Use](./documentation/readme-files/display-splash.png)
 
-![Network Diagram](./documentation/Network_calls.png)
+## Motivation
 
-Here is a list for the network calls for the entire system. If the arrow is leading from the box, then it's an emit event. Otherwise it's a socket.on() event.
+The product MagicShare is designed to be a platform for users to seamlessly and spontaneously share images with each other via a large interactive display. These iterations are described to be proxiemic because they are effected by the users physical lactation in relation to the large display. In other words, users are permitted to connect to the display and share images from their device if they are close to the display. The user's images will remove themselves from the display if they walk too far away from the screen. Sending images to the screen is designed to be as frictionless as possible, requiring no authentication obstacles.
 
-## "connect"
-This is reserved event for when sockets connect to the server.
-For the server, listen to this and log result.
+## When would I use MagicShare?
 
-## "request_img_remove"
-For client:
+MagicShare is perfect for large groups of people where showing content on a small device would be impractical.
+With traditional content hosting services, there is one "presenter" who controls all of the content being displayed.With MagicShare, the system is decentralised, allowing all users the opportunity to excess themselves.
 
-When user wants to remove an image from the display, emit a packet of the form:
-```
-const imgPacket = {
-userIP: {socket.handshake.address},
-imgId: {Unique id for the image being sent | Int}
-}
-```
-For Server:
 
-Listen to the "request_img_remove" event on the socket. When received create a packet of the form:
-```
-const imgPacket = {
-imgId: {userIP + client-imgId}
-}
-```
-and emit on event "remove_img"
+## How do I use MagicShare
 
-## "upload_img"
-For client:
+![Splash Screen](./documentation/readme-files/display-use.png)
 
-When user wants to send an image to the display, emit the packet
-```
-const imgPacket = {
-userIP: {socket.handshake.adress}
-imgId: {image ID}
-imgName: file.name
-imgPayload: file,
-imgType: file.type
-}
-```
-For Server:
+1. Ensure you are connected to the correct network. MagicShare can be set up on any network owned by the installer but by default the network is called ``HELLOWORLD``
 
-Listen to the "upload_img" event on the socket. Verify the validity of the filetype.  Create a packet of the form:
-```
-const imgPacket = {
-userId: userId \\integer associated with IP adress
-imgId: {IP + image ID}
-imgName: file.name
-imgPayload: file,
-imgType: file.type
-}
-```
-and emit on "download_img" event
+2. Scan the barcode displayed on the screen. You will be directed to our web application.
 
-## "user_connect"
-For server:
-
-Emit this event when there is a new IP connection to the network. It is important to note the distinction between network and client. Use the package
-```
-const data = {
-userId: userId
-}
-```
-
-For display manager:
-
-Add The user-icon / token to the display
-
-## "remove_user"
-For server:
-
-Emit this event when there an IP connection is disconnected from the network. It is important to note the distinction between network and client. Use the package
-```
-const data = {
-userId: userId
-}
-```
-
-For display manager:
-
-Remove the user icon and remove all images from the userId.
-
-## "remove_img"
-For Server:
-
-Listen to the "request_img_remove" event on the socket. When received create a packet of the form:
-```
-const imgPacket = {
-imgId: {userIP + client-imgId}
-}
-```
-and emit on event "remove_img"
-
-For display manager:
-
-Remove the image corresponding to the imgId.
-
-## "download_img"
-For Server:
-
-Listen to the "upload_img" event on the socket. Verify the validity of the filetype.  Create a packet of the form:
-```
-const imgPacket = {
-userId: userId \\integer associated with IP adress
-imgId: {IP + image ID}
-imgName: file.name
-imgPayload: file,
-imgType: file.type
-}
-```
-and emit on "download_img" event
-
-For display manager:
-
-Render the image to the display
-
-## Device connect
-On a new IP connection to the network, the server should emit the event "user_connect" with the payload
-```
-const data = {
-userId: {userId}
-}
-```
-
-### Display-Manager
-Display manager features:
-* Use sockets API to upload images to it (Remind me to write up documentation for this)
-* Backspace to clear images from screen
-* Slashscreen for when system idle
-
-    TODO:
-* Image Positioning system
-* Fancier animations
-* Splashscreen idle animation
-* Setup Script for testing
-
-## Please note that aesthetics are messed up at the moment. Will fix css in future
-
-![Splash Screen Display Manager](./documentation/DOCS-display-manager/display-manager-splash.PNG)
-![Example1](./documentation/DOCS-display-manager/example1.PNG)
-![Example2](./documentation/DOCS-display-manager/example2.PNG)
+3. Upload images using the web application. You can select any from your devices file explorer. When you want to remove your images, simply walk away, disconnect form the network or click, "Remove my Images".
 
 
 ## Client-Side
@@ -165,6 +42,7 @@ Features:
 https://www.figma.com/file/V7FGQ1mc1rS79A7kNoOWSB/Hello-World?type=design&node-id=0-1&mode=design&t=WQHavnsUmiNmRr49-0
 
 ## Team Members
+
 All the people working on this project:
 * Benjamin Jorgensen
 * Tadiwa Mlambo
@@ -172,4 +50,3 @@ All the people working on this project:
 * Suryansh Singh
 * Kristian Norved
 * Lauchie Harvey
-
