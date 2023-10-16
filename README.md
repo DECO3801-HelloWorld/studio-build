@@ -23,23 +23,51 @@ With traditional content hosting services, there is one "presenter" who controls
 
 3. Upload images using the web application. You can select any from your devices file explorer. When you want to remove your images, simply walk away, disconnect form the network or click, "Remove my Images".
 
+![start](./documentation/readme-files/client-init.png) ![use](./documentation/readme-files/client-upload-more.png)
 
-## Client-Side
-Features:
-* Users can upload images to the server from their file explorer.
-* Users can disconnect from the server, and after that, no more images will be uploaded.
-* A live preview of media uploaded by the user is available.
-  TODO:
+## Demo of the Project
 
-* Implement the swipe-up feature for media upload.
-* Enhance the user interface design.
-* Remove uploaded media when disconnected.
+## Installation
 
-![Start](./documentation/DOCS-client-side-UI/Client-start.png)
-![image](./documentation/DOCS-client-side-UI/Client-image.png)
+#### Prequisites
+Before, installation, you must have the following programs already installed. Unfortunately, the server only runs on Linux, but users can access from any platform.
 
-## Link to Client Side UI prototypes
-https://www.figma.com/file/V7FGQ1mc1rS79A7kNoOWSB/Hello-World?type=design&node-id=0-1&mode=design&t=WQHavnsUmiNmRr49-0
+* Python3+
+* NodeJS
+* Linux
+
+#### How to install
+
+1. Clone the git into your local machine
+``` 
+git clone https://github.com/DECO3801-HelloWorld/studio-build.git
+```
+
+2. Execute the run shell script.
+```
+./scripts/run.sh [PORT]
+```
+Note: You <strong>must </strong> execute `run.sh` from the root directory `./studio-build`. It will not work otherwise.
+
+You can also optionally specify your desired port number for the web application. If left blank, the program defaults to port `3001`. You may need to modify your firewall rules to allow connections from this port.
+
+3. The program will ask 
+```
+Start in dev mode? (Auto-Updating) [y/n]
+```
+Type `n` and press enter
+
+4. After the script has run, the display application should open on your default browser. If it doesn't Navigate to 
+```
+http://{YOUR MACHINE IP ADRESS}:{YOUR PORT NUMBER}/display
+```
+The terminal should print out your machine IP for convenience.
+
+![Terminal-run-script](./documentation/readme-files/server_run.PNG)
+
+It is worth noting that any device on the network can show the display if directed to the given IP address. This is useful to note if you have a dedicated machine for showing the display.
+
+The terminal screen also prints various actions that have been performed such as users uploading photos, connecting and disconnecting.
 
 ## Team Members
 
