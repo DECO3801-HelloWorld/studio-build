@@ -33,6 +33,8 @@ const deathAnimation = {
 	*		React hook that updates the images array.
 	*/
 export function addImage(imgPacket, {images,  setImages }) {
+	const timeout = 300000 // 5 mins
+	// const timeout = 10000 // 10 secs
 	//Append the colour to the image packet
 	if (Object.prototype.hasOwnProperty.call(dict, imgPacket.userId)) {
 		Object.assign(imgPacket, { style: dict[imgPacket.userId] })
@@ -52,7 +54,10 @@ export function addImage(imgPacket, {images,  setImages }) {
 		setTimeout(() => {
 			console.log("Image Timed out -- Removing")
 			removeImage(imgPacket.imgId, {setImages})
-		}, 60000)
+			setTimeout(() => {
+				resizeImages({setImages})
+			}, 1000)
+		}, timeout)
 		return
 	}
 
@@ -66,7 +71,10 @@ export function addImage(imgPacket, {images,  setImages }) {
 	setTimeout(() => {
 		console.log("Image Timed out -- Removing")
 		removeImage(imgPacket.imgId, {setImages})
-	}, 60000)
+		setTimeout(() => {
+			resizeImages({setImages})
+		}, 1000)
+	}, timeout)
 
 }
 
@@ -81,8 +89,8 @@ export function resizeImages({setImages}) {
 		let current_row_width = padding
 		for (let i = 0; i < currentImages.length; i++) {
 			current_row_width += currentImages[i].data.props.width + padding
-			if (current_row_width > rootWidth) {
-				current_row_width = rootWidth
+			if (current_row_width > rootWidth - padding) {
+				current_row_width = rootWidth - padding
 			}
 			if ((i+1) % 3 == 0) {
 				img_row_width.push(current_row_width)
@@ -90,7 +98,6 @@ export function resizeImages({setImages}) {
 			}
 		}
 		img_row_width.push(current_row_width)
-		// console.log(img_row_width)
 
 		const attributes = {
 			left: (rootWidth / 2) - (img_row_width[0] / 2),
@@ -109,7 +116,7 @@ export function resizeImages({setImages}) {
 			}
 
 			image.data.props = image.data.moving;
-			attributes.left = ((i+1)%3) ? attributes.left + image.data.props.width + padding: (rootWidth / 2) - (img_row_width[Math.ceil(i / 3)]/2);
+			attributes.left = ((i+1)%3) ? attributes.left + image.data.props.width + padding : (rootWidth / 2) - (img_row_width[Math.ceil(i / 3)]/2);
 			attributes.top = ((i+1)%3) ? attributes.top : attributes.top + image.data.props.height + padding;
 
 		}
@@ -201,6 +208,10 @@ export function removeImage(imgId, { setImages }) {
 	})
 	setTimeout(() => {
 		setImages((currentImages) => {
+			currentImages.map((image) => {
+				image.data.props = image.data.original
+				return image
+			})
 			resizeImages({setImages});
 			return currentImages.filter((image) => image.id !== imgId)
 		})
