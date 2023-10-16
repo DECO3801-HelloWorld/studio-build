@@ -77,6 +77,8 @@ input {
 }
 
 .upload-image img {
+  max-width: 800px;
+  max-height: 363px;
   bottom: 0;
   width: 60vw;
   height: 55vh;

@@ -9,7 +9,8 @@ export default function SplashScreen(props) {
 			<div id="title">
 				<h1 className='subheading'>Team</h1>
 				<h1 className='teamname'>HelloWorld</h1>
-				<h1 className='subheading'>Presents</h1>
+				<h1 id="presents" className='subheading'>Presents</h1>
+				<h1 id="product-name"> MagicShare </h1>
 			</div>
 			<div id="instructions">
 				<div className="stepCards" id="step1">

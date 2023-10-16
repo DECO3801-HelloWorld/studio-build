@@ -56,7 +56,7 @@ io.on("connection", (socket) => {
 
 	// Declare Disconnects
 	socket.on("disconnect", () => {
-		console.log("client disconnected");
+		console.log(`client disconnected - ${socket.handshake.address}`);
 	})
 
 	socket.on("remove_all_image", () => {
@@ -80,6 +80,6 @@ app.use('/', express.static(path.join(__dirname, '../client-side/dist')));
 // Serve the display code.
 app.use('/display', express.static(path.join(__dirname, '../display-manager/dist')));
 
-server.listen(port, () => {
-	console.log("Server Started on port " + port)
+server.listen(port, "0.0.0.0", () => {
+	console.log("Opening port " + port + " for traffic")
 })

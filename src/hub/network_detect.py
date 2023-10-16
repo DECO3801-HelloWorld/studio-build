@@ -3,6 +3,7 @@ import threading
 import time
 import datetime
 import contextlib
+import argparse
 
 import asyncio
 import socketio
@@ -11,6 +12,15 @@ import ipaddress
 
 from scapy.all import ARP, sniff
 from user_manager import UserManager
+
+# Getting the port from commandline argument
+argument = argparse.ArgumentParser(
+        description="Accepts a port number to run on")
+argument.add_argument("port", type=int, help="The port number to use")
+
+port_cmd = argument.parse_args().port
+if port_cmd is None:
+    port_cmd = 3001
 
 connected_devices = {} # {mac:ip}
 
@@ -119,7 +129,9 @@ def main():
     hostname = socket.gethostname()
     # get ip address
     ip_address = socket.gethostbyname(hostname)
-    port = os.environ.get("PORT", "3001")
+    port = os.environ.get("PORT")
+    if port is None:
+        port = port_cmd
     try:
         print(f"{ip_address}:{port}")
         sio.connect(f'http://{ip_address}:{port}')

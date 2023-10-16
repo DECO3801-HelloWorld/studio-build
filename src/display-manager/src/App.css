@@ -34,9 +34,9 @@
 
 .prompts {
 	position: absolute;
-	opacity: 0.9;
+	opacity: 1;
     left: 50%;
-    top: 60vh;
+    top: 65vh;
     transform: translate(-51%, 0);
 	transition: 0.5s all ease;
 }
