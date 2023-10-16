@@ -10,7 +10,7 @@ The product MagicShare is designed to be a platform for users to seamlessly and 
 ## When would I use MagicShare?
 
 MagicShare is perfect for large groups of people where showing content on a small device would be impractical.
-With traditional content hosting services, there is one "presenter" who controls all of the content being displayed.With MagicShare, the system is decentralised, allowing all users the opportunity to excess themselves.
+With traditional content hosting services, there is one "presenter" who controls all of the content being displayed. With MagicShare, the system is decentralised, allowing all users the opportunity to excess themselves.
 
 
 ## How do I use MagicShare
@@ -57,7 +57,7 @@ Start in dev mode? (Auto-Updating) [y/n]
 ```
 Type `n` and press enter
 
-4. After the script has run, the display application should open on your default browser. If it doesn't Navigate to 
+4. After the script has run, the display application should open on your default browser. If it doesn't open automatically, navigate to 
 ```
 http://{YOUR MACHINE IP ADRESS}:{YOUR PORT NUMBER}/display
 ```
