@@ -21,4 +21,11 @@ export const handle_lost_connection = (socket) => (data) => {
     console.log("Lost connection to ___.");
     console.log("The data is: ", data);
     console.log("=====");
+	const payload = { userId: ip2int(socket.handshake.address)}
+	socket.broadcast.emit("display_remove_all_image", payload)
+	console.log(`User ${payload.userId} requested a remove all images`)
+}
+
+function ip2int(ip) {
+    return ip.split('.').reduce(function(ipInt, octet) { return (ipInt<<8) + parseInt(octet, 10)}, 0) >>> 0;
 }
