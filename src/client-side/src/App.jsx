@@ -191,45 +191,40 @@ export default function App() {
    */
   return (
     <>
-      {/* {console.log("initial value "+socket.connected)} */}
-      {/*Upload button*/}
-      <div className="wrapper-upload-btn">
-        <div className="header">
-          <div className="header-text">MagicShare</div>
-        </div>
-        {/* {status()} */}
-        {imageURL.length === 0 ? uploadFxn() : imgMapFxn()}
-        <br />
-        <center>
-        <div class="start-presenting-button">
-          <button
-            htmlFor="image-upload"
-            onClick={() => fileUploadButton.current.click()}
-          >
-            Start Presenting
-          </button>
-          <input
-            type="file"
-            ref={fileUploadButton}
-            onChange={uploadFile}
-            id="image-upload"
-            accept="image/*" // Specify accepted file types
-          />
-        </div>
-        </center>
-        <div>
-        <button
-          class="disconnect-button"
-          htmlFor="Disconnect"
-          onClick={() => {
-			  NetworkManager.disconnectUser(socket)
-            setImageURL([]);
-          }}
-        >
-          Remove My Images
-        </button>
-        </div>
+    {/* {console.log("initial value "+socket.connected)} */}
+    {/*Upload button*/}
+    <div className="wrapper-upload-btn">
+      <div className="header">
+        <div className="header-text">MagicShare</div>
       </div>
-    </>
-  );
+      {/* {status()} */}
+      {imageURL.length === 0 ? uploadFxn() : imgMapFxn()}
+      <div className="start-presenting-button">
+        <input
+          type="file"
+          ref={fileUploadButton}
+          onChange={uploadFile}
+          id="image-upload"
+          accept="image/*" // Specify accepted file types
+        />
+      </div>
+      <button 
+  htmlFor="image-upload"
+  onClick={() => fileUploadButton.current.click()}
+  style={imageURL.length === 0 ? {opacity : 0} : {}} className="extra-upload">
+  Upload More Images
+          </button>
+    <button
+        className="disconnect-button"
+        htmlFor="Disconnect"
+        onClick={() => {
+      NetworkManager.disconnectUser(socket)
+          setImageURL([]);
+        }}
+      >
+        Remove My Images
+      </button>
+    </div>
+  </>
+);
 }
