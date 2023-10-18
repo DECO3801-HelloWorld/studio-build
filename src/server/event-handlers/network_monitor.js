@@ -19,9 +19,9 @@ export const handle_new_connection = (socket) => (data) => {
 export const handle_lost_connection = (socket) => (data) => {
     console.log("=====");
     console.log("Lost connection to ___.");
-    console.log("The data is: ", data);
+    console.log("The data is: ", data.ip);
     console.log("=====");
-	const payload = { userId: ip2int(data)}
+	const payload = { userId: ip2int(data.ip)}
 	socket.broadcast.emit("display_remove_all_image", payload)
 	console.log(`User ${payload.userId} requested a remove all images`)
 }
