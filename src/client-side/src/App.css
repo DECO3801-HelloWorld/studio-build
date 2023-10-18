@@ -4,6 +4,7 @@
 body, html {
   background-color: #7970b1;
   font-family: Montserrat;
+  overscroll-behavior: contain;
 }
 
 #root {
@@ -12,6 +13,8 @@ body, html {
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  transition: 2s background-color ease 0.2s;
+	
 }
 
 input {
@@ -57,12 +60,16 @@ input {
   transform: translate(-50%, -150%);
   cursor: pointer; 
 }
+/* .animated-image-container {
+  transition: transform 0.1s ease ;
+  
+} */
 
 .upload-image img {
-  
-  
-  max-Width: 800px;
-  max-Height: 363px;
+  /* transition: 2s background-color ease 0.2s; */
+  transition: 2s transform ease 1s;
+  width: 800px;
+  height: 363px;
   border: solid 3px;
   color: black;
   border-radius: 10px;
@@ -71,7 +78,7 @@ input {
   top: 37%;
   bottom: 200px;
   left: 50%;
-  transform: translate(-50%, -50%); /* Center the label using transform */
+  transform: translate(-50%, -73%);
 }
 
 .upload-box label {
@@ -177,9 +184,11 @@ input {
   }
 
   .upload-image img {
-    width: 90%;
-    height: auto;
-  }
+   object-fit: cover; /* Maintain aspect ratio */
+  max-width: 468px; 
+  max-height: auto; /* Adjust as needed */
+}
+  
 
   .upload-text {
     font-size: 14px;

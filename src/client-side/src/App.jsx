@@ -10,6 +10,7 @@ var count = 0;
 //Testing Variables
 const userId = 1; //Maybe grab this from server in future
 const userName = "Test User"; //Device name maybe?
+
 //const Hammer = require('hammerjs')//Require Hammer.js
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
   const [isConnected, setIsConnected] = useState(false);
   //Grab Upload button
   const fileUploadButton = useRef(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
 
 
   useEffect(() => {
@@ -103,12 +105,80 @@ export default function App() {
       </div>
     );
   }
+  const TOUCH_THRESHOLD = 300; // Define a threshold to trigger the alerts
+
+  // Event handlers for dragging images
+  const handleTouchStart = (event) => {
+    const touch = event.touches[0];
+    const initialTouch = {
+      startX: touch.clientX,
+      startY: touch.clientY,
+    };
+
+    // Store the initial touch position in the state
+    setPosition((prevPosition) => ({
+      ...prevPosition,
+      initialTouch,
+    }));
+  };
+
+  const handleTouchMove = (event) => {
+    if (position.initialTouch) {
+      const touch = event.touches[0];
+      const deltaX = touch.clientX - position.initialTouch.startX;
+      const deltaY = touch.clientY - position.initialTouch.startY;
+
+      // Update the position state to move the image
+      setPosition((prevPosition) => ({
+        ...prevPosition,
+        x: deltaX,
+        y: deltaY,
+      }));
+
+      // Check if the image moves beyond the threshold before displaying alerts
+      if (Math.abs(deltaY) >= TOUCH_THRESHOLD) {
+        // const screenHeight = Dimensions.get('window').height;
+        if (position.y >= TOUCH_THRESHOLD) {
+          // Image touches the bottom of the screen (within the threshold)
+          setImageURL((prevImageURL) => prevImageURL.slice(0, prevImageURL.length - 1));
+          handleTouchEnd ();
+          //alert("hii");
+        }
+       
+      }
+    }
+  };
+
+  const handleTouchEnd = () => {
+    // Animate the image back to its original position
+    // using CSS transitions
+    setPosition((prevPosition) => ({
+      ...prevPosition,
+      x: 0,
+      y: 0,
+      initialTouch: null,
+    }));
+  };
+
   function imgMapFxn() {
-	  return (
-		  <div className="upload-image">
-			<img src={imageURL[imageURL.length -1].URLs} alt="Oops!" />
-		  </div>)
-  }
+  return  imageURL.map((image,index) => (
+    
+      <div className="upload-image"
+      style={{
+        marginTop: `${(15 * index)}px`, // Adjust the vertical spacing between images
+        marginLeft: `${(15 * index)}px`,
+        transform: `translate(${position.x}px, ${position.y}px) scale(1)`,
+        }}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+        >
+          <img  src={image.URLs} alt="Oops!" />
+        {/* <img src={imageURL[imageURL.length - 1].URLs} alt="Oops!" /> */}
+      </div>
+  )
+  );
+}
 
   /* Entry Point of Program
    * ---------------------------------------------
