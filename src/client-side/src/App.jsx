@@ -55,6 +55,7 @@ export default function App() {
     const imgPacket = NetworkManager.packImage(file, userId, userName, imageURL.length);
     NetworkManager.sendImage(socket, imgPacket);
 
+
     const newImageURLs = [];
     for (let i = 0; i < e.target.files.length; i++) {
       const imgFile = e.target.files[i];
@@ -82,7 +83,7 @@ export default function App() {
 
   function uploadFxn() {
     return (
-
+      <center>
       <div className="upload-box">
         <label className="file-uploader-container">
           <div className="centered-content">
@@ -103,6 +104,7 @@ export default function App() {
           </div>
         </label>
       </div>
+      </center>
     );
   }
   const TOUCH_THRESHOLD = 300; // Define a threshold to trigger the alerts
@@ -197,7 +199,15 @@ export default function App() {
         </div>
         {/* {status()} */}
         {imageURL.length === 0 ? uploadFxn() : imgMapFxn()}
-        <div className="start-presenting-button">
+        <br />
+        <center>
+        <div class="start-presenting-button">
+          <button
+            htmlFor="image-upload"
+            onClick={() => fileUploadButton.current.click()}
+          >
+            Start Presenting
+          </button>
           <input
             type="file"
             ref={fileUploadButton}
@@ -206,14 +216,10 @@ export default function App() {
             accept="image/*" // Specify accepted file types
           />
         </div>
-        <button 
-	  htmlFor="image-upload"
-	  onClick={() => fileUploadButton.current.click()}
-	  style={imageURL.length === 0 ? {opacity : 0} : {}} className="extra-upload">
-	  Upload More Images
-            </button>
-			<button
-          className="disconnect-button"
+        </center>
+        <div>
+        <button
+          class="disconnect-button"
           htmlFor="Disconnect"
           onClick={() => {
 			  NetworkManager.disconnectUser(socket)
@@ -222,6 +228,7 @@ export default function App() {
         >
           Remove My Images
         </button>
+        </div>
       </div>
     </>
   );
