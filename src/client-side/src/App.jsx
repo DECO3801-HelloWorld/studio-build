@@ -159,21 +159,24 @@ export default function App() {
   };
 
   function imgMapFxn() {
-  return (
-    
-      <div className="upload-image"
-      style={{
-        transform: `translate(${position.x}px, ${position.y}px scale(1)) `,
-        }}
+    return  imageURL.map((image,index) => (
+      
+        <div className="upload-image"
+        style={{
+          marginTop: `${(15 * index)}px`, // Adjust the vertical spacing between images
+          marginLeft: `${(15 * index)}px`,
+          transform: `translate(${position.x}px, ${position.y}px) scale(1)`,
+          }}
         onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-        >
-        <img src={imageURL[imageURL.length - 1].URLs} alt="Oops!" />
-      </div>
-    
-  );
-}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+          >
+            <img  src={image.URLs} alt="Oops!" />
+          {/* <img src={imageURL[imageURL.length - 1].URLs} alt="Oops!" /> */}
+        </div>
+    )
+    );
+  }
 
   /* Entry Point of Program
    * ---------------------------------------------
