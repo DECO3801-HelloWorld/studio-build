@@ -80,6 +80,6 @@ app.use('/', express.static(path.join(__dirname, '../client-side/dist')));
 // Serve the display code.
 app.use('/display', express.static(path.join(__dirname, '../display-manager/dist')));
 
-server.listen(port, () => {
+server.listen(port, "0.0.0.0", () => {
 	console.log("Server Started on port " + port)
 })

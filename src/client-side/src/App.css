@@ -59,17 +59,19 @@ input {
   top: 100%;
   transform: translate(-50%, -150%);
   cursor: pointer; 
+  transition: box-shadow 0.3s; 
 }
-/* .animated-image-container {
-  transition: transform 0.1s ease ;
-  
-} */
+
+.disconnect-button:hover {
+  box-shadow: 9px 5px 9px rgba(0, 0, 0, 0.2); 
+}
 
 .upload-image img {
   /* transition: 2s background-color ease 0.2s; */
   transition: 2s transform ease 1s;
-  width: 800px;
-  height: 363px;
+ 
+  max-Width: 800px;
+  max-Height: 363px;
   border: solid 3px;
   color: black;
   border-radius: 10px;
@@ -164,20 +166,6 @@ input {
     padding-left: 5%;
   }
 
-  .start-presenting-button button {
-    width: 170px;
-    height: 45px;
-    font-size: 17px;
-  }
-
-  /* .disconnect-button { */
-  /*   width: 110px; */
-  /*   height: 40px; */
-  /*   font-size: 16px; */
-  /*   top: 94%; */
-  /*   left: 83%; */
-  /* } */
-
   .upload-box label {
     max-width: 90%;
     height: 35%;
@@ -215,5 +203,11 @@ input {
 	font-family: Montserrat;
 	font-weight: 500;
 	font-size: 15px;
-	color: black
+	color: black;
+  transition: box-shadow 0.3s; 
+  cursor: pointer;
+}
+
+.extra-upload:hover {
+  box-shadow: 9px 5px 9px rgba(0, 0, 0, 0.2); 
 }
