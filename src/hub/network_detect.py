@@ -51,7 +51,7 @@ def msg_format(ip):
     int_ip = int(ipaddress.IPv4Address(ip))
     usr_count = len(connected_devices)
 
-    msg_json = {int_ip:usr_count}
+    msg_json = {'ip':ip, 'count':usr_count}
     return msg_json
 
 def process_packet(packet):
@@ -86,7 +86,7 @@ def device_ping():
                     del connected_devices[mac]
                 sio.emit('lost_connection', msg_format(ip)) # send disconnected ip to server
 
-        time.sleep(5) # seconds
+        time.sleep(1) # seconds
 
 def close_cmd():
     global connected_devices
