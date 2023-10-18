@@ -3,7 +3,7 @@
 // Import npm modules
 import {useState, useEffect} from 'react'
 import io from 'socket.io-client'
-import { QRCodeSVG } from 'qrcode.react'
+import { QRCodeCanvas, QRCodeSVG } from 'qrcode.react'
 
 // Importing Custom modules
 import ImgPod from './Components/ImgPod.jsx' //Images are rendered
@@ -106,7 +106,7 @@ export default function App() {
 			<div className="prompts"
 				style={images.length ? sideStyle : {} }>
 				{/* Add something akin to prompt the user to scan the qr code.*/}
-				<QRCodeSVG id="QR" value={window.location.origin}/>
+				<QRCodeCanvas size="255" id="QR" value={window.location.origin}/>
 			</div>
 		</>
 	)

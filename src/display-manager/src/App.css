@@ -37,11 +37,16 @@
 	opacity: 1;
     left: 50%;
     top: 65vh;
-    transform: translate(-51%, 0);
+    transform: translate(-50%, 0);
 	transition: 0.5s all ease;
 }
 
 #QR {
+	width: 10vw;
+	height: 10vw;
+}
+
+canvas {
 	width: 10vw;
 	height: 10vw;
 }
