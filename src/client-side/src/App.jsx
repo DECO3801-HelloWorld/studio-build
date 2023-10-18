@@ -137,10 +137,12 @@ export default function App() {
 
       // Check if the image moves beyond the threshold before displaying alerts
       if (Math.abs(deltaY) >= TOUCH_THRESHOLD) {
-        const screenHeight = Dimensions.get('window').height;
+        // const screenHeight = Dimensions.get('window').height;
         if (position.y >= TOUCH_THRESHOLD) {
           // Image touches the bottom of the screen (within the threshold)
           setImageURL((prevImageURL) => prevImageURL.slice(0, prevImageURL.length - 1));
+          handleTouchEnd ();
+          //alert("hii");
         }
        
       }

@@ -2,7 +2,7 @@
 /* Put all CSS in here  */
 
 body, html {
-  background-color: #7970b1;
+  background-color: white;
   font-family: Montserrat;
   overscroll-behavior: contain;
 }
