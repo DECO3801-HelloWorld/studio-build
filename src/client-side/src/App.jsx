@@ -3,36 +3,29 @@ import io from "socket.io-client";
 import * as NetworkManager from "./Components/NetworkManager.jsx";
 import "./App.css";
 
-//Server variables
-const socket = io.connect(window.location.origin); //Socket is connection to server
-var count = 0;
+/**
+ * Connects to the current server location using socket.io.
+ */
+const socket = io.connect(window.location.origin);
 
-//Testing Variables
-const userId = 1; //Maybe grab this from server in future
-const userName = "Test User"; //Device name maybe?
-//const Hammer = require('hammerjs')//Require Hammer.js
+//Variables for demo purposes
+var count = 0;
+const userId = 1;
+const userName = "Test User";
 
 export default function App() {
   const [imageURL, setImageURL] = useState([]);
   const [isConnected, setIsConnected] = useState(false);
-  //Grab Upload button
   const fileUploadButton = useRef(null);
 
-
+ /*
+  * Sets the connection state when the socket connects or disconnects.
+  * Also listens for server updates about images.
+  */
   useEffect(() => {
-    // Setting up listeners for socket connection and disconnection
-    socket.on('connect', () => {
-        setIsConnected(true);
-    });
-
-    socket.on('disconnect', () => {
-        setIsConnected(false);
-    });
-
-    // Listen for server updates about images
-    socket.on('updateImages', (updatedImages) => {
-        setImageURL(updatedImages);
-    });
+    socket.on('connect', () => setIsConnected(true));
+    socket.on('disconnect', () => setIsConnected(false));
+    socket.on('updateImages', (updatedImages) => setImageURL(updatedImages));
 
     // Cleanup listeners on unmount
     return () => {
@@ -42,11 +35,9 @@ export default function App() {
   }
 }, []);
 
-  /* uploadFile()
-   *  ------------------------
+  /*
    *  Uploads the file from the input element with id "imgUpload" to the server
-   *  Requires:
-   *		userId, UserName and socket global variables are initialised
+   *  @param {Event} e - The event triggered by file input change.
    */
   function uploadFile(e) {
     const file = NetworkManager.getFile(fileUploadButton);
@@ -56,14 +47,21 @@ export default function App() {
     const newImageURLs = [];
     for (let i = 0; i < e.target.files.length; i++) {
       const imgFile = e.target.files[i];
-      const reader = new FileReader();
+      // const files = NetworkManager.getFiles(fileUploadButton);
+      // files.forEach((file, index) => {
+      // const imgPacket = NetworkManager.packImage(file, userId, userName, imageURL.length + index);
+      // NetworkManager.sendImage(socket, imgPacket);
 
+      console.log("Sending image", file);
+
+      const reader = new FileReader();
       reader.onloadend = () => {
         newImageURLs.push(reader.result);
         setImageURL((currentImageUrl) => {
           return [
             ...currentImageUrl,
             {
+              //id: count++,
               id: count++,
               name: imgPacket.imgName,
               imgFile: file,
@@ -74,13 +72,13 @@ export default function App() {
       };
       reader.readAsDataURL(imgFile);
     }
-
-    //this adds the list of images to imageURL
   }
 
+  /**
+   * Renders the upload button and information.
+   */
   function uploadFxn() {
     return (
-
       <div className="upload-box">
         <label className="file-uploader-container">
           <div className="centered-content">
@@ -92,7 +90,9 @@ export default function App() {
               htmlFor="image-upload"
               onClick={() => fileUploadButton.current.click()}
             >
-              <span className="upload-text">Upload your Image</span>
+              <span className="upload-text">
+                Upload your Image
+              </span>
             </button>
           </div>
           <div className="supported-formats-text">
@@ -103,6 +103,10 @@ export default function App() {
       </div>
     );
   }
+
+  /**
+   * Maps and renders each uploaded image.
+   */
   function imgMapFxn() {
 	  return (
 		  <div className="upload-image">
@@ -119,8 +123,6 @@ export default function App() {
    */
   return (
     <>
-      {/* {console.log("initial value "+socket.connected)} */}
-      {/*Upload button*/}
       <div className="wrapper-upload-btn">
         <div className="header">
           <div className="header-text">MagicShare</div>
@@ -137,16 +139,18 @@ export default function App() {
           />
         </div>
         <button 
-	  htmlFor="image-upload"
-	  onClick={() => fileUploadButton.current.click()}
-	  style={imageURL.length === 0 ? {opacity : 0} : {}} className="extra-upload">
-	  Upload More Images
-            </button>
-			<button
+	        htmlFor="image-upload"
+	        onClick={() => fileUploadButton.current.click()}
+	        style={imageURL.length === 0 ? {opacity : 0} : {}} 
+          className="extra-upload"
+        >
+	        Upload More Images
+        </button>
+			  <button
           className="disconnect-button"
           htmlFor="Disconnect"
           onClick={() => {
-			  NetworkManager.disconnectUser(socket)
+			      NetworkManager.disconnectUser(socket)
             setImageURL([]);
           }}
         >
