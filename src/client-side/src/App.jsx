@@ -55,7 +55,6 @@ export default function App() {
     const imgPacket = NetworkManager.packImage(file, userId, userName, imageURL.length);
     NetworkManager.sendImage(socket, imgPacket);
 
-
     const newImageURLs = [];
     for (let i = 0; i < e.target.files.length; i++) {
       const imgFile = e.target.files[i];
@@ -83,7 +82,7 @@ export default function App() {
 
   function uploadFxn() {
     return (
-      <center>
+
       <div className="upload-box">
         <label className="file-uploader-container">
           <div className="centered-content">
@@ -104,10 +103,9 @@ export default function App() {
           </div>
         </label>
       </div>
-      </center>
     );
   }
-  const TOUCH_THRESHOLD = 300; // Define a threshold to trigger the alerts
+  const TOUCH_THRESHOLD = 200; // Define a threshold to trigger the alerts
 
   // Event handlers for dragging images
   const handleTouchStart = (event) => {
@@ -139,12 +137,10 @@ export default function App() {
 
       // Check if the image moves beyond the threshold before displaying alerts
       if (Math.abs(deltaY) >= TOUCH_THRESHOLD) {
-        // const screenHeight = Dimensions.get('window').height;
+        const screenHeight = Dimensions.get('window').height;
         if (position.y >= TOUCH_THRESHOLD) {
           // Image touches the bottom of the screen (within the threshold)
           setImageURL((prevImageURL) => prevImageURL.slice(0, prevImageURL.length - 1));
-          handleTouchEnd ();
-          //alert("hii");
         }
        
       }
@@ -163,22 +159,19 @@ export default function App() {
   };
 
   function imgMapFxn() {
-  return  imageURL.map((image,index) => (
+  return (
     
       <div className="upload-image"
       style={{
-        marginTop: `${(15 * index)}px`, // Adjust the vertical spacing between images
-        marginLeft: `${(15 * index)}px`,
-        transform: `translate(${position.x}px, ${position.y}px) scale(1)`,
+        transform: `translate(${position.x}px, ${position.y}px scale(1)) `,
         }}
-      onTouchStart={handleTouchStart}
+        onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
         >
-          <img  src={image.URLs} alt="Oops!" />
-        {/* <img src={imageURL[imageURL.length - 1].URLs} alt="Oops!" /> */}
+        <img src={imageURL[imageURL.length - 1].URLs} alt="Oops!" />
       </div>
-  )
+    
   );
 }
 
@@ -191,40 +184,40 @@ export default function App() {
    */
   return (
     <>
-    {/* {console.log("initial value "+socket.connected)} */}
-    {/*Upload button*/}
-    <div className="wrapper-upload-btn">
-      <div className="header">
-        <div className="header-text">MagicShare</div>
+      {/* {console.log("initial value "+socket.connected)} */}
+      {/*Upload button*/}
+      <div className="wrapper-upload-btn">
+        <div className="header">
+          <div className="header-text">MagicShare</div>
+        </div>
+        {/* {status()} */}
+        {imageURL.length === 0 ? uploadFxn() : imgMapFxn()}
+        <div className="start-presenting-button">
+          <input
+            type="file"
+            ref={fileUploadButton}
+            onChange={uploadFile}
+            id="image-upload"
+            accept="image/*" // Specify accepted file types
+          />
+        </div>
+        <button 
+	  htmlFor="image-upload"
+	  onClick={() => fileUploadButton.current.click()}
+	  style={imageURL.length === 0 ? {opacity : 0} : {}} className="extra-upload">
+	  Upload More Images
+            </button>
+			<button
+          className="disconnect-button"
+          htmlFor="Disconnect"
+          onClick={() => {
+			  NetworkManager.disconnectUser(socket)
+            setImageURL([]);
+          }}
+        >
+          Remove My Images
+        </button>
       </div>
-      {/* {status()} */}
-      {imageURL.length === 0 ? uploadFxn() : imgMapFxn()}
-      <div className="start-presenting-button">
-        <input
-          type="file"
-          ref={fileUploadButton}
-          onChange={uploadFile}
-          id="image-upload"
-          accept="image/*" // Specify accepted file types
-        />
-      </div>
-      <button 
-  htmlFor="image-upload"
-  onClick={() => fileUploadButton.current.click()}
-  style={imageURL.length === 0 ? {opacity : 0} : {}} className="extra-upload">
-  Upload More Images
-          </button>
-    <button
-        className="disconnect-button"
-        htmlFor="Disconnect"
-        onClick={() => {
-      NetworkManager.disconnectUser(socket)
-          setImageURL([]);
-        }}
-      >
-        Remove My Images
-      </button>
-    </div>
-  </>
-);
+    </>
+  );
 }
