@@ -75,29 +75,20 @@ export function addImage(imgPacket, {images,  setImages }) {
 			resizeImages({setImages})
 		}, 1000)
 	}, timeout)
-
 }
 
-export function resizeImages({setImages}) {
+export function resizeImages({images, setImages}) {
 	setImages(currentImages => {
 		const rootHeight = document.getElementById("imgContainer").getBoundingClientRect().height;
 		const rootWidth= document.getElementById("imgContainer").getBoundingClientRect().width;
 		const padding = 30;
 
-
-		let img_row_width = []
-		let current_row_width = padding
-		for (let i = 0; i < currentImages.length; i++) {
-			current_row_width += currentImages[i].data.props.width + padding
-			if (current_row_width > rootWidth - padding) {
-				current_row_width = rootWidth - padding
-			}
-			if ((i+1) % 3 == 0) {
-				img_row_width.push(current_row_width)
-				current_row_width = 0
-			}
+		let img_row_width = pre_processing(padding, currentImages, rootWidth)
+		if (img_row_width === null) {
+			console.log("couln't resolve images")
+			return [...currentImages]
 		}
-		img_row_width.push(current_row_width)
+
 
 		const attributes = {
 			left: (rootWidth / 2) - (img_row_width[0] / 2),
@@ -122,6 +113,27 @@ export function resizeImages({setImages}) {
 		}
 		return [...currentImages];
 	})
+}
+
+
+function pre_processing(padding, currentImages, rootWidth) {
+	let img_row_width = []
+	let current_row_width = padding
+	for (let i = 0; i < currentImages.length; i++) {
+		if (!currentImages[i].data.props) {
+			return null
+		}
+		current_row_width += currentImages[i].data.props.width + padding
+		if (current_row_width > rootWidth - padding) {
+			current_row_width = rootWidth - padding
+		}
+		if ((i+1) % 3 == 0) {
+			img_row_width.push(current_row_width)
+			current_row_width = 0
+		}
+	}
+	img_row_width.push(current_row_width)
+	return img_row_width
 }
 
 
@@ -212,7 +224,7 @@ export function removeImage(imgId, { setImages }) {
 				image.data.props = image.data.original
 				return image
 			})
-			resizeImages({setImages});
+			// resizeImages({setImages});
 			return currentImages.filter((image) => image.id !== imgId)
 		})
 	}, 500);
