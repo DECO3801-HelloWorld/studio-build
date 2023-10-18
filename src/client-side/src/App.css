@@ -28,15 +28,16 @@ input {
   font-weight: 400;
   word-wrap: break-word;
   background-color: #7970b1;
-  position: fixed;
-  display: flex;
-  top: 60%;
-  left: 50%;
-  transform: translate(-50%, 100%);
+
   align-items: center;
   justify-content: center;
   border: #454545;
   cursor: pointer;
+  transition: box-shadow 0.3s; 
+}
+
+.start-presenting-button button:hover {
+  box-shadow: 12px 12px 16px rgba(0, 0, 0, 0.3); 
 }
 
 .upload-button {
@@ -53,19 +54,24 @@ input {
   background-color: #595151;
   position: fixed;
   border: #454545;
-  top: 100%;
-  transform: translate(-50%, -150%);
+  /* top: 100%;
+  transform: translate(-50%, -150%); */
   cursor: pointer; 
+  transition: box-shadow 0.3s; 
+}
+
+.disconnect-button:hover {
+  box-shadow: 9px 5px 9px rgba(0, 0, 0, 0.2);
 }
 
 .upload-image img {
-  
-  
-  max-Width: 800px;
-  max-Height: 363px;
+  bottom: 0;
+  width: 60vw;
+  height: 55vh;
   border: solid 3px;
   color: black;
-  border-radius: 10px;
+  border-radius: 20px;
+  /* border-radius: 10px; */
   object-fit: cover;
   position: fixed;
   top: 37%;
@@ -77,16 +83,14 @@ input {
 .upload-box label {
   background: #e0e0e0;
   border: 1px rgba(8, 133, 134, 0.3) dotted;
-  width: 100%; /* Use 100% width to fill the container */
-  max-width: 800px; /* Limit the maximum width */
-  height: 363px;
+  width: 60vw; 
+  height: 55vh;
   color: black;
   border-radius: 20px;
   object-fit: cover;
-  position: fixed;
   top: 37%;
   left: 50%;
-  transform: translate(-50%, -50%); /* Center the label using transform */
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
