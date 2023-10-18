@@ -2,13 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
 import * as NetworkManager from "./Components/NetworkManager.jsx";
 import "./App.css";
+import { v4 as uuidv4 } from 'uuid';
+
 
 //Server variables
 const socket = io.connect(window.location.origin); //Socket is connection to server
 var count = 0;
 
 //Testing Variables
-const userId = 1; //Maybe grab this from server in future
+const userId = uuidv4(); //Maybe grab this from server in future
 const userName = "Test User"; //Device name maybe?
 
 //const Hammer = require('hammerjs')//Require Hammer.js
@@ -66,7 +68,7 @@ export default function App() {
           return [
             ...currentImageUrl,
             {
-              id: count++,
+              id: uuidv4(),
               name: imgPacket.imgName,
               imgFile: file,
               URLs: newImageURLs[i],
@@ -141,6 +143,8 @@ export default function App() {
         if (position.y >= TOUCH_THRESHOLD) {
           // Image touches the bottom of the screen (within the threshold)
           setImageURL((prevImageURL) => prevImageURL.slice(0, prevImageURL.length - 1));
+          console.log(imageURL[imageURL.length - 1].id);
+          NetworkManager.swipeRemove(socket,imageURL[imageURL.length - 1].id);
           handleTouchEnd ();
           //alert("hii");
         }
