@@ -54,12 +54,13 @@ def msg_format(ip):
     msg_json = {'ip':ip, 'count':usr_count}
     return msg_json
 
+# Detects if user has joined the networking using ARP connect requests
 def process_packet(packet):
     global connected_devices
 
-    if ARP in packet and packet[ARP].op == 1: # ARP Request
-        ip = packet[ARP].psrc
-        mac = packet[ARP].hwsrc
+    if ARP in packet and packet[ARP].op == 1: # ARP connect request check
+        ip = packet[ARP].psrc # ip address of device
+        mac = packet[ARP].hwsrc # mac address of device
 
         with lock: # Get lock
             if mac not in connected_devices:
@@ -70,6 +71,7 @@ def process_packet(packet):
                 else:
                     print("\nDevice ARP: avoided")
 
+# Detects if user has left the network using pings
 def device_ping():
     global exit_flag
     global connected_devices
@@ -88,10 +90,11 @@ def device_ping():
 
         time.sleep(1) # seconds
 
+# Listens and processes end program message
 def close_cmd():
     global connected_devices
     global exit_flag
-    # wait for user input to exit the program
+    # wait for user input to send 'end' to end the program
     while True:
         user_input = input()
         if user_input.lower() == "end":
