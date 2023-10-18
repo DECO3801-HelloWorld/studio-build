@@ -224,7 +224,7 @@ export function removeImage(imgId, { setImages }) {
 				image.data.props = image.data.original
 				return image
 			})
-			// resizeImages({setImages});
+			resizeImages({setImages});
 			return currentImages.filter((image) => image.id !== imgId)
 		})
 	}, 500);
