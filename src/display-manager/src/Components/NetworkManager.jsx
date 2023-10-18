@@ -119,5 +119,5 @@ export function disconnectUser(socket, imageState) {
 	// 	ImageManager.removeImagesByUser(userId, imageState)
 	// })
 
-	socket.emit('disconnectUser', userId);
+	socket.emit('remove_all_image', userId);
 }
