@@ -69,6 +69,11 @@ It is worth noting that any device on the network can show the display if direct
 
 The terminal screen also prints various actions that have been performed such as users uploading photos, connecting and disconnecting.
 
+## Security, Ethical & Privacy Considerations
+Security of the connection between the client device and the hub is handled by standard Wi-Fi security protocols. We have decided to use nothing weaker than WPA2, as is the standard for non-enterprise organisations.  
+It is assumed that all users only post images to the screen that they are comfortable sharing with other people in the room. It is policy to never write these images to disk. This means that when the user disconnects the images will be permanantly removed from memory and there is no risk of future users seeing their images.  
+Proximity is a consideration to ensure that the user can see everyone that can access the screen. This gives the user confidence that they're only sharing their images with people they trust them with. 
+
 ## Team Members
 
 All the people working on this project:
