@@ -51,13 +51,13 @@ export function addImage(imgPacket, {images,  setImages }) {
 				return [...currentImages, { id: imgPacket.imgId, data: imgPacket},]
 			})
 		}, 1000)
-		setTimeout(() => {
-			console.log("Image Timed out -- Removing")
-			removeImage(imgPacket.imgId, {setImages})
-			setTimeout(() => {
-				resizeImages({setImages})
-			}, 1000)
-		}, timeout)
+		// setTimeout(() => {
+		// 	console.log("Image Timed out -- Removing")
+		// 	removeImage(imgPacket.imgId, {setImages})
+		// 	setTimeout(() => {
+		// 		resizeImages({setImages})
+		// 	}, 1000)
+		// }, timeout)
 		return
 	}
 
@@ -68,13 +68,13 @@ export function addImage(imgPacket, {images,  setImages }) {
 		return [...currentImages, { id: imgPacket.imgId, data: imgPacket},]
 	})
 
-	setTimeout(() => {
-		console.log("Image Timed out -- Removing")
-		removeImage(imgPacket.imgId, {setImages})
-		setTimeout(() => {
-			resizeImages({setImages})
-		}, 1000)
-	}, timeout)
+	// setTimeout(() => {
+	// 	console.log("Image Timed out -- Removing")
+	// 	removeImage(imgPacket.imgId, {setImages})
+	// 	setTimeout(() => {
+	// 		resizeImages({setImages})
+	// 	}, 1000)
+	// }, timeout)
 }
 
 export function resizeImages({images, setImages}) {
