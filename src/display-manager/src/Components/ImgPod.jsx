@@ -53,7 +53,7 @@ export default function ImgPod({ data, setImages }) {
 	function birthAnimation() {
 		//Apply birth animation
 		Object.assign(img.current.offsetParent.style, {
-			animation: "0.5s birth ease 0.3s",
+			animation: "0.5s birth ease 0",
 			animationIterationCount: "1",
 			animationFillMode: "forward",
 			opacity: "1"
@@ -61,16 +61,16 @@ export default function ImgPod({ data, setImages }) {
 
 		//set image width, length as props
 		data.props = {
-			width: img.current.width,
-			height: img.current.height,
+			width: img.current.width > 1000 ? 1000 : img.current.width,
+			height: img.current.height > 1000 ? 1000 : img.current.height,
 			area: img.current.width * img.current.height,
 			ratio: img.current.width / img.current.height //L + ratio
 		}
 
 		//store original  image width, length as props
 		data.original = {
-			width: img.current.width,
-			height: img.current.height,
+			width: img.current.width > 1000 ? 1000 : img.current.width,
+			height: img.current.height > 1000 ? 1000 : img.current.height,
 			area: img.current.width * img.current.height,
 			ratio: img.current.width / img.current.height //L + ratio
 		}
