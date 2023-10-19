@@ -61,16 +61,16 @@ export default function ImgPod({ data, setImages }) {
 
 		//set image width, length as props
 		data.props = {
-			width: img.current.width > 1000 ? 1000 : img.current.width,
-			height: img.current.height > 1000 ? 1000 : img.current.height,
+			width: img.current.width,
+			height: img.current.height,
 			area: img.current.width * img.current.height,
 			ratio: img.current.width / img.current.height //L + ratio
 		}
 
 		//store original  image width, length as props
 		data.original = {
-			width: img.current.width > 1000 ? 1000 : img.current.width,
-			height: img.current.height > 1000 ? 1000 : img.current.height,
+			width: img.current.width,
+			height: img.current.height,
 			area: img.current.width * img.current.height,
 			ratio: img.current.width / img.current.height //L + ratio
 		}
