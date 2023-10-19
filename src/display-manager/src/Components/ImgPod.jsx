@@ -53,7 +53,7 @@ export default function ImgPod({ data, setImages }) {
 	function birthAnimation() {
 		//Apply birth animation
 		Object.assign(img.current.offsetParent.style, {
-			animation: "0.5s birth ease 0s",
+			animation: "0.5s birth ease 0.3s",
 			animationIterationCount: "1",
 			animationFillMode: "forward",
 			opacity: "1"
