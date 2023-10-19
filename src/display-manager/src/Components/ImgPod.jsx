@@ -1,37 +1,31 @@
+/* ImgPod */
+/* Component that holds images send from the client */
+
+//Import styling
 import '../App.css'
 import './ImgPod.css'
-import { resizeImages } from './ImageManager';
+
+// Get the appropriate functions from image manager 
+import { resizeImages, resolveIcon} from './ImageManager';
 import { useRef , createElement} from 'react'
 import base64ArrayBuffer from "./Encoder";
 import {FaHorse, FaFish, FaCat, FaDog, FaSpider} from 'react-icons/fa'
 
-function resolve_icon(style) {
-	switch (style["--colour1"]) {
-		case "#ffe040":
-			return 1
-		case "#70f0f5":
-			return 2
-		case "#1aff69":
-			return 3
-		case "#ff00f7":
-			return 4
-		case "#f54971":
-			return 5
 
-		default:
-			return 0;
-	}
-}
-
-/* The ImgPod(s) are an element that are going to render the user's image in a
-* colourful frame. Eventually it'll take arguments from App.jsx about the
-* name and associated id/colour of the bubble. 
-*/
+/**
+ * The `ImgPod` component is responsible for rendering a user's image in a colorful frame. It can receive data from App.jsx, including the user's name and associated id/color for the bubble.
+ *
+ * @param {object} data - Data containing information about the user's image and associated properties.
+ * @param {Function} setImages - React hook for updating the images state.
+ */
 export default function ImgPod({ data, setImages }) {
+
 	//Encode image into string that can be encoded into the image
 	const base64String = base64ArrayBuffer(data.imgPayload)
+	//Resolve source based on type of image
 	const src = (data.imgPath) ? data.imgPath : "data:image/"+data.imgType+";base64,"+base64String
 
+	//Map of icons and their ID
 	const icons = {
 		1 : FaHorse,
 		2 : FaFish,
@@ -40,12 +34,24 @@ export default function ImgPod({ data, setImages }) {
 		5 : FaSpider
 	}
 
-	const icon = icons[resolve_icon(data.style)]
-
+	//Get the icon based on ID
+	const icon = icons[resolveIcon(data.style)]
 	const img = useRef(null);
 
-	//Birth animation
+	/**
+	 * Animates the birth of an image and updates its properties.
+	 *
+	 * This function applies a birth animation to an image, which includes setting
+	 * animation properties and updating the image's width, height, area, and ratio.
+	 * It also stores the original image properties. Finally, it resizes the image
+	 * to ensure correct positioning.
+	 *
+	 * @function
+	 * @name birthAnimation
+	 * @returns {void}
+	 */
 	function birthAnimation() {
+		//Apply birth animation
 		Object.assign(img.current.offsetParent.style, {
 			animation: "0.5s birth ease 0s",
 			animationIterationCount: "1",
@@ -53,6 +59,7 @@ export default function ImgPod({ data, setImages }) {
 			opacity: "1"
 		})
 
+		//set image width, length as props
 		data.props = {
 			width: img.current.width,
 			height: img.current.height,
@@ -60,6 +67,7 @@ export default function ImgPod({ data, setImages }) {
 			ratio: img.current.width / img.current.height //L + ratio
 		}
 
+		//store original  image width, length as props
 		data.original = {
 			width: img.current.width,
 			height: img.current.height,
@@ -67,13 +75,14 @@ export default function ImgPod({ data, setImages }) {
 			ratio: img.current.width / img.current.height //L + ratio
 		}
 
+		//Reize images so that they are positioned correctly
 		resizeImages({setImages})
 		setTimeout(() => {
 			resizeImages({setImages})
 		}, 500)
 	}
 
-	//This is fucked but lets just ignore it for now
+	//Creating the style variable - eg colourful frame
 	let style = Object.assign({}, data.style);
 	Object.assign(style, data.moving);
 
@@ -81,6 +90,7 @@ export default function ImgPod({ data, setImages }) {
 	return (
 		<div className="imgPod" style={style}>
 			<div className='imgPod-icon-container'>
+			{/* Create the icon */}
 			{createElement(icon, { className: 'imgPod-icon' })}
 			</div>
 			<img src={src} ref={img} className="img-content" onLoad={birthAnimation} alt={data.imgName}/>

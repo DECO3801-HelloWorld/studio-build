@@ -5,15 +5,13 @@ import "./App.css";
 import { v4 as uuidv4 } from 'uuid';
 
 
-//Server variables
 const socket = io.connect(window.location.origin); //Socket is connection to server
+console.log("initial value " + socket.connected);
 var count = 0;
 
 //Testing Variables
 const userId = uuidv4(); //Maybe grab this from server in future
 const userName = uuidv4(); //Device name maybe?
-
-//const Hammer = require('hammerjs')//Require Hammer.js
 
 export default function App() {
   const [imageURL, setImageURL] = useState([]);
@@ -82,6 +80,7 @@ export default function App() {
    */
   function uploadFxn() {
     return (
+      <center>
       <div className="upload-box">
         <label className="file-uploader-container">
           <div className="centered-content">
@@ -104,8 +103,9 @@ export default function App() {
           </div>
         </label>
       </div>
-    );
-  }
+    )
+}
+
   const TOUCH_THRESHOLD = 200; // Define a threshold to trigger the alerts
 
   // Event handlers for dragging images
@@ -211,6 +211,7 @@ export default function App() {
             onChange={uploadFile}
             id="image-upload"
             accept="image/*" // Specify accepted file types
+            // capture // Capture from device camera if available
           />
         </div>
         <button 
@@ -229,8 +230,10 @@ export default function App() {
             setImageURL([]);
           }}
         >
-          Remove My Images
+          Remove Images
         </button>
+        </div>
+        {/* {<label onClick={print}>printing</label>} */}
       </div>
     </>
   );
