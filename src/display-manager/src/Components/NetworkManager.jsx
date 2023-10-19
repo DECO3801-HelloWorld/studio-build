@@ -1,41 +1,55 @@
 /* Network Manager */
-/* Takes care of networking, including websockets and the actions related to them */
+/* Takes care of networking, 
+	* Responsibilities involve:
+	* Getting images, 
+	* managing websockets
+	* Dismounting listeners when finished */
+
+//Import ImageManager to perform actions based on websockets
 import * as ImageManager from './ImageManager.jsx'
 
-
-/* listenForImage()
-	* -------------------------------------------------------
-	*  Creates an event listener for the image download event on the socket.
-	*  Adds an image if one is received
-	*
-	*  socket:
-	*		The socket to listen to
-	*	imageState:
-	*		{images, setImage} the state of images on the display
-	*/
+/**
+ * Creates an event listener for the image download event on the socket and adds an image if one is received.
+ *
+ * @param {Socket} socket - The socket to listen to.
+ * @param {{ images: Array, setImage: function }} imageState - The state of images on the display. */
 export function listenForImage(socket, imageState) {
 	// if there is an image from the server
 	socket.on("download_img", (imgPacket) => {
+
 		// print out image info and add to image state
 		console.log(`Image received form ${imgPacket.userName} : ${imgPacket.imgName}`);
 		imgPacket.userId = imgPacket.userId || null;
 		ImageManager.addImage(imgPacket, imageState);
 	});
-
-	socket.on('updateImages', (updatedImages) => {
-        imageState.setImages(updatedImages);
-    });
 }
 
-export function listenForRemoveAllImage(socket, {images, setImages}) {
+/**
+ * Creates an event listener for the "display_remove_all_image" event on the socket and removes all images associated with a specific user.
+ *
+ * @param {Socket} socket - The socket to listen to.
+ * @param {{ images: Array, setImages: function }} imageState - The state of images on the display.
+ */
+export function listenForRemoveAllUserImage(socket, {images, setImages}) {
 	socket.on("display_remove_all_image", ({ userId }) => {
 		// print out image info and add to image state
 		console.log(`Removing image with ID: ${userId}`);
 		ImageManager.removeUser(userId, {images, setImages});
 	})
+	socket.on("remove_user", ({ userId }) => {
+		console.log(`Removing all images belonging to user: ${userId}`);
+		ImageManager.removeUser(userId, imageState);
+	})
 }
 
-//Stub for user data
+/**
+ * UNUSED: This function is intended for handling user connection events but is currently unused.
+ *
+ * Creates an event listener for the "user_connect" event on the socket. When a user connects, it attempts to add the user's icon to the display.
+ *
+ * @param {Socket} socket - The socket to listen to.
+ * @param {UserState} userState - The state of user-related information on the display.
+ */
 export function listenForUserConnect(socket, userState) {
 	socket.on("user_connect"), () => {
 		const userId = 0;
@@ -51,16 +65,12 @@ export function listenForUserConnect(socket, userState) {
 	}
 }
 
-/* listenForImgRemove()
-	* -------------------------------------------------------
-	*  Listens to the remove image event from the socket and
-	*  calls for the ImageManager to remove the image
-	*
-	*  socket:
-	*		The socket to listen to
-	*	imageState:
-	*		{images, setImage} the state of images on the display
-	*/
+/**
+ * Listens to the "remove_img" event from the socket and calls for the ImageManager to remove the image.
+ *
+ * @param {Socket} socket - The socket to listen to.
+ * @param {{ images: Array, setImage: function }} imageState - The state of images on the display.
+ */
 export function listenForImgRemove(socket, imageState) {
 
 	// if there is an image from the server
@@ -71,39 +81,11 @@ export function listenForImgRemove(socket, imageState) {
 	})
 }
 
-/* listenForRemoveUser()
-	* -------------------------------------------------------
-	*  Listens to the remove user event from the socket and
-	*  calls for the ImageManager to remove all images from 
-	*  the user
-	*
-	*  socket:
-	*		The socket to listen to
-	*	imageState:
-	*		{images, setImage} the state of images on the display
-	*/
-export function listenForRemoveUser(socket, imageState, userState) {
-	socket.on("remove_user", ({ userId }) => {
-		console.log(`Removing all images belonging to user: ${userId}`);
-		ImageManager.removeUser(userId, imageState);
-	})
-}
-
-// export function removeImagesByUser(userId, { images, setImages }) {
-// 	const updatedImages = images.filter(image => image.userId !== userId);
-// 	setImages(updatedImages);
-// }
-
-/* dismountListeners()
-	* -------------------------------------------------------
-	*  Will call socket.off() on all the appropriate event listeners.
-	*  Required for the useEffect hook to function
-	*
-	*  socket:
-	*		The socket to listen to
-	*	imageState:
-	*		{images, setImage} the state of images on the display
-	*/
+/**
+ * Calls `socket.off()` to remove all the appropriate event listeners. This function is required for the `useEffect` hook to function properly.
+ *
+ * @param {Socket} socket - The socket to remove event listeners from.
+ */
 export function dismountListeners(socket) {
 	socket.off("download_img");
 	socket.off("remove_user");
@@ -113,11 +95,3 @@ export function dismountListeners(socket) {
 	socket.off("display_remove_all_image");
 }
 
-export function disconnectUser(socket, imageState) {
-	// socket.on("disconnectUser", ({ userId }) => {
-	// 	console.log(`Removing all images belonging to user: ${userId}`);
-	// 	ImageManager.removeImagesByUser(userId, imageState)
-	// })
-
-	socket.emit('remove_all_image', userId);
-}

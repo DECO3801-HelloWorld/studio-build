@@ -3,6 +3,7 @@ import threading
 import time
 import datetime
 import contextlib
+import argparse
 
 import asyncio
 import socketio
@@ -11,6 +12,15 @@ import ipaddress
 
 from scapy.all import ARP, sniff
 from user_manager import UserManager
+
+# Getting the port from commandline argument
+argument = argparse.ArgumentParser(
+        description="Accepts a port number to run on")
+argument.add_argument("port", type=int, help="The port number to use")
+
+port_cmd = argument.parse_args().port
+if port_cmd is None:
+    port_cmd = 3001
 
 connected_devices = {} # {mac:ip}
 
@@ -41,15 +51,16 @@ def msg_format(ip):
     int_ip = int(ipaddress.IPv4Address(ip))
     usr_count = len(connected_devices)
 
-    msg_json = {int_ip:usr_count}
+    msg_json = {'ip':ip, 'count':usr_count}
     return msg_json
 
+# Detects if user has joined the networking using ARP connect requests
 def process_packet(packet):
     global connected_devices
 
-    if ARP in packet and packet[ARP].op == 1: # ARP Request
-        ip = packet[ARP].psrc
-        mac = packet[ARP].hwsrc
+    if ARP in packet and packet[ARP].op == 1: # ARP connect request check
+        ip = packet[ARP].psrc # ip address of device
+        mac = packet[ARP].hwsrc # mac address of device
 
         with lock: # Get lock
             if mac not in connected_devices:
@@ -60,6 +71,7 @@ def process_packet(packet):
                 else:
                     print("\nDevice ARP: avoided")
 
+# Detects if user has left the network using pings
 def device_ping():
     global exit_flag
     global connected_devices
@@ -76,12 +88,13 @@ def device_ping():
                     del connected_devices[mac]
                 sio.emit('lost_connection', msg_format(ip)) # send disconnected ip to server
 
-        time.sleep(5) # seconds
+        time.sleep(1) # seconds
 
+# Listens and processes end program message
 def close_cmd():
     global connected_devices
     global exit_flag
-    # wait for user input to exit the program
+    # wait for user input to send 'end' to end the program
     while True:
         user_input = input()
         if user_input.lower() == "end":
@@ -119,7 +132,9 @@ def main():
     hostname = socket.gethostname()
     # get ip address
     ip_address = socket.gethostbyname(hostname)
-    port = os.environ.get("PORT", "3001")
+    port = os.environ.get("PORT")
+    if port is None:
+        port = port_cmd
     try:
         print(f"{ip_address}:{port}")
         sio.connect(f'http://{ip_address}:{port}')
