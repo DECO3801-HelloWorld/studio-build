@@ -21,6 +21,7 @@ export default function App() {
   //Grab Upload button
   const fileUploadButton = useRef(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isMovingDown, setIsMovingDown] = useState(false);
 
 
   useEffect(() => {
@@ -126,6 +127,7 @@ export default function App() {
   };
 
   const handleTouchMove = (event) => {
+    setIsMovingDown(true);
     if (position.initialTouch) {
       const touch = event.touches[0];
       const deltaX = touch.clientX - position.initialTouch.startX;
@@ -141,6 +143,7 @@ export default function App() {
       // Check if the image moves beyond the threshold before displaying alerts
       if (Math.abs(deltaY) >= TOUCH_THRESHOLD) {
         // const screenHeight = Dimensions.get('window').height;
+        
         if (position.y >= TOUCH_THRESHOLD) {
           // Image touches the bottom of the screen (within the threshold)
           setImageURL((prevImageURL) => prevImageURL.slice(0, prevImageURL.length - 1));
@@ -160,17 +163,26 @@ export default function App() {
   const handleTouchEnd = () => {
     // Animate the image back to its original position
     // using CSS transitions
+    
+      setIsMovingDown(false);
+    
     setPosition((prevPosition) => ({
       ...prevPosition,
       x: 0,
       y: 0,
       initialTouch: null,
     }));
+  
   };
 
   function imgMapFxn() {
     return  imageURL.map((image,index) => (
-      
+      <>
+    {isMovingDown && (
+      <div className="gradient-overlay">
+        <p>Swipe down to remove</p>
+      </div>
+    )}
         <div className="upload-image"
         style={{
           marginTop: `${(15 * index)}px`, // Adjust the vertical spacing between images
@@ -184,9 +196,13 @@ export default function App() {
             <img  src={image.URLs} alt="Oops!" />
           {/* <img src={imageURL[imageURL.length - 1].URLs} alt="Oops!" /> */}
         </div>
+        </>
     )
     );
   }
+      
+       
+  
 
   /* Entry Point of Program
    * ---------------------------------------------
