@@ -1,8 +1,10 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
+/* SplashScreen.jsx */
+/* Component that displays the instructions and logo of MagicShare if the system is idle */
 import './SplashScreen.css'
 import WifiIcon from '../images/wifi.png'
 import UploadIcon from '../images/Upload.png'
 
+/** The splash screen that displays when system is idle*/
 export default function SplashScreen(props) {
 	return (
 		<div id="splash-root" style={props.style}>

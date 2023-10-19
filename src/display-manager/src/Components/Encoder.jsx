@@ -1,6 +1,10 @@
-
-/* https://gist.github.com/jonleighton/958841 */
-/* Thank you! you saved my life! */
+/**
+ * Converts an array buffer to a base64 string. The code for this function is adapted from the following source: 
+ * @see {@link https://gist.github.com/jonleighton/958841|https://gist.github.com/jonleighton/958841}
+ * Thank you for saving mu life jonleighton :)
+ *
+ * @param {ArrayBuffer} arrayBuffer - The array buffer to be converted to a base64 string.
+ */
 export default function base64ArrayBuffer(arrayBuffer) {
   var base64    = ''
   var encodings = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'

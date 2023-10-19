@@ -9,9 +9,21 @@ import {
 	handle_new_connection
 } from './event-handlers/network_monitor.js';
 
-//PORT NUM
+//PORT NUMBER as defined in the environment variable
 const port = process.env.PORT || 3001;
 
+/**
+ * Converts an IPv4 address in string format to an integer.
+ *
+ * This function takes an IPv4 address in string format (e.g., '192.168.1.1') and
+ * converts it to a 32-bit unsigned integer. It uses bitwise shifting and parsing
+ * to perform the conversion.
+ *
+ * @param {string} ip - The IPv4 address in string format to be converted.
+ * @returns {number} The 32-bit unsigned integer representing the IPv4 address.
+ *
+ * @see https://gist.github.com/jppommet/5708697
+ */
 function ip2int(ip) {
     return ip.split('.').reduce(function(ipInt, octet) { return (ipInt<<8) + parseInt(octet, 10)}, 0) >>> 0;
 }
@@ -45,14 +57,6 @@ io.on("connection", (socket) => {
 		imgPacket.imgId = ip2int(socket.handshake.address)+imgPacket.imgId
 		socket.broadcast.emit("download_img", imgPacket);
 	})
-
-	socket.on("disconnectUser", (userId) => {
-		// Remove images uploaded by the disconnected user
-		images = images.filter(image => image.userId !== userId);
-	  
-		// Notify all clients about the updated images array
-		io.emit('updateImages', images);
-	  });
 
 	// Declare Disconnects
 	socket.on("disconnect", () => {
