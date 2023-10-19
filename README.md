@@ -27,6 +27,8 @@ With traditional content hosting services, there is one "presenter" who controls
 
 ## Demo of the Project
 
+![demo](./documentation/readme-files/demo.mp4)
+
 ## Installation
 
 #### Prequisites
