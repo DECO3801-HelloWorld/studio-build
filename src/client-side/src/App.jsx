@@ -11,7 +11,7 @@ var count = 0;
 
 //Testing Variables
 const userId = uuidv4(); //Maybe grab this from server in future
-const userName = "Test User"; //Device name maybe?
+const userName = uuidv4(); //Device name maybe?
 
 //const Hammer = require('hammerjs')//Require Hammer.js
 
@@ -54,7 +54,8 @@ export default function App() {
    */
   function uploadFile(e) {
     const file = NetworkManager.getFile(fileUploadButton);
-    const imgPacket = NetworkManager.packImage(file, userId, userName, imageURL.length);
+    const imgId = uuidv4();
+    const imgPacket = NetworkManager.packImage(file, userId, userName, imgId);
     NetworkManager.sendImage(socket, imgPacket);
 
     const newImageURLs = [];
@@ -68,7 +69,7 @@ export default function App() {
           return [
             ...currentImageUrl,
             {
-              id: uuidv4(),
+              id: imgPacket.imgId,
               name: imgPacket.imgName,
               imgFile: file,
               URLs: newImageURLs[i],
@@ -143,8 +144,11 @@ export default function App() {
         if (position.y >= TOUCH_THRESHOLD) {
           // Image touches the bottom of the screen (within the threshold)
           setImageURL((prevImageURL) => prevImageURL.slice(0, prevImageURL.length - 1));
-          console.log(imageURL[imageURL.length - 1].id);
-          NetworkManager.swipeRemove(socket,imageURL[imageURL.length - 1].id);
+          //NetworkManager.packImage(file, userId, userName, imgId);
+         
+          const imgPacket = NetworkManager.packImage(imageURL[imageURL.length - 1].imgFile, userId,userName , imageURL[imageURL.length - 1].id);
+          console.log(imgPacket);
+          NetworkManager.swipeRemove(socket,imgPacket);
           handleTouchEnd ();
           //alert("hii");
         }

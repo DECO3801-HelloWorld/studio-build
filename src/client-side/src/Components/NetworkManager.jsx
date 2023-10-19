@@ -80,3 +80,17 @@ export function disconnectUser(socket) {
 	console.log(`Client initiated disconnect from server` )
 }
 
+/* swipeRemove() 
+* --------------------------------------
+	* Remove the last image user uploaded on the server
+	* 
+	* socket - object
+	*		The socket connected with the server
+*/
+
+export function swipeRemove(socket,imgPacket) {
+	socket.emit("request_img_remove",imgPacket)
+	console.log(`USer ID ${imgPacket.userId}` )
+	console.log(`Client initiated single image removal from server ${imgPacket.imgId}` )
+}
+

@@ -33,6 +33,8 @@ const io = new Server(server, {
 })
 
 let images = []
+ 
+
 
 // When connected log the socketID
 io.on("connection", (socket) => {
@@ -42,8 +44,10 @@ io.on("connection", (socket) => {
 	socket.on("upload_img", (imgPacket) => {
 		console.log(`Sending Image ${imgPacket.imgName} from ${imgPacket.userName}`)
 		imgPacket.userId = ip2int(socket.handshake.address)
-		imgPacket.imgId = ip2int(socket.handshake.address)+imgPacket.imgId
+		imgPacket.imgId = imgPacket.imgId
+	
 		socket.broadcast.emit("download_img", imgPacket);
+		
 	})
 
 	socket.on("disconnectUser", (userId) => {
@@ -68,10 +72,11 @@ io.on("connection", (socket) => {
 	socket.on("request_img_remove", (imgPacket) => {
 		console.log("Requested to remove an image.");
 		console.log(imgPacket);
-		imgPacket.userId = ip2int(socket.handshake.address)
-		imgPacket.imgId = ip2int(socket.handshake.address)+imgPacket.imgId
+		
 		socket.broadcast.emit("remove_img", imgPacket)
 	})
+
+	
 
 	socket.on("new_connection", handle_new_connection(socket));
 	socket.on("lost_connection", handle_lost_connection(socket));
