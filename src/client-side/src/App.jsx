@@ -18,25 +18,17 @@ const userName = uuidv4(); //Device name maybe?
 export default function App() {
   const [imageURL, setImageURL] = useState([]);
   const [isConnected, setIsConnected] = useState(false);
-  //Grab Upload button
   const fileUploadButton = useRef(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
-
+ /*
+  * Sets the connection state when the socket connects or disconnects.
+  * Also listens for server updates about images.
+  */
   useEffect(() => {
-    // Setting up listeners for socket connection and disconnection
-    socket.on('connect', () => {
-        setIsConnected(true);
-    });
-
-    socket.on('disconnect', () => {
-        setIsConnected(false);
-    });
-
-    // Listen for server updates about images
-    socket.on('updateImages', (updatedImages) => {
-        setImageURL(updatedImages);
-    });
+    socket.on('connect', () => setIsConnected(true));
+    socket.on('disconnect', () => setIsConnected(false));
+    socket.on('updateImages', (updatedImages) => setImageURL(updatedImages));
 
     // Cleanup listeners on unmount
     return () => {
@@ -46,11 +38,9 @@ export default function App() {
   }
 }, []);
 
-  /* uploadFile()
-   *  ------------------------
+  /*
    *  Uploads the file from the input element with id "imgUpload" to the server
-   *  Requires:
-   *		userId, UserName and socket global variables are initialised
+   *  @param {Event} e - The event triggered by file input change.
    */
   function uploadFile(e) {
     const file = NetworkManager.getFile(fileUploadButton);
@@ -61,8 +51,14 @@ export default function App() {
     const newImageURLs = [];
     for (let i = 0; i < e.target.files.length; i++) {
       const imgFile = e.target.files[i];
-      const reader = new FileReader();
+      // const files = NetworkManager.getFiles(fileUploadButton);
+      // files.forEach((file, index) => {
+      // const imgPacket = NetworkManager.packImage(file, userId, userName, imageURL.length + index);
+      // NetworkManager.sendImage(socket, imgPacket);
 
+      console.log("Sending image", file);
+
+      const reader = new FileReader();
       reader.onloadend = () => {
         newImageURLs.push(reader.result);
         setImageURL((currentImageUrl) => {
@@ -79,13 +75,13 @@ export default function App() {
       };
       reader.readAsDataURL(imgFile);
     }
-
-    //this adds the list of images to imageURL
   }
 
+  /**
+   * Renders the upload button and information.
+   */
   function uploadFxn() {
     return (
-
       <div className="upload-box">
         <label className="file-uploader-container">
           <div className="centered-content">
@@ -97,7 +93,9 @@ export default function App() {
               htmlFor="image-upload"
               onClick={() => fileUploadButton.current.click()}
             >
-              <span className="upload-text">Upload your Image</span>
+              <span className="upload-text">
+                Upload your Image
+              </span>
             </button>
           </div>
           <div className="supported-formats-text">
@@ -168,6 +166,9 @@ export default function App() {
     }));
   };
 
+  /**
+   * Maps and renders each uploaded image.
+   */
   function imgMapFxn() {
     return  imageURL.map((image,index) => (
       
@@ -197,8 +198,6 @@ export default function App() {
    */
   return (
     <>
-      {/* {console.log("initial value "+socket.connected)} */}
-      {/*Upload button*/}
       <div className="wrapper-upload-btn">
         <div className="header">
           <div className="header-text">MagicShare</div>
@@ -215,16 +214,18 @@ export default function App() {
           />
         </div>
         <button 
-	  htmlFor="image-upload"
-	  onClick={() => fileUploadButton.current.click()}
-	  style={imageURL.length === 0 ? {opacity : 0} : {}} className="extra-upload">
-	  Upload More Images
-            </button>
-			<button
+	        htmlFor="image-upload"
+	        onClick={() => fileUploadButton.current.click()}
+	        style={imageURL.length === 0 ? {opacity : 0} : {}} 
+          className="extra-upload"
+        >
+	        Upload More Images
+        </button>
+			  <button
           className="disconnect-button"
           htmlFor="Disconnect"
           onClick={() => {
-			  NetworkManager.disconnectUser(socket)
+			      NetworkManager.disconnectUser(socket)
             setImageURL([]);
           }}
         >
