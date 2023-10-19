@@ -34,10 +34,10 @@
 
 .prompts {
 	position: absolute;
-	opacity: 0.9;
+	opacity: 1;
     left: 50%;
-    top: 60vh;
-    transform: translate(-51%, 0);
+    top: 65vh;
+    transform: translate(-50%, 0);
 	transition: 0.5s all ease;
 }
 
@@ -46,4 +46,16 @@
 	height: 10vw;
 }
 
+canvas {
+	width: 10vw;
+	height: 10vw;
+}
+
+@media screen and (max-width: 1000px) {
+	.prompts {
+		left: 50%;
+		top: 55vh;
+		transform: translate(-50%, 0);
+	}
+}
 

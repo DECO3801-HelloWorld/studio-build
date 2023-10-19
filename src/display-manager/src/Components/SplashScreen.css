@@ -13,6 +13,22 @@
 	transition: opacity 0.2s;
 }
 
+#product-name {
+	top: 8.3vw;
+	font-size: 2.5vw;
+	background-image: linear-gradient(70deg, #c319e6, #ffa1fc, #c319e6);
+	background-size: 300%;
+	background-repeat: repeat;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent; 
+	-moz-background-clip: text;
+	background-clip: text;
+	-moz-text-fill-color: transparent;
+	animation: 30s grandientShift ease;
+	animation-direction: alternate;
+	animation-iteration-count: infinite;
+}
+
 /* Holds the words together */
 #title {
 	position: relative;
@@ -21,10 +37,9 @@
 	/* justify-content: center; */
 	align-items: center;
 	width: 100%;
-	height: 13vw;
+	height: 12vw;
 	margin-top: 10px;
 	/* margin-top: 50px; */
-	/* outline: solid blue; */
 }
 
 /* Big glowey text in the center */
@@ -70,7 +85,7 @@
 }
 
 /* Presents */
-.subheading:last-child {
+#presents {
 	right: 33%;
 	top: 5vw;
 }
@@ -85,7 +100,7 @@
 	/* outline: solid green; */
 	width: 80%;
 	height: 50vh;
-	top: 30%;
+	top: 35%;
 	/* margin-top: 5%; */
 	display: flex;
 }
@@ -121,7 +136,7 @@
 	--colour2: #f69D05;
 	position: absolute;
 	box-sizing: border-box;
-	top: 60vh;
+	top: 65vh;
     left: 50%;
 	height: 14vw;
 	aspect-ratio:  1 / 1;
@@ -166,7 +181,7 @@
 
 .graphics {
 	position: absolute;
-	top: 60vh;
+	top: 65vh;
 	width: 10vw;
     /* transform: translate(-51%, 0); */
 }
@@ -178,3 +193,29 @@
 #upload-icon {
 	right: 18.5vw;
 }
+
+@media screen and (max-width: 1000px) {
+	#instructions {
+		flex-direction: column;
+	}
+
+	.imgPodQR {
+		top: 55vh;
+	}
+
+	.stepCards {
+		align-items: flex-start;
+		margin-left: 10vw;
+	}
+
+	#wifi-icon {
+		left: 45vw;
+		top: 38vh
+	}
+
+	#upload-icon {
+		left: 45vw;
+		top: 72.5vh
+	}
+}
+

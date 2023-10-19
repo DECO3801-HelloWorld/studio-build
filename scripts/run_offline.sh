@@ -26,12 +26,12 @@ fi
 export PORT=$PORT
 
 # Start running user detection
-echo "Checking if python depenencies installed"
-./scripts/install_py_deps.sh
+# echo "Checking if python depenencies installed"
+# ./scripts/install_py_deps.sh
 
 # Build the client code.
 cd ./src/client-side
-npm install
+# npm install
 if [ $DEV == 1 ]; then
 	npm run dev -- --host&
 else
@@ -40,7 +40,7 @@ fi
 
 # Build the display manager code.
 cd ../display-manager/
-npm install
+# npm install
 if [ $DEV == 1 ]; then
 	npm run dev -- --host&
 else
@@ -48,19 +48,19 @@ else
 fi
 
 IP_ADDRESS=$(hostname -I | tr -d ' ')
-open_browser () {
-	sleep 3s
-	xdg-open "http://$IP_ADRESS:$PORT/display"
-}
+# open_browser () {
+# 	sleep 3s
+# 	xdg-open "http://$IP_ADRESS:$PORT/display"
+# }
 
 
 # Run the server.
 cd ../server
-npm install
+# npm install
 if [ $DEV == 1 ]; then
 	npm run dev&
 else 
-	open_browser&
+	# open_browser&
 	(sleep 5 && echo -e "\n\n==== SERVER IS RUNNING ====" && echo "If your page hasn't opened automatically, go to http://$IP_ADDRESS:$PORT/display")&
 	(sleep 10 && cd ../hub && sudo python3 network_detect.py $PORT)&
 	npm run start
