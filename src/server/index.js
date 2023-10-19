@@ -56,10 +56,6 @@ const io = new Server(server, {
 	maxHttpBufferSize: 1e8,
 })
 
-let images = []
- 
-
-
 // When connected log the socketID
 io.on("connection", (socket) => {
 	console.log(`User connected: ${socket.handshake.address}`)
@@ -68,10 +64,9 @@ io.on("connection", (socket) => {
 	socket.on("upload_img", (imgPacket) => {
 		console.log(`Sending Image ${imgPacket.imgName} from ${imgPacket.userName}`)
 		imgPacket.userId = ip2int(socket.handshake.address)
-		imgPacket.imgId = imgPacket.imgId + imgPacket.userId
-	
+		imgPacket.imgId = ip2int(socket.handshake.address) + imgPacket.imgId
 		socket.broadcast.emit("download_img", imgPacket);
-		
+		console.log(`sent image with ID ${imgPacket.imgId}`)
 	})
 
 	// Declare Disconnects
@@ -90,6 +85,7 @@ io.on("connection", (socket) => {
 		imgPacket.userId = ip2int(socket.handshake.address)
 		imgPacket.imgId = ip2int(socket.handshake.address)+imgPacket.imgId
 		socket.broadcast.emit("remove_img", imgPacket)
+		console.log(`Removed image with id ${imgPacket.imgId}`)
 	})
 
 	
