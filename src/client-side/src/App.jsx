@@ -182,11 +182,9 @@ export default function App() {
   function imgMapFxn() {
     return  imageURL.map((image,index) => (
       <>
-    {isMovingDown && (
-      <div className="gradient-overlay">
+      <div style={isMovingDown ? {opacity: 1} : {}}className="gradient-overlay">
         <p>Swipe down to remove</p>
       </div>
-    )}
         <div className="upload-image"
         style={{
           marginTop: `${(15 * index)}px`, // Adjust the vertical spacing between images

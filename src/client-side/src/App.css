@@ -232,9 +232,10 @@ input {
   pointer-events: none; /* Allow interactions with the image behind */
   transition: opacity 0.3s ease-in-out;
   z-index: 3;
-}
-
-
-.gradient-overlay.hidden {
   opacity: 0;
 }
+
+
+/* .gradient-overlay.hidden { */
+/*   opacity: 0; */
+/* } */
