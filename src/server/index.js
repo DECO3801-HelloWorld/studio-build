@@ -1,3 +1,5 @@
+/* index.js */
+/* Backend server program responsible for processing network requests from client to display */
 import express from 'express';
 import http from 'http'
 import cors from 'cors'
@@ -8,6 +10,16 @@ import {
 	handle_lost_connection,
 	handle_new_connection
 } from './event-handlers/network_monitor.js';
+
+/*ETHICAL NOTE:
+	* For user privacy, there are no image being stored in this program. They are processed and then immediately sent to the display.
+	* Images are not stored on disk EVER to ensure that content sent from the clients are always confidential
+	* Users only have control over their own images and can not download/modify other user images
+
+/* SECURITY NOTE:
+	* Users must be validated via the network before they are permitted to use the server, ensuring 
+	* a secure environment for the system to operate
+*/
 
 //PORT NUMBER as defined in the environment variable
 const port = process.env.PORT || 3001;
