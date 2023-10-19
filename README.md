@@ -29,6 +29,13 @@ With traditional content hosting services, there is one "presenter" who controls
 
 [![demo](https://img.youtube.com/vi/sYQpMZsfE_4/0.jpg)](https://www.youtube.com/watch?v=sYQpMZsfE_4)
 
+## Software Used
+
+* NodeJS (https://nodejs.org/en)
+* React (https://react.dev/)
+* SocketIO (https://react.dev/)
+
+
 ## Installation
 
 #### Prequisites
