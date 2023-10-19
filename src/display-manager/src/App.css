@@ -51,4 +51,11 @@ canvas {
 	height: 10vw;
 }
 
+@media screen and (max-width: 1000px) {
+	.prompts {
+		left: 50%;
+		top: 55vh;
+		transform: translate(-50%, 0);
+	}
+}
 
