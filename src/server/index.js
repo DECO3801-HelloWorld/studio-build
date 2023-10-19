@@ -68,7 +68,7 @@ io.on("connection", (socket) => {
 	socket.on("upload_img", (imgPacket) => {
 		console.log(`Sending Image ${imgPacket.imgName} from ${imgPacket.userName}`)
 		imgPacket.userId = ip2int(socket.handshake.address)
-		imgPacket.imgId = imgPacket.imgId
+		imgPacket.imgId = imgPacket.imgId + imgPacket.userId
 	
 		socket.broadcast.emit("download_img", imgPacket);
 		
@@ -87,7 +87,6 @@ io.on("connection", (socket) => {
 
 	socket.on("request_img_remove", (imgPacket) => {
 		console.log("Requested to remove an image.");
-		console.log(imgPacket);
 		imgPacket.userId = ip2int(socket.handshake.address)
 		imgPacket.imgId = ip2int(socket.handshake.address)+imgPacket.imgId
 		socket.broadcast.emit("remove_img", imgPacket)
