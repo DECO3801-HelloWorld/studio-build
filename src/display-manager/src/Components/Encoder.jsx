@@ -1,6 +1,6 @@
 /**
  * Converts an array buffer to a base64 string. The code for this function is adapted from the following source: 
- * @see {@link https://gist.github.com/jonleighton/958841|https://gist.github.com/jonleighton/958841}
+ * @see {@link https://gist.github.com/jonleighton/958841}
  * Thank you for saving mu life jonleighton :)
  *
  * @param {ArrayBuffer} arrayBuffer - The array buffer to be converted to a base64 string.

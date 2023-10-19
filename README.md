@@ -74,6 +74,25 @@ Security of the connection between the client device and the hub is handled by s
 It is assumed that all users only post images to the screen that they are comfortable sharing with other people in the room. It is policy to never write these images to disk. This means that when the user disconnects the images will be permanantly removed from memory and there is no risk of future users seeing their images.  
 Proximity is a consideration to ensure that the user can see everyone that can access the screen. This gives the user confidence that they're only sharing their images with people they trust them with. 
 
+## Codebase References And Citations
+
+``src/display-manager/src/Components/ImgPod.css:39``
+[Border With Gradient and Radius](https://dev.to/afif/border-with-gradient-and-radius-387f)
+
+https://dev.to/afif/border-with-gradient-and-radius-387f
+
+---
+``src/display-manager/src/Components/Encoder.jsx``
+[base64ArrayBuffer.js](https://gist.github.com/jonleighton/958841)
+
+https://gist.github.com/jonleighton/958841
+
+---
+``src/display-manager/index.css``
+[Montserrat Font](https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;900&display=swap)
+
+https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;900&display=swap
+
 ## Team Members
 
 All the people working on this project:
