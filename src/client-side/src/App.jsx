@@ -47,6 +47,8 @@ export default function App() {
     const imgId = uuidv4();
     const imgPacket = NetworkManager.packImage(file, userId, userName, imgId);
     NetworkManager.sendImage(socket, imgPacket);
+	console.log("Sending image id")
+	console.log(imgPacket.imgId)
 
     const newImageURLs = [];
     for (let i = 0; i < e.target.files.length; i++) {
@@ -145,7 +147,8 @@ export default function App() {
           //NetworkManager.packImage(file, userId, userName, imgId);
          
           const imgPacket = NetworkManager.packImage(imageURL[imageURL.length - 1].imgFile, userId,userName , imageURL[imageURL.length - 1].id);
-          console.log(imgPacket);
+		  console.log("removing image with id")
+          console.log(imgPacket.imgId);
           NetworkManager.swipeRemove(socket,imgPacket);
           handleTouchEnd ();
           //alert("hii");
