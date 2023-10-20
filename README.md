@@ -27,7 +27,7 @@ With traditional content hosting services, there is one "presenter" who controls
 
 ## Demo of the Project
 
-[![demo](https://img.youtube.com/vi/sYQpMZsfE_4/0.jpg)](https://www.youtube.com/watch?v=sYQpMZsfE_4)
+[![demo](https://drive.google.com/file/d/1tiN9xFKiAcTJiy9XttrKVqL9uL4hSeZs/view?usp=sharing)](https://drive.google.com/file/d/1tiN9xFKiAcTJiy9XttrKVqL9uL4hSeZs/view?usp=sharing)
 
 ## Software Used
 
