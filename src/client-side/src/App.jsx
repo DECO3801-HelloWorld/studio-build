@@ -122,7 +122,7 @@ export default function App() {
     }));
   };
 
-  const handleTouchMove = (event) => {
+  async function handleTouchMove(event) {
     setIsMovingDown(true);
     if (position.initialTouch) {
       const touch = event.touches[0];
@@ -145,7 +145,7 @@ export default function App() {
           setImageURL((prevImageURL) => prevImageURL.slice(0, prevImageURL.length - 1));
           //NetworkManager.packImage(file, userId, userName, imgId);
          
-          const imgPacket = NetworkManager.packImage(imageURL[imageURL.length - 1].imgFile, userId,userName , imageURL[imageURL.length - 1].id);
+          const imgPacket = await NetworkManager.packImage(imageURL[imageURL.length - 1].imgFile, userId,userName , imageURL[imageURL.length - 1].id);
 		  console.log("removing image with id")
           console.log(imgPacket.imgId);
           NetworkManager.swipeRemove(socket,imgPacket);
@@ -155,7 +155,7 @@ export default function App() {
        
       }
     }
-  };
+  }
 
   const handleTouchEnd = () => {
     // Animate the image back to its original position
