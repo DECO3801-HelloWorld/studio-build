@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "browser-image-compression": "^2.0.2",
     "hammerjs": "^2.0.8",
     "react": "^18.2.0",
     "react-device-detect": "^2.2.3",
