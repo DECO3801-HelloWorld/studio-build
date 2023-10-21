@@ -24,7 +24,7 @@ import imageCompression from 'browser-image-compression';
 */
 export async function packImage(file, userID, userName, imgId) {
 	const options = {
-		maxSizeMB: 3,
+		maxSizeMB: 1,
 		maxWidthOrHeight: 1920,
 		useWebWorker: true,
 	}
