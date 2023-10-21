@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
 import * as NetworkManager from "./Components/NetworkManager.jsx";
 import "./App.css";
+import Logo from "./Components/Upload icon.png";
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -84,7 +85,7 @@ export default function App() {
       <div className="upload-box">
         <label className="file-uploader-container">
           <div className="centered-content">
-            <img src="src\Components\Upload icon.png" />
+            <img src={Logo} />
           </div>
           <div>
             <button
