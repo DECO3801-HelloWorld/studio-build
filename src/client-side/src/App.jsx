@@ -39,10 +39,10 @@ export default function App() {
    *  Uploads the file from the input element with id "imgUpload" to the server
    *  @param {Event} e - The event triggered by file input change.
    */
-  function uploadFile(e) {
+  async function uploadFile(e) {
     const file = NetworkManager.getFile(fileUploadButton);
     const imgId = uuidv4();
-    const imgPacket = NetworkManager.packImage(file, userId, userName, imgId);
+    const imgPacket = await NetworkManager.packImage(file, userId, userName, imgId);
     NetworkManager.sendImage(socket, imgPacket);
 	console.log("Sending image id")
 	console.log(imgPacket.imgId)
