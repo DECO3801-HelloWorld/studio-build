@@ -7,7 +7,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 //Server variables
 const socket = io.connect(window.location.origin); //Socket is connection to server
-var count = 0;
 
 //Testing Variables
 const userId = uuidv4(); //Maybe grab this from server in future
@@ -17,7 +16,6 @@ const userName = uuidv4(); //Device name maybe?
 
 export default function App() {
   const [imageURL, setImageURL] = useState([]);
-  const [isConnected, setIsConnected] = useState(false);
   const fileUploadButton = useRef(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isMovingDown, setIsMovingDown] = useState(false);
@@ -27,8 +25,6 @@ export default function App() {
   * Also listens for server updates about images.
   */
   useEffect(() => {
-    socket.on('connect', () => setIsConnected(true));
-    socket.on('disconnect', () => setIsConnected(false));
     socket.on('updateImages', (updatedImages) => setImageURL(updatedImages));
 
     // Cleanup listeners on unmount

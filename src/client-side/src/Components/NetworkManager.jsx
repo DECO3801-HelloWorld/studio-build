@@ -4,6 +4,7 @@
 * You can call basic functions related to sending data without interfacing with the
 * socket.io API
 */
+import imageCompression from 'browser-image-compression';
 
 /* packImage() 
 * --------------------------------------
@@ -21,12 +22,20 @@
 	*		imgPacket - The packed object that contains all information
 	*					about an image.
 */
-export function packImage(file, userID, userName, imgId) {
+export async function packImage(file, userID, userName, imgId) {
+	const options = {
+		maxSizeMB: 1,
+		maxWidthOrHeight: 1920,
+		useWebWorker: true,
+	}
+
+	const fileSmall = await imageCompression(file, options)
+
 	const imgPacket = {
 		userId: userID,			//ID belong to the clients IP adress
 		userName: userName,		//Handle for the IP, [NOT USED FOR IDENTIFICATION]
 		imgName: file.name,		//Filename of the image
-		imgPayload: file,		//ArrayBuffer format
+		imgPayload: fileSmall,		//ArrayBuffer format
 		imgType: file.type,		//ImgType eg. PNG JPEG
 		imgId: imgId,
 	}
