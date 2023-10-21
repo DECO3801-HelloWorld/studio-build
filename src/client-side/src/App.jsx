@@ -145,13 +145,13 @@ export default function App() {
           setImageURL((prevImageURL) => prevImageURL.slice(0, prevImageURL.length - 1));
           //NetworkManager.packImage(file, userId, userName, imgId);
          
-		  console.log("removing image with id")
-		  const id = imageURL[imageURL.length - 1].id
-          NetworkManager.swipeRemove(socket,{id});
-          handleTouchEnd ();
-          //alert("hii");
-        }
-       
+			console.log("removing image with id")
+			const id = imageURL[imageURL.length - 1].id
+			console.log(id)
+			NetworkManager.swipeRemove(socket,{imgId : id});
+			handleTouchEnd();
+		}
+
       }
     }
   }
