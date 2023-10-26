@@ -36,15 +36,12 @@ user_m = UserManager()
 # exit program flag
 exit_flag = False
 
-# TODO add in:
-#   - user verificaiton in process_packet
-#   - don't process device and hotspot ARP
-#   - fix exit msg w/ SNIF
-
+# used end the arp sniffing process
 def stop_capture(packet):
     global exit_flag
     return exit_flag
 
+# formats socket messages to '{ip:IP, count:usr_count}'
 def msg_format(ip):
     global connected_devices
 
